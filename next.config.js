@@ -1,3 +1,17 @@
-/** @type {import('next').NextConfig} */ 
-const nextConfig = {}; 
-module.exports = nextConfig; 
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+        ],
+      },
+    ];
+  },
+};
+module.exports = nextConfig;
