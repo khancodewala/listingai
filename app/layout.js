@@ -23,6 +23,9 @@ export default function RootLayout({ children }) {
             <Link href="/generate" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>
               AI Generator
             </Link>
+            <Link href="/pricing" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>
+              Pricing
+            </Link>
             <Link href="/dashboard" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>
               Dashboard
             </Link>
