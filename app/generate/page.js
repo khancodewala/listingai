@@ -20,13 +20,13 @@ function ListingForm({ onGenerate, loading }) {
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 3-bed villa, studio apartment" />
-        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. DHA Phase 5, Lahore" />
+        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Manhattan NY, Dubai Marina, DHA Lahore" />
         <Field label="Bedrooms" value={form.bedrooms} onChange={set("bedrooms")} placeholder="e.g. 4" />
         <Field label="Bathrooms" value={form.bathrooms} onChange={set("bathrooms")} placeholder="e.g. 3" />
-        <Field label="Size (sq ft)" value={form.size} onChange={set("size")} placeholder="e.g. 2400" />
-        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. PKR 2.5 Crore" />
+        <Field label="Size" value={form.size} onChange={set("size")} placeholder="e.g. 2400 sq ft or 220 sqm" />
+        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $250,000 or PKR 2.5 Crore or AED 900,000" />
       </div>
-      <Field label="Key Features" value={form.features} onChange={set("features")} placeholder="e.g. Marble flooring, rooftop garden, generator backup" textarea />
+      <Field label="Key Features" value={form.features} onChange={set("features")} placeholder="e.g. Pool, Gym, Parking, Garden, Sea View" textarea />
       <Field label="Additional Notes (optional)" value={form.notes} onChange={set("notes")} placeholder="Anything else to highlight..." textarea />
       <GenerateBtn onClick={() => onGenerate({ feature: "listing", ...form })} loading={loading} />
     </div>
@@ -42,12 +42,12 @@ function SocialForm({ onGenerate, loading }) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse" />
-        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Gulberg III, Lahore" />
-        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. PKR 3.8 Crore" />
-        <Field label="Target Buyer" value={form.targetBuyer} onChange={set("targetBuyer")} placeholder="e.g. Young professionals, families" />
+        <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse, family home" />
+        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Beverly Hills CA, Palm Jumeirah, Gulberg Lahore" />
+        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $500,000 or AED 1.2M or PKR 3 Crore" />
+        <Field label="Target Buyer" value={form.targetBuyer} onChange={set("targetBuyer")} placeholder="e.g. Young professionals, families, investors" />
       </div>
-      <Field label="Key Highlights" value={form.highlights} onChange={set("highlights")} placeholder="e.g. Stunning city views, modern kitchen, gym, pool" textarea />
+      <Field label="Key Highlights" value={form.highlights} onChange={set("highlights")} placeholder="e.g. Stunning city views, modern kitchen, pool, gym" textarea />
       <GenerateBtn onClick={() => onGenerate({ feature: "social", ...form })} loading={loading} />
     </div>
   );
@@ -63,12 +63,12 @@ function EmailForm({ onGenerate, loading }) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Tauqeer Ahmed" />
-        <Field label="Buyer's Name" value={form.buyerName} onChange={set("buyerName")} placeholder="e.g. Mr. Ali Khan" />
-        <Field label="Property Address" value={form.propertyAddress} onChange={set("propertyAddress")} placeholder="e.g. House 12, Street 5, F-7/2, Islamabad" />
-        <Field label="Showing Date" value={form.showingDate} onChange={set("showingDate")} placeholder="e.g. Yesterday, 4 May 2026" />
+        <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. John Smith, Ahmed Khan" />
+        <Field label="Buyer's Name" value={form.buyerName} onChange={set("buyerName")} placeholder="e.g. Mr. Robert, Ms. Sarah" />
+        <Field label="Property Address" value={form.propertyAddress} onChange={set("propertyAddress")} placeholder="e.g. 123 Main St NY, Flat 5 Dubai Marina" />
+        <Field label="Showing Date" value={form.showingDate} onChange={set("showingDate")} placeholder="e.g. Yesterday, May 5 2026" />
       </div>
-      <Field label="Buyer's Interests / Requirements" value={form.buyerInterests} onChange={set("buyerInterests")} placeholder="e.g. Needs 4 beds, school nearby, budget PKR 2 Crore" textarea />
+      <Field label="Buyer's Interests / Requirements" value={form.buyerInterests} onChange={set("buyerInterests")} placeholder="e.g. Needs 4 beds, good schools nearby, budget $300,000" textarea />
       <Field label="Suggested Next Step" value={form.nextStep} onChange={set("nextStep")} placeholder="e.g. Schedule a second visit this weekend" textarea />
       <GenerateBtn onClick={() => onGenerate({ feature: "email", ...form })} loading={loading} />
     </div>
@@ -86,7 +86,7 @@ function ContractForm({ onGenerate, loading }) {
         </label>
         <textarea
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[200px] resize-y"
-          placeholder="Paste the full contract text here. Claude will summarize it in plain English..."
+          placeholder="Paste any real estate contract text here. Claude AI will summarize it in plain English for any country..."
           value={contractText}
           onChange={(e) => setContractText(e.target.value)}
         />
@@ -200,7 +200,7 @@ export default function GeneratePage() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900">AI Generator</h1>
-          <p className="text-gray-500 mt-2">Powered by Claude · Choose a tool below</p>
+          <p className="text-gray-500 mt-2">Powered by Claude · Works for any country worldwide 🌍</p>
         </div>
 
         <div className="flex gap-2 mb-6 flex-wrap">
