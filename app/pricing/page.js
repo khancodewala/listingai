@@ -7,14 +7,7 @@ export default function PricingPage() {
       price: "$0",
       period: "forever",
       description: "Perfect for trying out ListingAI",
-      features: [
-        "5 AI generations per month",
-        "Property Listing Writer",
-        "Social Media Captions",
-        "Buyer Email Templates",
-        "Contract Summarizer",
-        "Copy to clipboard",
-      ],
+      features: ["5 AI generations per month", "Property Listing Writer", "Social Media Captions", "Buyer Email Templates", "Contract Summarizer", "Copy to clipboard"],
       notIncluded: ["Priority support", "Unlimited generations", "Team access"],
       buttonText: "Get Started Free",
       buttonLink: "/signup",
@@ -25,16 +18,7 @@ export default function PricingPage() {
       price: "$29",
       period: "per month",
       description: "For active real estate agents",
-      features: [
-        "100 AI generations per month",
-        "Property Listing Writer",
-        "Social Media Captions",
-        "Buyer Email Templates",
-        "Contract Summarizer",
-        "Copy to clipboard",
-        "Priority support",
-        "Early access to new features",
-      ],
+      features: ["100 AI generations per month", "Property Listing Writer", "Social Media Captions", "Buyer Email Templates", "Contract Summarizer", "Copy to clipboard", "Priority support", "Early access to new features"],
       notIncluded: ["Team access"],
       buttonText: "Start Pro Plan",
       buttonLink: "/signup",
@@ -45,18 +29,7 @@ export default function PricingPage() {
       price: "$79",
       period: "per month",
       description: "For real estate teams and agencies",
-      features: [
-        "Unlimited AI generations",
-        "Property Listing Writer",
-        "Social Media Captions",
-        "Buyer Email Templates",
-        "Contract Summarizer",
-        "Copy to clipboard",
-        "Priority support",
-        "Early access to new features",
-        "Team access up to 10 users",
-        "Dedicated account manager",
-      ],
+      features: ["Unlimited AI generations", "Property Listing Writer", "Social Media Captions", "Buyer Email Templates", "Contract Summarizer", "Copy to clipboard", "Priority support", "Early access to new features", "Team access up to 10 users", "Dedicated account manager"],
       notIncluded: [],
       buttonText: "Start Agency Plan",
       buttonLink: "/signup",
@@ -122,7 +95,7 @@ export default function PricingPage() {
                 </span>
               </div>
 
-              
+              <a
                 href={plan.buttonLink}
                 style={{
                   display: "block",
@@ -144,13 +117,13 @@ export default function PricingPage() {
               <div>
                 {plan.features.map((feature) => (
                   <div key={feature} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                    <span style={{ color: "#16a34a", fontSize: "16px" }}>✓</span>
+                    <span style={{ color: "#16a34a", fontSize: "16px" }}>+</span>
                     <span style={{ fontSize: "14px", color: "#374151" }}>{feature}</span>
                   </div>
                 ))}
                 {plan.notIncluded.map((feature) => (
                   <div key={feature} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                    <span style={{ color: "#d1d5db", fontSize: "16px" }}>✕</span>
+                    <span style={{ color: "#d1d5db", fontSize: "16px" }}>-</span>
                     <span style={{ fontSize: "14px", color: "#9ca3af" }}>{feature}</span>
                   </div>
                 ))}
@@ -160,7 +133,7 @@ export default function PricingPage() {
         </div>
 
         <p style={{ textAlign: "center", color: "#6b7280", fontSize: "14px", marginTop: "40px" }}>
-          🌍 Works for real estate agents worldwide · Payments in USD · Cancel anytime
+          Works for real estate agents worldwide. Payments in USD. Cancel anytime.
         </p>
 
       </div>
