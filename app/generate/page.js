@@ -159,10 +159,21 @@ export default function GeneratePage() {
   const [session, setSession] = useState(null);
   const [usage, setUsage] = useState(null);
 
-  // ---- Get user session on page load ----
+  // ---- Get user session and usage on page load ----
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
+      if (session) {
+        const res = await fetch("/api/usage", {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+        const data = await res.json();
+        if (data.used !== undefined) {
+          setUsage({ used: data.used, limit: data.limit, plan: data.plan });
+        }
+      }
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -173,7 +184,6 @@ export default function GeneratePage() {
   }, []);
 
   const handleGenerate = async (payload) => {
-    // Check if user is logged in
     if (!session) {
       setError("Please log in to generate content.");
       return;
@@ -206,9 +216,15 @@ export default function GeneratePage() {
         setError(data.error || "Something went wrong. Please try again.");
       } else {
         setResult(data.result);
-        // Update usage display after successful generation
-        if (data.used !== undefined) {
-          setUsage({ used: data.used, limit: data.limit, plan: data.plan });
+        // Refresh usage after successful generation
+        const usageRes = await fetch("/api/usage", {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+        const usageData = await usageRes.json();
+        if (usageData.used !== undefined) {
+          setUsage({ used: usageData.used, limit: usageData.limit, plan: usageData.plan });
         }
       }
     } catch (err) {
@@ -243,7 +259,7 @@ export default function GeneratePage() {
         {session && usage && (
           <div className="mb-4 bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between text-sm">
             <span className="text-gray-600">
-              Generations used: <strong>{usage.used} / {usage.limit ?? "∞"}</strong>
+              Generations used this month: <strong>{usage.used} / {usage.limit ?? "∞"}</strong>
             </span>
             {usage.limit && usage.used >= usage.limit && (
               <a href="/pricing" className="text-blue-600 font-semibold hover:underline">
