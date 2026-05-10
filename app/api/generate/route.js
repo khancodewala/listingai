@@ -1,4 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { supabaseAdmin } from '@/lib/supabaseAdmin'
+import { checkAndTrackUsage } from "@/lib/checkUsage";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -29,6 +31,35 @@ function buildPrompt(feature, data) {
 
 export async function POST(request) {
   try {
+
+    // ---- STEP 1: Check if user is logged in ----
+    const authHeader = request.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "");
+
+    if (!token) {
+      return Response.json({ error: "Please log in to generate content." }, { status: 401 });
+    }
+
+    const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
+
+    if (authError || !user) {
+      return Response.json({ error: "Session expired. Please log in again." }, { status: 401 });
+    }
+
+    // ---- STEP 2: Check usage limit ----
+    const usageResult = await checkAndTrackUsage(user.id);
+
+    if (!usageResult.allowed) {
+      return Response.json({
+        error: "limit_reached",
+        message: `You have used all ${usageResult.limit} generations on your ${usageResult.plan} plan this month. Please upgrade to continue.`,
+        used: usageResult.used,
+        limit: usageResult.limit,
+        plan: usageResult.plan,
+      }, { status: 429 });
+    }
+
+    // ---- STEP 3: Your existing Claude AI code (unchanged) ----
     const body = await request.json();
     const feature = body.feature;
     const data = body;

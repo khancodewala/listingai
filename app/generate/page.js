@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 const TABS = [
   { id: "listing", label: "🏠 Listing Writer" },
@@ -155,8 +156,29 @@ export default function GeneratePage() {
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [session, setSession] = useState(null);
+  const [usage, setUsage] = useState(null);
+
+  // ---- Get user session on page load ----
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleGenerate = async (payload) => {
+    // Check if user is logged in
+    if (!session) {
+      setError("Please log in to generate content.");
+      return;
+    }
+
     setLoading(true);
     setResult("");
     setError("");
@@ -164,16 +186,30 @@ export default function GeneratePage() {
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${session.access_token}`,
+        },
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
 
+      // ---- Handle limit reached ----
+      if (res.status === 429 && data.error === "limit_reached") {
+        setError(`⚠️ ${data.message}`);
+        setUsage({ used: data.used, limit: data.limit, plan: data.plan });
+        return;
+      }
+
       if (!res.ok || !data.success) {
         setError(data.error || "Something went wrong. Please try again.");
       } else {
         setResult(data.result);
+        // Update usage display after successful generation
+        if (data.used !== undefined) {
+          setUsage({ used: data.used, limit: data.limit, plan: data.plan });
+        }
       }
     } catch (err) {
       setError("Network error. Please check your connection.");
@@ -203,6 +239,27 @@ export default function GeneratePage() {
           <p className="text-gray-500 mt-2">Powered by Claude · Works for any country worldwide 🌍</p>
         </div>
 
+        {/* Usage Bar - shows when user is logged in */}
+        {session && usage && (
+          <div className="mb-4 bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between text-sm">
+            <span className="text-gray-600">
+              Generations used: <strong>{usage.used} / {usage.limit ?? "∞"}</strong>
+            </span>
+            {usage.limit && usage.used >= usage.limit && (
+              <a href="/pricing" className="text-blue-600 font-semibold hover:underline">
+                Upgrade Plan →
+              </a>
+            )}
+          </div>
+        )}
+
+        {/* Not logged in warning */}
+        {!session && (
+          <div className="mb-4 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded-xl px-4 py-3">
+            ⚠️ Please <a href="/login" className="font-semibold underline">log in</a> to use the AI generator.
+          </div>
+        )}
+
         <div className="flex gap-2 mb-6 flex-wrap">
           {TABS.map((tab) => (
             <button
@@ -224,7 +281,7 @@ export default function GeneratePage() {
 
           {error && (
             <div className="mt-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
-              ⚠️ {error}
+              {error}
             </div>
           )}
 
