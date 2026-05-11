@@ -159,7 +159,6 @@ export default function GeneratePage() {
   const [session, setSession] = useState(null);
   const [usage, setUsage] = useState(null);
 
-  // ---- Get user session and usage on page load ----
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
@@ -205,7 +204,6 @@ export default function GeneratePage() {
 
       const data = await res.json();
 
-      // ---- Handle limit reached ----
       if (res.status === 429 && data.error === "limit_reached") {
         setError(`⚠️ ${data.message}`);
         setUsage({ used: data.used, limit: data.limit, plan: data.plan });
@@ -216,7 +214,6 @@ export default function GeneratePage() {
         setError(data.error || "Something went wrong. Please try again.");
       } else {
         setResult(data.result);
-        // Refresh usage after successful generation
         const usageRes = await fetch("/api/usage", {
           headers: {
             Authorization: `Bearer ${session.access_token}`,
@@ -255,7 +252,6 @@ export default function GeneratePage() {
           <p className="text-gray-500 mt-2">Powered by Claude · Works for any country worldwide 🌍</p>
         </div>
 
-        {/* Usage Bar - shows when user is logged in */}
         {session && usage && (
           <div className="mb-4 bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between text-sm">
             <span className="text-gray-600">
@@ -269,7 +265,6 @@ export default function GeneratePage() {
           </div>
         )}
 
-        {/* Not logged in warning */}
         {!session && (
           <div className="mb-4 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded-xl px-4 py-3">
             ⚠️ Please <a href="/login" className="font-semibold underline">log in</a> to use the AI generator.

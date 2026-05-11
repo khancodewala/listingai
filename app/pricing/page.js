@@ -1,16 +1,63 @@
 "use client";
 
+import { useState } from "react";
+import { supabase } from "@/lib/supabase";
+
 export default function PricingPage() {
+  const [loading, setLoading] = useState("");
+
+  const handleUpgrade = async (plan) => {
+    setLoading(plan);
+
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      window.location.href = "/signup";
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/polar/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plan,
+          userId: session.user.id,
+          userEmail: session.user.email,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      alert("Network error. Please try again.");
+    } finally {
+      setLoading("");
+    }
+  };
+
   const plans = [
     {
       name: "Free",
       price: "$0",
       period: "forever",
       description: "Perfect for trying out ListingAI",
-      features: ["5 AI generations per month", "Property Listing Writer", "Social Media Captions", "Buyer Email Templates", "Contract Summarizer", "Copy to clipboard"],
+      features: [
+        "5 AI generations per month",
+        "Property Listing Writer",
+        "Social Media Captions",
+        "Buyer Email Templates",
+        "Contract Summarizer",
+        "Copy to clipboard",
+      ],
       notIncluded: ["Priority support", "Unlimited generations", "Team access"],
       buttonText: "Get Started Free",
-      buttonLink: "/signup",
+      planKey: "free",
       highlighted: false,
     },
     {
@@ -18,10 +65,19 @@ export default function PricingPage() {
       price: "$29",
       period: "per month",
       description: "For active real estate agents",
-      features: ["100 AI generations per month", "Property Listing Writer", "Social Media Captions", "Buyer Email Templates", "Contract Summarizer", "Copy to clipboard", "Priority support", "Early access to new features"],
+      features: [
+        "100 AI generations per month",
+        "Property Listing Writer",
+        "Social Media Captions",
+        "Buyer Email Templates",
+        "Contract Summarizer",
+        "Copy to clipboard",
+        "Priority support",
+        "Early access to new features",
+      ],
       notIncluded: ["Team access"],
       buttonText: "Start Pro Plan",
-      buttonLink: "/signup",
+      planKey: "pro",
       highlighted: true,
     },
     {
@@ -29,10 +85,21 @@ export default function PricingPage() {
       price: "$79",
       period: "per month",
       description: "For real estate teams and agencies",
-      features: ["Unlimited AI generations", "Property Listing Writer", "Social Media Captions", "Buyer Email Templates", "Contract Summarizer", "Copy to clipboard", "Priority support", "Early access to new features", "Team access up to 10 users", "Dedicated account manager"],
+      features: [
+        "Unlimited AI generations",
+        "Property Listing Writer",
+        "Social Media Captions",
+        "Buyer Email Templates",
+        "Contract Summarizer",
+        "Copy to clipboard",
+        "Priority support",
+        "Early access to new features",
+        "Team access up to 10 users",
+        "Dedicated account manager",
+      ],
       notIncluded: [],
       buttonText: "Start Agency Plan",
-      buttonLink: "/signup",
+      planKey: "agency",
       highlighted: false,
     },
   ];
@@ -95,24 +162,48 @@ export default function PricingPage() {
                 </span>
               </div>
 
-              <a
-                href={plan.buttonLink}
-                style={{
-                  display: "block",
-                  textAlign: "center",
-                  background: plan.highlighted ? "#1d4ed8" : "#ffffff",
-                  color: plan.highlighted ? "#ffffff" : "#1d4ed8",
-                  border: "2px solid #1d4ed8",
-                  borderRadius: "8px",
-                  padding: "12px",
-                  fontWeight: "600",
-                  fontSize: "15px",
-                  textDecoration: "none",
-                  marginBottom: "28px",
-                }}
-              >
-                {plan.buttonText}
-              </a>
+              {plan.planKey === "free" ? (
+            <a    
+                  href="/signup"
+                  style={{
+                    display: "block",
+                    textAlign: "center",
+                    background: "#ffffff",
+                    color: "#1d4ed8",
+                    border: "2px solid #1d4ed8",
+                    borderRadius: "8px",
+                    padding: "12px",
+                    fontWeight: "600",
+                    fontSize: "15px",
+                    textDecoration: "none",
+                    marginBottom: "28px",
+                  }}
+                >
+                  Get Started Free
+                </a>
+              ) : (
+                <button
+                  onClick={() => handleUpgrade(plan.planKey)}
+                  disabled={loading === plan.planKey}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    textAlign: "center",
+                    background: plan.highlighted ? "#1d4ed8" : "#ffffff",
+                    color: plan.highlighted ? "#ffffff" : "#1d4ed8",
+                    border: "2px solid #1d4ed8",
+                    borderRadius: "8px",
+                    padding: "12px",
+                    fontWeight: "600",
+                    fontSize: "15px",
+                    cursor: loading === plan.planKey ? "not-allowed" : "pointer",
+                    opacity: loading === plan.planKey ? 0.7 : 1,
+                    marginBottom: "28px",
+                  }}
+                >
+                  {loading === plan.planKey ? "Redirecting..." : plan.buttonText}
+                </button>
+              )}
 
               <div>
                 {plan.features.map((feature) => (
@@ -128,6 +219,7 @@ export default function PricingPage() {
                   </div>
                 ))}
               </div>
+
             </div>
           ))}
         </div>
