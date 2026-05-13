@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
-  max-width: 100%;
-}
+.desktop-nav { display: flex; }
+.mobile-menu-btn { display: none; }
+.mobile-nav { display: none; }
 
-html, body {
-  overflow-x: hidden;
-  width: 100%;
+@media (max-width: 768px) {
+  .desktop-nav { display: none !important; }
+  .mobile-menu-btn { display: block !important; }
+  .mobile-nav { display: flex !important; }
 }

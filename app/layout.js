@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 
 export default function RootLayout({ children }) {
   const [user, setUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -32,67 +33,62 @@ export default function RootLayout({ children }) {
           background: "#ffffff",
           borderBottom: "1px solid #e5e7eb",
           padding: "12px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
           position: "sticky",
           top: 0,
           zIndex: 100,
         }}>
-          <Link href="/" style={{ fontWeight: "700", fontSize: "20px", color: "#1d4ed8", textDecoration: "none" }}>
-            🏠 ListingAI
-          </Link>
-          <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
-            <Link href="/generate" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>
-              AI Generator
-            </Link>
-            <Link href="/pricing" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>
-              Pricing
-            </Link>
-            <Link href="/dashboard" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>
-              Dashboard
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <Link href="/" style={{ fontWeight: "700", fontSize: "20px", color: "#1d4ed8", textDecoration: "none" }}>
+              🏠 ListingAI
             </Link>
 
-            {user ? (
-              <>
-                <span style={{ color: "#6b7280", fontSize: "14px" }}>
-                  {user.email}
-                </span>
-                <button
-                  onClick={handleLogout}
-                  style={{
-                    background: "#ef4444",
-                    color: "#ffffff",
-                    border: "none",
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    padding: "8px 16px",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>
-                  Login
-                </Link>
-                <Link href="/signup" style={{
-                  background: "#1d4ed8",
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  padding: "8px 16px",
-                  borderRadius: "8px",
-                }}>
-                  Sign Up
-                </Link>
-              </>
-            )}
+            {/* Desktop menu */}
+            <div style={{ display: "flex", gap: "24px", alignItems: "center" }} className="desktop-nav">
+              <Link href="/generate" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>AI Generator</Link>
+              <Link href="/pricing" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Pricing</Link>
+              <Link href="/dashboard" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Dashboard</Link>
+              {user ? (
+                <>
+                  <span style={{ color: "#6b7280", fontSize: "14px" }}>{user.email}</span>
+                  <button onClick={handleLogout} style={{ background: "#ef4444", color: "#fff", border: "none", fontSize: "14px", fontWeight: "500", padding: "8px 16px", borderRadius: "8px", cursor: "pointer" }}>Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Login</Link>
+                  <Link href="/signup" style={{ background: "#1d4ed8", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "500", padding: "8px 16px", borderRadius: "8px" }}>Sign Up</Link>
+                </>
+              )}
+            </div>
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="mobile-menu-btn"
+              style={{ background: "none", border: "none", cursor: "pointer", fontSize: "24px" }}
+            >
+              {menuOpen ? "✕" : "☰"}
+            </button>
           </div>
+
+          {/* Mobile dropdown */}
+          {menuOpen && (
+            <div className="mobile-nav" style={{ paddingTop: "12px", display: "flex", flexDirection: "column", gap: "12px" }}>
+              <Link href="/generate" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>AI Generator</Link>
+              <Link href="/pricing" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Pricing</Link>
+              <Link href="/dashboard" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Dashboard</Link>
+              {user ? (
+                <>
+                  <span style={{ color: "#6b7280", fontSize: "14px" }}>{user.email}</span>
+                  <button onClick={handleLogout} style={{ background: "#ef4444", color: "#fff", border: "none", fontSize: "15px", fontWeight: "500", padding: "10px 16px", borderRadius: "8px", cursor: "pointer", textAlign: "left" }}>Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Login</Link>
+                  <Link href="/signup" onClick={() => setMenuOpen(false)} style={{ background: "#1d4ed8", color: "#fff", textDecoration: "none", fontSize: "15px", fontWeight: "500", padding: "10px 16px", borderRadius: "8px", textAlign: "center" }}>Sign Up</Link>
+                </>
+              )}
+            </div>
+          )}
         </nav>
         {children}
       </body>
