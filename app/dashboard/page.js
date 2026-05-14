@@ -1,11 +1,14 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@supabase/ssr'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
 export default function Dashboard() {
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
   const [plan, setPlan] = useState('free')
   const [usage, setUsage] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -72,7 +75,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Recent generations table stays as-is for now */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Recent Generations</h2>
           <p className="text-gray-400 text-sm">History coming soon...</p>
