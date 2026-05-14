@@ -1,14 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
+import { supabase } from '@/lib/supabase'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
-
-// Move this OUTSIDE the component
-const supabase = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-)
 
 export default function Dashboard() {
   const [plan, setPlan] = useState('free')
@@ -19,19 +13,16 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession()
-        const user = session?.user
-        if (!user) {
-          setLoading(false)
-          return
-        }
+        if (!session) { setLoading(false); return }
 
-        const [{ data: profile }, { count }] = await Promise.all([
-          supabase.from('profiles').select('plan').eq('id', user.id).single(),
-          supabase.from('usage').select('*', { count: 'exact', head: true }).eq('user_id', user.id)
+        const [{ data: profile }, usageRes] = await Promise.all([
+          supabase.from('profiles').select('plan').eq('id', session.user.id).single(),
+          fetch('/api/usage', { headers: { Authorization: `Bearer ${session.access_token}` } })
         ])
 
+        const usageData = await usageRes.json()
         setPlan(profile?.plan || 'free')
-        setUsage(count || 0)
+        setUsage(usageData.used || 0)
       } catch (err) {
         console.error('Dashboard fetch error:', err)
       } finally {
