@@ -4,28 +4,39 @@ import { createBrowserClient } from '@supabase/ssr'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
+// Move this OUTSIDE the component
+const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
+
 export default function Dashboard() {
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
   const [plan, setPlan] = useState('free')
   const [usage, setUsage] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        const user = session?.user
+        if (!user) {
+          setLoading(false)
+          return
+        }
 
-      const [{ data: profile }, { count }] = await Promise.all([
-        supabase.from('profiles').select('plan').eq('id', user.id).single(),
-        supabase.from('usage').select('*', { count: 'exact', head: true }).eq('user_id', user.id)
-      ])
+        const [{ data: profile }, { count }] = await Promise.all([
+          supabase.from('profiles').select('plan').eq('id', user.id).single(),
+          supabase.from('usage').select('*', { count: 'exact', head: true }).eq('user_id', user.id)
+        ])
 
-      setPlan(profile?.plan || 'free')
-      setUsage(count || 0)
-      setLoading(false)
+        setPlan(profile?.plan || 'free')
+        setUsage(count || 0)
+      } catch (err) {
+        console.error('Dashboard fetch error:', err)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchData()
