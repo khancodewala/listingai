@@ -1,304 +1,99 @@
-"use client";
+'use client'
+import { useEffect, useState } from 'react'
+import { createBrowserClient } from '@supabase/ssr'
 
-import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
-const TABS = [
-  { id: "listing", label: "🏠 Listing Writer" },
-  { id: "social",  label: "📱 Social Media" },
-  { id: "email",   label: "📧 Buyer Email" },
-  { id: "contract",label: "📄 Contract Summary" },
-];
+const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
-function ListingForm({ onGenerate, loading }) {
-  const [form, setForm] = useState({
-    propertyType: "", location: "", bedrooms: "", bathrooms: "",
-    size: "", price: "", features: "", notes: "",
-  });
-  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 3-bed villa, studio apartment" />
-        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Manhattan NY, Dubai Marina, DHA Lahore" />
-        <Field label="Bedrooms" value={form.bedrooms} onChange={set("bedrooms")} placeholder="e.g. 4" />
-        <Field label="Bathrooms" value={form.bathrooms} onChange={set("bathrooms")} placeholder="e.g. 3" />
-        <Field label="Size" value={form.size} onChange={set("size")} placeholder="e.g. 2400 sq ft or 220 sqm" />
-        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $250,000 or PKR 2.5 Crore or AED 900,000" />
-      </div>
-      <Field label="Key Features" value={form.features} onChange={set("features")} placeholder="e.g. Pool, Gym, Parking, Garden, Sea View" textarea />
-      <Field label="Additional Notes (optional)" value={form.notes} onChange={set("notes")} placeholder="Anything else to highlight..." textarea />
-      <GenerateBtn onClick={() => onGenerate({ feature: "listing", ...form })} loading={loading} />
-    </div>
-  );
-}
-
-function SocialForm({ onGenerate, loading }) {
-  const [form, setForm] = useState({
-    propertyType: "", location: "", price: "", highlights: "", targetBuyer: "",
-  });
-  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse, family home" />
-        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Beverly Hills CA, Palm Jumeirah, Gulberg Lahore" />
-        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $500,000 or AED 1.2M or PKR 3 Crore" />
-        <Field label="Target Buyer" value={form.targetBuyer} onChange={set("targetBuyer")} placeholder="e.g. Young professionals, families, investors" />
-      </div>
-      <Field label="Key Highlights" value={form.highlights} onChange={set("highlights")} placeholder="e.g. Stunning city views, modern kitchen, pool, gym" textarea />
-      <GenerateBtn onClick={() => onGenerate({ feature: "social", ...form })} loading={loading} />
-    </div>
-  );
-}
-
-function EmailForm({ onGenerate, loading }) {
-  const [form, setForm] = useState({
-    agentName: "", buyerName: "", propertyAddress: "",
-    showingDate: "", buyerInterests: "", nextStep: "",
-  });
-  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. John Smith, Ahmed Khan" />
-        <Field label="Buyer's Name" value={form.buyerName} onChange={set("buyerName")} placeholder="e.g. Mr. Robert, Ms. Sarah" />
-        <Field label="Property Address" value={form.propertyAddress} onChange={set("propertyAddress")} placeholder="e.g. 123 Main St NY, Flat 5 Dubai Marina" />
-        <Field label="Showing Date" value={form.showingDate} onChange={set("showingDate")} placeholder="e.g. Yesterday, May 5 2026" />
-      </div>
-      <Field label="Buyer's Interests / Requirements" value={form.buyerInterests} onChange={set("buyerInterests")} placeholder="e.g. Needs 4 beds, good schools nearby, budget $300,000" textarea />
-      <Field label="Suggested Next Step" value={form.nextStep} onChange={set("nextStep")} placeholder="e.g. Schedule a second visit this weekend" textarea />
-      <GenerateBtn onClick={() => onGenerate({ feature: "email", ...form })} loading={loading} />
-    </div>
-  );
-}
-
-function ContractForm({ onGenerate, loading }) {
-  const [contractText, setContractText] = useState("");
-
-  return (
-    <div className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Paste Contract Text
-        </label>
-        <textarea
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[200px] resize-y"
-          placeholder="Paste any real estate contract text here. Claude AI will summarize it in plain English for any country..."
-          value={contractText}
-          onChange={(e) => setContractText(e.target.value)}
-        />
-      </div>
-      <GenerateBtn onClick={() => onGenerate({ feature: "contract", contractText })} loading={loading} />
-    </div>
-  );
-}
-
-function Field({ label, value, onChange, placeholder, textarea }) {
-  const cls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
-  return (
-    <div className="col-span-1">
-      <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      {textarea
-        ? <textarea className={cls + " min-h-[80px] resize-y"} value={value} onChange={onChange} placeholder={placeholder} />
-        : <input className={cls} value={value} onChange={onChange} placeholder={placeholder} />}
-    </div>
-  );
-}
-
-function GenerateBtn({ onClick, loading }) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={loading}
-      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-    >
-      {loading ? (
-        <>
-          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-          </svg>
-          Generating...
-        </>
-      ) : (
-        "✨ Generate with AI"
-      )}
-    </button>
-  );
-}
-
-function ResultBox({ result, onCopy, copied }) {
-  return (
-    <div className="mt-6 bg-gray-50 border border-gray-200 rounded-xl p-5">
-      <div className="flex justify-between items-center mb-3">
-        <h3 className="font-semibold text-gray-800">✅ Generated Result</h3>
-        <button
-          onClick={onCopy}
-          className="text-sm bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg transition-colors"
-        >
-          {copied ? "✓ Copied!" : "Copy"}
-        </button>
-      </div>
-      <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans leading-relaxed">
-        {result}
-      </pre>
-    </div>
-  );
-}
-
-export default function GeneratePage() {
-  const [activeTab, setActiveTab] = useState("listing");
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState("");
-  const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [session, setSession] = useState(null);
-  const [usage, setUsage] = useState(null);
+export default function Dashboard() {
+  const [plan, setPlan] = useState('free')
+  const [usage, setUsage] = useState(0)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session);
-      if (session) {
-        const res = await fetch("/api/usage", {
-          headers: {
-            Authorization: `Bearer ${session.access_token}`,
-          },
-        });
-        const data = await res.json();
-        if (data.used !== undefined) {
-          setUsage({ used: data.used, limit: data.limit, plan: data.plan });
+    const fetchData = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        const user = session?.user
+        console.log('User ID:', user?.id)
+        if (!user) {
+          setLoading(false)
+          return
         }
+
+        const [{ data: profile, error: profileError }, { count, error: usageError }] = await Promise.all([
+          supabase.from('profiles').select('plan').eq('id', user.id).single(),
+          supabase.from('usage').select('*', { count: 'exact', head: true }).eq('user_id', user.id)
+        ])
+
+        console.log('Profile:', profile, profileError)
+        console.log('Usage count:', count, usageError)
+
+        setPlan(profile?.plan || 'free')
+        setUsage(count || 0)
+      } catch (err) {
+        console.error('Dashboard fetch error:', err)
+      } finally {
+        setLoading(false)
       }
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleGenerate = async (payload) => {
-    if (!session) {
-      setError("Please log in to generate content.");
-      return;
     }
 
-    setLoading(true);
-    setResult("");
-    setError("");
+    fetchData()
+  }, [])
 
-    try {
-      const res = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (res.status === 429 && data.error === "limit_reached") {
-        setError(`⚠️ ${data.message}`);
-        setUsage({ used: data.used, limit: data.limit, plan: data.plan });
-        return;
-      }
-
-      if (!res.ok || !data.success) {
-        setError(data.error || "Something went wrong. Please try again.");
-      } else {
-        setResult(data.result);
-        const usageRes = await fetch("/api/usage", {
-          headers: {
-            Authorization: `Bearer ${session.access_token}`,
-          },
-        });
-        const usageData = await usageRes.json();
-        if (usageData.used !== undefined) {
-          setUsage({ used: usageData.used, limit: usageData.limit, plan: usageData.plan });
-        }
-      }
-    } catch (err) {
-      setError("Network error. Please check your connection.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(result);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const forms = {
-    listing: <ListingForm onGenerate={handleGenerate} loading={loading} />,
-    social:  <SocialForm  onGenerate={handleGenerate} loading={loading} />,
-    email:   <EmailForm   onGenerate={handleGenerate} loading={loading} />,
-    contract:<ContractForm onGenerate={handleGenerate} loading={loading} />,
-  };
+  const limit = PLAN_LIMITS[plan] ?? 5
+  const remaining = limit === Infinity ? 'Unlimited' : Math.max(0, limit - usage)
+  const planLabel = plan.charAt(0).toUpperCase() + plan.slice(1)
+  const planColor = plan === 'agency' ? 'text-purple-600' : plan === 'pro' ? 'text-blue-600' : 'text-green-600'
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">AI Generator</h1>
-          <p className="text-gray-500 mt-2">Powered by Claude · Works for any country worldwide 🌍</p>
+    <main className="min-h-screen bg-gray-50">
+      <div className="max-w-5xl mx-auto py-12 px-6">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-800">Dashboard</h1>
+            <p className="text-gray-500 mt-1">Welcome back!</p>
+          </div>
+          <a href="/generate" className="bg-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-blue-700">
+            New Generation
+          </a>
         </div>
 
-        {session && usage && (
-          <div className="mb-4 bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between text-sm">
-            <span className="text-gray-600">
-              Generations used this month: <strong>{usage.used} / {usage.limit ?? "∞"}</strong>
-            </span>
-            {usage.limit && usage.used >= usage.limit && (
-              <a href="/pricing" className="text-blue-600 font-semibold hover:underline">
-                Upgrade Plan →
-              </a>
-            )}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {[1,2,3].map(i => (
+              <div key={i} className="bg-white rounded-xl p-6 shadow-sm animate-pulse">
+                <div className="h-4 bg-gray-200 rounded w-1/2 mb-3"></div>
+                <div className="h-8 bg-gray-200 rounded w-1/3"></div>
+              </div>
+            ))}
           </div>
-        )}
-
-        {!session && (
-          <div className="mb-4 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded-xl px-4 py-3">
-            ⚠️ Please <a href="/login" className="font-semibold underline">log in</a> to use the AI generator.
-          </div>
-        )}
-
-        <div className="flex gap-2 mb-6 flex-wrap">
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => { setActiveTab(tab.id); setResult(""); setError(""); }}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "bg-blue-600 text-white shadow"
-                  : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          {forms[activeTab]}
-
-          {error && (
-            <div className="mt-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
-              {error}
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <p className="text-gray-500 text-sm">Total Generations</p>
+              <p className="text-4xl font-bold text-gray-800 mt-1">{usage}</p>
             </div>
-          )}
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <p className="text-gray-500 text-sm">Generations Left</p>
+              <p className="text-4xl font-bold text-blue-600 mt-1">{remaining}</p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <p className="text-gray-500 text-sm">Current Plan</p>
+              <p className={`text-4xl font-bold mt-1 ${planColor}`}>{planLabel}</p>
+            </div>
+          </div>
+        )}
 
-          {result && <ResultBox result={result} onCopy={handleCopy} copied={copied} />}
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Recent Generations</h2>
+          <p className="text-gray-400 text-sm">History coming soon...</p>
         </div>
       </div>
-    </div>
-  );
+    </main>
+  )
 }
