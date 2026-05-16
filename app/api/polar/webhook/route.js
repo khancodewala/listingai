@@ -25,18 +25,38 @@ export async function POST(req) {
     throw err;
   }
 
-  const { userId, plan } = event.data.metadata ?? {};
+  // Log full event to see exact structure
+  console.log('POLAR WEBHOOK EVENT:', JSON.stringify(event, null, 2));
 
-  if (event.type === 'subscription.active') {
-    await supabase.from('profiles').update({ plan }).eq('id', userId);
+  // Metadata can be on the subscription or the checkout
+  const metadata =
+    event.data?.metadata ||
+    event.data?.subscription?.metadata ||
+    event.data?.checkout?.metadata ||
+    {};
+
+  const userId = metadata?.userId;
+  const plan = metadata?.plan;
+
+  console.log('EXTRACTED:', { userId, plan, eventType: event.type });
+
+  if (!userId || !plan) {
+    console.error('Missing userId or plan in metadata:', metadata);
+    return NextResponse.json({ received: true, warning: 'Missing metadata' });
+  }
+
+  if (
+    event.type === 'subscription.active' ||
+    (event.type === 'subscription.updated' && event.data.status === 'active')
+  ) {
+    const { error } = await supabase.from('profiles').update({ plan }).eq('id', userId);
+    if (error) console.error('Supabase update error:', error);
+    else console.log(`Updated user ${userId} to plan ${plan}`);
   }
 
   if (event.type === 'subscription.revoked') {
-    await supabase.from('profiles').update({ plan: 'free' }).eq('id', userId);
-  }
-
-  if (event.type === 'subscription.updated' && event.data.status === 'active') {
-    await supabase.from('profiles').update({ plan }).eq('id', userId);
+    const { error } = await supabase.from('profiles').update({ plan: 'free' }).eq('id', userId);
+    if (error) console.error('Supabase revoke error:', error);
   }
 
   return NextResponse.json({ received: true });
