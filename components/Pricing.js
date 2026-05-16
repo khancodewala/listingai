@@ -4,8 +4,7 @@ export default function Pricing() {
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">Simple, Transparent Pricing</h2>
         <p className="text-center text-gray-500 mb-12">Start free, upgrade when you are ready</p>
-        <div className="flex flex-col gap-6">
-
+        <div className="flex flex-col md:flex-row md:items-stretch gap-6">
           {/* Free Plan */}
           <div className="rounded-xl p-8 border border-gray-200 shadow-sm w-full">
             <h3 className="text-xl font-bold mb-2">Free</h3>
