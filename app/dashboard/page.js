@@ -4,9 +4,24 @@ import { supabase } from '@/lib/supabase'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
+const TYPE_LABELS = {
+  listing: 'Listing Writer',
+  social: 'Social Media',
+  email: 'Buyer Email',
+  contract: 'Contract Summary',
+}
+
+const TYPE_COLORS = {
+  listing: 'bg-blue-100 text-blue-700',
+  social: 'bg-purple-100 text-purple-700',
+  email: 'bg-green-100 text-green-700',
+  contract: 'bg-amber-100 text-amber-700',
+}
+
 export default function Dashboard() {
   const [plan, setPlan] = useState('free')
   const [usage, setUsage] = useState(0)
+  const [generations, setGenerations] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -15,14 +30,21 @@ export default function Dashboard() {
         const { data: { session } } = await supabase.auth.getSession()
         if (!session) { setLoading(false); return }
 
-        const [{ data: profile }, usageRes] = await Promise.all([
+        const [{ data: profile }, usageRes, { data: gens }] = await Promise.all([
           supabase.from('profiles').select('plan').eq('id', session.user.id).single(),
-          fetch('/api/usage', { headers: { Authorization: `Bearer ${session.access_token}` } })
+          fetch('/api/usage', { headers: { Authorization: `Bearer ${session.access_token}` } }),
+          supabase
+            .from('generations')
+            .select('id, type, input, created_at')
+            .eq('user_id', session.user.id)
+            .order('created_at', { ascending: false })
+            .limit(10)
         ])
 
         const usageData = await usageRes.json()
         setPlan(profile?.plan || 'free')
         setUsage(usageData.used || 0)
+        setGenerations(gens || [])
       } catch (err) {
         console.error('Dashboard fetch error:', err)
       } finally {
@@ -38,9 +60,26 @@ export default function Dashboard() {
   const planLabel = plan.charAt(0).toUpperCase() + plan.slice(1)
   const planColor = plan === 'agency' ? 'text-purple-600' : plan === 'pro' ? 'text-blue-600' : 'text-green-600'
 
+  const formatDate = (ts) => new Date(ts).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+
+  const getTitle = (type, input) => {
+    if (type === 'listing') return `${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
+    if (type === 'social') return `${input?.propertyType || 'Property'} — ${input?.location || 'Unknown'}`
+    if (type === 'email') return `Email to ${input?.buyerName || 'Buyer'}`
+    if (type === 'contract') return 'Contract Summary'
+    return 'Generation'
+  }
+
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto py-12 px-6">
+
+        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-gray-800">Dashboard</h1>
@@ -51,9 +90,10 @@ export default function Dashboard() {
           </a>
         </div>
 
+        {/* Stats Cards */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {[1,2,3].map(i => (
+            {[1, 2, 3].map(i => (
               <div key={i} className="bg-white rounded-xl p-6 shadow-sm animate-pulse">
                 <div className="h-4 bg-gray-200 rounded w-1/2 mb-3"></div>
                 <div className="h-8 bg-gray-200 rounded w-1/3"></div>
@@ -77,10 +117,47 @@ export default function Dashboard() {
           </div>
         )}
 
+        {/* Recent Generations */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Recent Generations</h2>
-          <p className="text-gray-400 text-sm">History coming soon...</p>
+
+          {loading ? (
+            <div className="space-y-3">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="animate-pulse h-16 bg-gray-100 rounded-lg"></div>
+              ))}
+            </div>
+          ) : generations.length === 0 ? (
+            <p className="text-gray-400 text-sm">
+              No generations yet.{' '}
+              <a href="/generate" className="text-blue-600 hover:underline">
+                Create your first one →
+              </a>
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {generations.map((gen) => (
+                <div
+                  key={gen.id}
+                  className="flex items-center justify-between p-4 rounded-lg border border-gray-100 hover:border-gray-200 transition"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap ${TYPE_COLORS[gen.type] || 'bg-gray-100 text-gray-600'}`}>
+                      {TYPE_LABELS[gen.type] || gen.type}
+                    </span>
+                    <span className="text-sm text-gray-700 font-medium truncate">
+                      {getTitle(gen.type, gen.input)}
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-400 whitespace-nowrap ml-4">
+                    {formatDate(gen.created_at)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+
       </div>
     </main>
   )

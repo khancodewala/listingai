@@ -59,7 +59,7 @@ export async function POST(request) {
       }, { status: 429 });
     }
 
-    // ---- STEP 3: Your existing Claude AI code (unchanged) ----
+    // ---- STEP 3: Generate with Claude ----
     const body = await request.json();
     const feature = body.feature;
     const data = body;
@@ -76,6 +76,15 @@ export async function POST(request) {
     });
 
     const result = message.content[0].text;
+
+    // ---- STEP 4: Save to generations history ----
+    await supabaseAdmin.from('generations').insert({
+      user_id: user.id,
+      type: feature,
+      input: data,
+      output: result,
+    });
+
     return Response.json({ success: true, result });
 
   } catch (error) {
