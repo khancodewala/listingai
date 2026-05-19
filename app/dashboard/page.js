@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import GenerationDetailPanel from '@/components/GenerationDetailPanel'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
@@ -24,6 +25,9 @@ export default function Dashboard() {
   const [generations, setGenerations] = useState([])
   const [loading, setLoading] = useState(true)
 
+  // ✅ NEW: selected generation for the slide-over panel
+  const [selectedGeneration, setSelectedGeneration] = useState(null)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,7 +39,8 @@ export default function Dashboard() {
           fetch('/api/usage', { headers: { Authorization: `Bearer ${session.access_token}` } }),
           supabase
             .from('generations')
-            .select('id, type, input, created_at')
+            // ✅ Added 'output' to the select so the panel has data to show
+            .select('id, type, input, output, created_at')
             .eq('user_id', session.user.id)
             .order('created_at', { ascending: false })
             .limit(10)
@@ -139,7 +144,10 @@ export default function Dashboard() {
               {generations.map((gen) => (
                 <div
                   key={gen.id}
-                  className="flex items-center justify-between p-4 rounded-lg border border-gray-100 hover:border-gray-200 transition"
+                  // ✅ Click handler opens the slide-over panel
+                  onClick={() => setSelectedGeneration(gen)}
+                  className="flex items-center justify-between p-4 rounded-lg border border-gray-100
+                    hover:border-blue-200 hover:bg-blue-50/40 transition cursor-pointer group"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <span className={`text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap ${TYPE_COLORS[gen.type] || 'bg-gray-100 text-gray-600'}`}>
@@ -149,9 +157,18 @@ export default function Dashboard() {
                       {getTitle(gen.type, gen.input)}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-400 whitespace-nowrap ml-4">
-                    {formatDate(gen.created_at)}
-                  </span>
+                  <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                    <span className="text-xs text-gray-400 whitespace-nowrap">
+                      {formatDate(gen.created_at)}
+                    </span>
+                    {/* ✅ Arrow hint — visible on hover */}
+                    <svg
+                      className="w-4 h-4 text-gray-300 group-hover:text-blue-400 transition"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
               ))}
             </div>
@@ -159,6 +176,12 @@ export default function Dashboard() {
         </div>
 
       </div>
+
+      {/* ✅ Slide-over panel — outside the scroll container */}
+      <GenerationDetailPanel
+        generation={selectedGeneration}
+        onClose={() => setSelectedGeneration(null)}
+      />
     </main>
   )
 }
