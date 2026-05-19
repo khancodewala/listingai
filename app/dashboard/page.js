@@ -24,9 +24,13 @@ export default function Dashboard() {
   const [usage, setUsage] = useState(0)
   const [generations, setGenerations] = useState([])
   const [loading, setLoading] = useState(true)
-
-  // ✅ NEW: selected generation for the slide-over panel
   const [selectedGeneration, setSelectedGeneration] = useState(null)
+
+  // ✅ Cancel subscription state
+  const [showCancelModal, setShowCancelModal] = useState(false)
+  const [cancelling, setCancelling] = useState(false)
+  const [cancelSuccess, setCancelSuccess] = useState(false)
+  const [cancelError, setCancelError] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +43,6 @@ export default function Dashboard() {
           fetch('/api/usage', { headers: { Authorization: `Bearer ${session.access_token}` } }),
           supabase
             .from('generations')
-            // ✅ Added 'output' to the select so the panel has data to show
             .select('id, type, input, output, created_at')
             .eq('user_id', session.user.id)
             .order('created_at', { ascending: false })
@@ -80,6 +83,35 @@ export default function Dashboard() {
     return 'Generation'
   }
 
+  // ✅ Handle cancel subscription
+  const handleCancelSubscription = async () => {
+    setCancelling(true)
+    setCancelError('')
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) throw new Error('Not logged in')
+
+      const res = await fetch('/api/polar/cancel', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      })
+
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to cancel')
+
+      setCancelSuccess(true)
+      setTimeout(() => {
+        setShowCancelModal(false)
+        setCancelSuccess(false)
+      }, 3000)
+
+    } catch (err) {
+      setCancelError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setCancelling(false)
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto py-12 px-6">
@@ -118,6 +150,15 @@ export default function Dashboard() {
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <p className="text-gray-500 text-sm">Current Plan</p>
               <p className={`text-4xl font-bold mt-1 ${planColor}`}>{planLabel}</p>
+              {/* ✅ Cancel button — only shown for paid plans */}
+              {plan !== 'free' && (
+                <button
+                  onClick={() => setShowCancelModal(true)}
+                  className="mt-3 text-xs text-red-400 hover:text-red-600 underline transition-colors"
+                >
+                  Cancel subscription
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -144,7 +185,6 @@ export default function Dashboard() {
               {generations.map((gen) => (
                 <div
                   key={gen.id}
-                  // ✅ Click handler opens the slide-over panel
                   onClick={() => setSelectedGeneration(gen)}
                   className="flex items-center justify-between p-4 rounded-lg border border-gray-100
                     hover:border-blue-200 hover:bg-blue-50/40 transition cursor-pointer group"
@@ -161,7 +201,6 @@ export default function Dashboard() {
                     <span className="text-xs text-gray-400 whitespace-nowrap">
                       {formatDate(gen.created_at)}
                     </span>
-                    {/* ✅ Arrow hint — visible on hover */}
                     <svg
                       className="w-4 h-4 text-gray-300 group-hover:text-blue-400 transition"
                       fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -177,7 +216,76 @@ export default function Dashboard() {
 
       </div>
 
-      {/* ✅ Slide-over panel — outside the scroll container */}
+      {/* ✅ Cancel Subscription Modal */}
+      {showCancelModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+
+            {cancelSuccess ? (
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">Subscription Cancelled</h3>
+                <p className="text-gray-500 text-sm">
+                  Your subscription has been cancelled. You'll keep access to your current plan until the end of your billing period.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+
+                <h3 className="text-xl font-bold text-gray-800 text-center mb-2">
+                  Cancel Subscription?
+                </h3>
+                <p className="text-gray-500 text-sm text-center mb-6">
+                  You'll keep your <span className="font-semibold text-gray-700">{planLabel}</span> plan access until the end of your current billing period. After that, you'll be downgraded to the Free plan (5 generations/month).
+                </p>
+
+                {cancelError && (
+                  <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-600">
+                    {cancelError}
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => { setShowCancelModal(false); setCancelError('') }}
+                    disabled={cancelling}
+                    className="flex-1 py-2.5 px-4 border border-gray-200 text-gray-600 text-sm font-semibold rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Keep My Plan
+                  </button>
+                  <button
+                    onClick={handleCancelSubscription}
+                    disabled={cancelling}
+                    className="flex-1 py-2.5 px-4 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-lg transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                  >
+                    {cancelling ? (
+                      <>
+                        <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                        </svg>
+                        Cancelling...
+                      </>
+                    ) : 'Yes, Cancel'}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Slide-over panel */}
       <GenerationDetailPanel
         generation={selectedGeneration}
         onClose={() => setSelectedGeneration(null)}

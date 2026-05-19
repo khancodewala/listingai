@@ -25,10 +25,8 @@ export async function POST(req) {
     throw err;
   }
 
-  // Log full event to see exact structure
   console.log('POLAR WEBHOOK EVENT:', JSON.stringify(event, null, 2));
 
-  // Metadata can be on the subscription or the checkout
   const metadata =
     event.data?.metadata ||
     event.data?.subscription?.metadata ||
@@ -38,7 +36,10 @@ export async function POST(req) {
   const userId = metadata?.userId;
   const plan = metadata?.plan;
 
-  console.log('EXTRACTED:', { userId, plan, eventType: event.type });
+  // ✅ Get the subscription ID from the event
+  const subscriptionId = event.data?.id || event.data?.subscription?.id;
+
+  console.log('EXTRACTED:', { userId, plan, subscriptionId, eventType: event.type });
 
   if (!userId || !plan) {
     console.error('Missing userId or plan in metadata:', metadata);
@@ -49,14 +50,27 @@ export async function POST(req) {
     event.type === 'subscription.active' ||
     (event.type === 'subscription.updated' && event.data.status === 'active')
   ) {
-    const { error } = await supabase.from('profiles').update({ plan }).eq('id', userId);
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        plan,
+        // ✅ Save the subscription ID so we can cancel later
+        polar_subscription_id: subscriptionId || null,
+      })
+      .eq('id', userId);
+
     if (error) console.error('Supabase update error:', error);
-    else console.log(`Updated user ${userId} to plan ${plan}`);
+    else console.log(`Updated user ${userId} to plan ${plan}, subscription ${subscriptionId}`);
   }
 
-  if (event.type === 'subscription.revoked') {
-    const { error } = await supabase.from('profiles').update({ plan: 'free' }).eq('id', userId);
+  if (event.type === 'subscription.revoked' || event.type === 'subscription.canceled') {
+    const { error } = await supabase
+      .from('profiles')
+      .update({ plan: 'free', polar_subscription_id: null })
+      .eq('id', userId);
+
     if (error) console.error('Supabase revoke error:', error);
+    else console.log(`Revoked subscription for user ${userId}, downgraded to free`);
   }
 
   return NextResponse.json({ received: true });
