@@ -24,7 +24,7 @@ export async function POST(req) {
       products: [priceId],
       customerEmail: userEmail,
       metadata: { userId, plan },
-      successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
+      successUrl: `${process.env.NEXT_PUBLIC_URL}/success`,
     });
 
     return NextResponse.json({ url: checkout.url });

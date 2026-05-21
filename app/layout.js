@@ -1,95 +1,97 @@
-"use client";
-
 import "./globals.css";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import Navbar from "@/components/Navbar";
+
+const siteUrl = "https://listingai-rose.vercel.app";
+
+export const metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "ListingAI — AI Property Listing Writer for Real Estate Agents",
+    template: "%s | ListingAI",
+  },
+  description:
+    "Generate professional real estate listings, social media captions, and buyer emails in seconds with AI. Save 30 minutes per listing. Free to start.",
+  keywords: [
+    "real estate AI",
+    "property listing generator",
+    "AI listing writer",
+    "real estate agent tools",
+    "property description generator",
+    "MLS listing writer",
+    "real estate copywriting AI",
+    "listing description AI",
+  ],
+  authors: [{ name: "ListingAI" }],
+  creator: "ListingAI",
+  publisher: "ListingAI",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "ListingAI",
+    title: "ListingAI — AI Property Listing Writer for Real Estate Agents",
+    description:
+      "Generate professional real estate listings, social media captions, and buyer emails in seconds. Free to start — no credit card required.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "ListingAI — AI-powered real estate listing writer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ListingAI — AI Property Listing Writer",
+    description:
+      "Generate professional real estate listings in seconds with AI. Free to start.",
+    images: ["/og-image.png"],
+    creator: "@listingai",
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "ListingAI",
+  url: siteUrl,
+  description:
+    "AI-powered tool for real estate agents to generate property listings, social media captions, and buyer emails instantly.",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  offers: [
+    { "@type": "Offer", name: "Free", price: "0", priceCurrency: "USD", description: "5 AI generations per month" },
+    { "@type": "Offer", name: "Pro", price: "29", priceCurrency: "USD", description: "100 AI generations per month" },
+    { "@type": "Offer", name: "Agency", price: "79", priceCurrency: "USD", description: "Unlimited AI generations" },
+  ],
+};
 
 export default function RootLayout({ children }) {
-  const [user, setUser] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/";
-  };
-
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
-        <nav style={{
-          background: "#ffffff",
-          borderBottom: "1px solid #e5e7eb",
-          padding: "12px 24px",
-          position: "sticky",
-          top: 0,
-          zIndex: 100,
-        }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <Link href="/" style={{ fontWeight: "700", fontSize: "20px", color: "#1d4ed8", textDecoration: "none" }}>
-              🏠 ListingAI
-            </Link>
-
-            {/* Desktop menu */}
-            <div style={{ display: "flex", gap: "24px", alignItems: "center" }} className="desktop-nav">
-              <Link href="/generate" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>AI Generator</Link>
-              <Link href="/pricing" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Pricing</Link>
-              <Link href="/dashboard" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Dashboard</Link>
-              {user ? (
-                <>
-                  <span style={{ color: "#6b7280", fontSize: "14px" }}>{user.email}</span>
-                  <button onClick={handleLogout} style={{ background: "#ef4444", color: "#fff", border: "none", fontSize: "14px", fontWeight: "500", padding: "8px 16px", borderRadius: "8px", cursor: "pointer" }}>Logout</button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Login</Link>
-                  <Link href="/signup" style={{ background: "#1d4ed8", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "500", padding: "8px 16px", borderRadius: "8px" }}>Sign Up</Link>
-                </>
-              )}
-            </div>
-
-            {/* Mobile hamburger */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="mobile-menu-btn"
-              style={{ background: "none", border: "none", cursor: "pointer", fontSize: "24px" }}
-            >
-              {menuOpen ? "✕" : "☰"}
-            </button>
-          </div>
-
-          {/* Mobile dropdown */}
-          {menuOpen && (
-            <div className="mobile-nav" style={{ paddingTop: "12px", display: "flex", flexDirection: "column", gap: "12px" }}>
-              <Link href="/generate" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>AI Generator</Link>
-              <Link href="/pricing" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Pricing</Link>
-              <Link href="/dashboard" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Dashboard</Link>
-              {user ? (
-                <>
-                  <span style={{ color: "#6b7280", fontSize: "14px" }}>{user.email}</span>
-                  <button onClick={handleLogout} style={{ background: "#ef4444", color: "#fff", border: "none", fontSize: "15px", fontWeight: "500", padding: "10px 16px", borderRadius: "8px", cursor: "pointer", textAlign: "left" }}>Logout</button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Login</Link>
-                  <Link href="/signup" onClick={() => setMenuOpen(false)} style={{ background: "#1d4ed8", color: "#fff", textDecoration: "none", fontSize: "15px", fontWeight: "500", padding: "10px 16px", borderRadius: "8px", textAlign: "center" }}>Sign Up</Link>
-                </>
-              )}
-            </div>
-          )}
-        </nav>
+        <Navbar />
         {children}
       </body>
     </html>

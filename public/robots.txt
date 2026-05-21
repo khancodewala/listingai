@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /generate
+Disallow: /api/
+
+Sitemap: https://listingai-rose.vercel.app/sitemap.xml
