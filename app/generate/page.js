@@ -127,7 +127,37 @@ function ContractForm({ onGenerate, loading }) {
   );
 }
 
-function ResultPanel({ result, onCopy, copied, onClose }) {
+const FIELD_LABELS = {
+  propertyType: "Property Type",
+  location: "Location",
+  bedrooms: "Bedrooms",
+  bathrooms: "Bathrooms",
+  size: "Size",
+  price: "Price",
+  features: "Features",
+  notes: "Notes",
+  highlights: "Key Highlights",
+  targetBuyer: "Target Buyer",
+  agentName: "Agent Name",
+  buyerName: "Buyer Name",
+  propertyAddress: "Property Address",
+  showingDate: "Showing Date",
+  buyerInterests: "Buyer Interests",
+  nextStep: "Next Step",
+  contractText: "Contract Text",
+};
+
+const TAB_LABELS = {
+  listing: "Listing Writer",
+  social: "Social Media",
+  email: "Buyer Email",
+  contract: "Contract Summary",
+};
+
+function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
+  const { feature, ...fields } = inputData || {};
+  const inputEntries = Object.entries(fields).filter(([, v]) => v && v.trim && v.trim() !== "");
+
   return (
     <>
       {/* Backdrop */}
@@ -158,9 +188,15 @@ function ResultPanel({ result, onCopy, copied, onClose }) {
           padding: "16px 20px", borderBottom: "1px solid #e5e7eb",
           background: "#fff", flexShrink: 0,
         }}>
-          <h3 style={{ fontWeight: "600", fontSize: "16px", color: "#111827", margin: 0 }}>
-            ✅ Generated Result
-          </h3>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <span style={{
+              background: "#eff6ff", color: "#1d4ed8",
+              fontSize: "12px", fontWeight: "600",
+              padding: "3px 10px", borderRadius: "20px",
+            }}>
+              {TAB_LABELS[feature] || feature}
+            </span>
+          </div>
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
             <button
               onClick={onCopy}
@@ -190,6 +226,45 @@ function ResultPanel({ result, onCopy, copied, onClose }) {
 
         {/* Scrollable content */}
         <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
+
+          {/* Input Details */}
+          {inputEntries.length > 0 && (
+            <div style={{ marginBottom: "24px" }}>
+              <p style={{
+                fontSize: "11px", fontWeight: "600", color: "#9ca3af",
+                letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "12px",
+              }}>
+                Input Details
+              </p>
+              <div style={{
+                display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px",
+              }}>
+                {inputEntries.map(([key, value]) => (
+                  <div key={key}>
+                    <p style={{ fontSize: "11px", color: "#9ca3af", margin: "0 0 2px" }}>
+                      {FIELD_LABELS[key] || key}
+                    </p>
+                    <p style={{ fontSize: "14px", fontWeight: "500", color: "#111827", margin: 0 }}>
+                      {value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Divider */}
+          {inputEntries.length > 0 && (
+            <div style={{ borderTop: "1px solid #e5e7eb", marginBottom: "20px" }} />
+          )}
+
+          {/* AI Output */}
+          <p style={{
+            fontSize: "11px", fontWeight: "600", color: "#9ca3af",
+            letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "12px",
+          }}>
+            AI Output
+          </p>
           <pre style={{
             whiteSpace: "pre-wrap", fontSize: "14px", color: "#1f2937",
             fontFamily: "inherit", lineHeight: "1.7", margin: 0,
@@ -206,6 +281,7 @@ export default function GeneratePage() {
   const [activeTab, setActiveTab] = useState("listing");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
+  const [inputData, setInputData] = useState(null);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [session, setSession] = useState(null);
@@ -239,6 +315,7 @@ export default function GeneratePage() {
     }
     setLoading(true);
     setResult("");
+    setInputData(null);
     setError("");
 
     try {
@@ -263,6 +340,7 @@ export default function GeneratePage() {
         setError(data.error || "Something went wrong. Please try again.");
       } else {
         setResult(data.result);
+        setInputData(payload);
         const usageRes = await fetch("/api/usage", {
           headers: { Authorization: `Bearer ${session.access_token}` },
         });
@@ -323,7 +401,7 @@ export default function GeneratePage() {
           {TABS.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => { setActiveTab(tab.id); setResult(""); setError(""); }}
+              onClick={() => { setActiveTab(tab.id); setResult(""); setError(""); setInputData(null); }}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === tab.id
                   ? "bg-blue-600 text-white shadow"
@@ -346,13 +424,14 @@ export default function GeneratePage() {
 
       </div>
 
-      {/* Slide-over result panel — outside card, overlays full screen */}
+      {/* Slide-over result panel */}
       {result && (
         <ResultPanel
           result={result}
+          inputData={inputData}
           onCopy={handleCopy}
           copied={copied}
-          onClose={() => setResult("")}
+          onClose={() => { setResult(""); setInputData(null); }}
         />
       )}
     </div>
