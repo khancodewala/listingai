@@ -296,7 +296,7 @@ export default function Dashboard() {
                 <p className="text-white font-semibold text-sm">You are on the Free plan — {remaining} generations left</p>
                 <p className="text-blue-100 text-xs mt-0.5">Upgrade to Pro for 100 generations/month and unlock full access.</p>
               </div>
-              
+              <a
                 href="/pricing"
                 className="flex-shrink-0 bg-white text-blue-700 font-bold text-sm px-5 py-2 rounded-xl hover:bg-blue-50 transition-all"
               >
@@ -367,7 +367,7 @@ export default function Dashboard() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {TOOLS.map(tool => (
-                
+             <a   
                   key={tool.key}
                   href="/generate"
                   className={`bg-white border border-gray-100 rounded-2xl p-5 flex items-start gap-4 transition-all hover:shadow-md cursor-pointer group ${tool.color}`}
