@@ -219,7 +219,7 @@ export default function Dashboard() {
 
       <div className="px-3 py-4 border-t border-gray-800 space-y-3">
         {plan === 'free' && (
-          
+          <a
             href="/pricing"
             className="block w-full text-center bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all"
           >
