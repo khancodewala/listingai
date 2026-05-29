@@ -206,7 +206,7 @@ export default function Dashboard() {
 
       <nav className="flex-1 px-3 py-4 space-y-1">
         {NAV_ITEMS.map(item => (
-          
+          <a
             key={item.label}
             href={item.href}
             className={item.active ? 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white' : 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-800'}
