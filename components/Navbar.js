@@ -1,12 +1,14 @@
- "use client";
+"use client";
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -24,6 +26,8 @@ export default function Navbar() {
     await supabase.auth.signOut();
     window.location.href = "/";
   };
+
+  if (pathname === '/dashboard') return null;
 
   return (
     <nav style={{
