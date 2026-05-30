@@ -55,7 +55,6 @@ export default function HomePage() {
             ✦ AI for Real Estate Professionals
           </span>
 
-          {/* Headline — write.homes style: big, bold, accent word */}
           <h1 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
             fontSize: "clamp(2.2rem, 5vw, 3.4rem)",
@@ -78,7 +77,6 @@ export default function HomePage() {
             buyer emails, and contract summaries — instantly. Works for any property, worldwide.
           </p>
 
-          {/* CTA buttons — write.homes style: bold primary + ghost */}
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", alignItems: "center", marginBottom: "1.75rem" }}>
             <Link href="/generate" style={{
               background: "#C4A35C", color: "#0B1628",
@@ -134,30 +132,36 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── FEATURES with subtle photo-backed dark section ── */}
+      {/* ── FEATURES ── */}
       <section id="features" style={{ position: "relative", padding: "6rem 2rem", overflow: "hidden" }}>
-        {/* Subtle background image, very dark overlay */}
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${SECTION_IMG}')`,
           backgroundSize: "cover", backgroundPosition: "center",
           opacity: 0.07,
         }} />
-        <div style={{ position: "absolute", inset: 0, background: "#0B1628" , opacity: 0.80 }} />
+        <div style={{ position: "absolute", inset: 0, background: "#0B1628", opacity: 0.80 }} />
 
         <div style={{ position: "relative", maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Core Features</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.75rem" }}>Everything a Realtor Needs</h2>
           <p style={{ fontSize: "15px", color: "#7A90A8", maxWidth: "500px", marginBottom: "2.75rem", lineHeight: 1.75 }}>
-            Four AI tools built for real estate professionals — saving hours every single week.
+            Eight AI tools built for real estate professionals — saving hours every single week.
           </p>
 
+          {/* ── 8 tools grid (existing 4 + new 4) ── */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "1.25rem" }}>
             {[
-              { icon: "🏠", title: "Property Listing Writer",  desc: "Enter property details and get a professional MLS-ready description instantly. Any property type, any country.", tag: "Save 30 min per listing" },
-              { icon: "📱", title: "Social Media Captions",    desc: "Scroll-stopping Instagram and Facebook posts for your listings. Drive more leads from social media effortlessly.", tag: "More reach, less effort" },
-              { icon: "📧", title: "Buyer Email Templates",    desc: "Polished, persuasive follow-up emails to potential buyers — built to close deals faster.", tag: "Higher reply rates" },
-              { icon: "📄", title: "Contract Summarizer",      desc: "Paste any contract and get a plain-English summary in seconds. No legal headache.", tag: "Clarity in seconds" },
+              // existing
+              { icon: "🏠", title: "Property Listing Writer",  desc: "Enter property details and get a professional MLS-ready description instantly. Any property type, any country.",      tag: "Save 30 min per listing" },
+              { icon: "📱", title: "Social Media Captions",    desc: "Scroll-stopping Instagram and Facebook posts for your listings. Drive more leads from social media effortlessly.",     tag: "More reach, less effort" },
+              { icon: "📧", title: "Buyer Email Templates",    desc: "Polished, persuasive follow-up emails to potential buyers — built to close deals faster.",                             tag: "Higher reply rates" },
+              { icon: "📄", title: "Contract Summarizer",      desc: "Paste any contract and get a plain-English summary in seconds. No legal headache.",                                    tag: "Clarity in seconds" },
+              // new
+              { icon: "🎪", title: "Open House Announcement",  desc: "Generate ready-to-send open house copy for WhatsApp, SMS, and social media — with date, time, and contact info.",     tag: "Fill every open house" },
+              { icon: "📍", title: "Neighborhood Description", desc: "Write compelling area descriptions highlighting schools, amenities, and lifestyle for any city or country worldwide.", tag: "Sell the location" },
+              { icon: "💰", title: "Price Reduction Alert",    desc: "Announce price drops tactfully and persuasively — framing the new price as an unmissable opportunity.",               tag: "Re-ignite buyer interest" },
+              { icon: "🎥", title: "Property Video Script",    desc: "Get a polished walkthrough script for Reels, YouTube, or TikTok — hook, room-by-room narration, and CTA included.",  tag: "Go viral on social" },
             ].map(f => (
               <div key={f.title} style={{
                 background: "rgba(255,255,255,0.04)",
@@ -246,7 +250,7 @@ export default function HomePage() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.25rem", marginTop: "2.5rem" }}>
             {[
-              { name: "Free",   price: "0",  period: "Forever free",  featured: false, features: ["5 generations / month", "All 4 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
+              { name: "Free",   price: "0",  period: "Forever free",  featured: false, features: ["5 generations / month", "All 8 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
               { name: "Pro",    price: "29", period: "per month",      featured: true,  features: ["100 generations / month", "Everything in Free", "Priority support", "Works for any country"], cta: "Start Pro Plan",    href: "/pricing" },
               { name: "Agency", price: "79", period: "per month",      featured: false, features: ["Unlimited generations", "Everything in Pro", "Team access", "Dedicated support"],             cta: "Start Agency Plan", href: "/pricing" },
             ].map(p => (
@@ -293,13 +297,11 @@ export default function HomePage() {
 
       {/* ── BOTTOM CTA with property photo background ── */}
       <section style={{ position: "relative", padding: "7rem 2rem", textAlign: "center", overflow: "hidden" }}>
-        {/* Background photo */}
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${CTA_IMG}')`,
           backgroundSize: "cover", backgroundPosition: "center",
         }} />
-        {/* Strong dark overlay */}
         <div style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(180deg, rgba(7,14,28,0.88) 0%, rgba(7,14,28,0.80) 100%)",
