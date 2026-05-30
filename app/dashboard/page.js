@@ -5,18 +5,28 @@ import GenerationDetailPanel from '@/components/GenerationDetailPanel'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
+// ─── TYPE LABELS (existing + new) ────────────────────────────────────────────
 const TYPE_LABELS = {
-  listing: 'Listing Writer',
-  social: 'Social Media',
-  email: 'Buyer Email',
-  contract: 'Contract Summary',
+  listing:      'Listing Writer',
+  social:       'Social Media',
+  email:        'Buyer Email',
+  contract:     'Contract Summary',
+  openhouse:    'Open House',
+  neighborhood: 'Neighborhood',
+  pricedrop:    'Price Reduction',
+  videoscript:  'Video Script',
 }
 
+// ─── TYPE COLORS (existing + new) ────────────────────────────────────────────
 const TYPE_COLORS = {
-  listing: 'bg-blue-50 text-blue-700 border border-blue-100',
-  social: 'bg-purple-50 text-purple-700 border border-purple-100',
-  email: 'bg-emerald-50 text-emerald-700 border border-emerald-100',
-  contract: 'bg-amber-50 text-amber-700 border border-amber-100',
+  listing:      'bg-blue-50 text-blue-700 border border-blue-100',
+  social:       'bg-purple-50 text-purple-700 border border-purple-100',
+  email:        'bg-emerald-50 text-emerald-700 border border-emerald-100',
+  contract:     'bg-amber-50 text-amber-700 border border-amber-100',
+  openhouse:    'bg-rose-50 text-rose-700 border border-rose-100',
+  neighborhood: 'bg-teal-50 text-teal-700 border border-teal-100',
+  pricedrop:    'bg-orange-50 text-orange-700 border border-orange-100',
+  videoscript:  'bg-indigo-50 text-indigo-700 border border-indigo-100',
 }
 
 const PLAN_CONFIG = {
@@ -25,6 +35,7 @@ const PLAN_CONFIG = {
   agency: { color: 'text-purple-600', bar: 'bg-purple-500', light: 'bg-purple-50',  border: 'border-purple-200',badge: 'bg-purple-100 text-purple-700' },
 }
 
+// ─── TOOLS (existing + new) ───────────────────────────────────────────────────
 const TOOLS = [
   {
     key: 'listing',
@@ -57,6 +68,38 @@ const TOOLS = [
     desc: 'Summarize complex real estate contracts into plain English',
     color: 'hover:border-amber-300 hover:bg-amber-50/50',
     accent: 'bg-amber-100 text-amber-700',
+  },
+  {
+    key: 'openhouse',
+    icon: '🎪',
+    label: 'Open House',
+    desc: 'Create announcements for WhatsApp, SMS, and social media',
+    color: 'hover:border-rose-300 hover:bg-rose-50/50',
+    accent: 'bg-rose-100 text-rose-700',
+  },
+  {
+    key: 'neighborhood',
+    icon: '📍',
+    label: 'Neighborhood',
+    desc: 'Write compelling area descriptions for any city worldwide',
+    color: 'hover:border-teal-300 hover:bg-teal-50/50',
+    accent: 'bg-teal-100 text-teal-700',
+  },
+  {
+    key: 'pricedrop',
+    icon: '💰',
+    label: 'Price Reduction',
+    desc: 'Announce price drops tactfully to attract motivated buyers',
+    color: 'hover:border-orange-300 hover:bg-orange-50/50',
+    accent: 'bg-orange-100 text-orange-700',
+  },
+  {
+    key: 'videoscript',
+    icon: '🎥',
+    label: 'Video Script',
+    desc: 'Write walkthrough scripts for Reels, YouTube & TikTok',
+    color: 'hover:border-indigo-300 hover:bg-indigo-50/50',
+    accent: 'bg-indigo-100 text-indigo-700',
   },
 ]
 
@@ -143,7 +186,6 @@ export default function Dashboard() {
 
   const chartData = (() => {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    const today = new Date().getDay()
     const last7 = Array.from({ length: 7 }, (_, i) => {
       const d = new Date()
       d.setDate(d.getDate() - (6 - i))
@@ -162,10 +204,14 @@ export default function Dashboard() {
   })
 
   const getTitle = (type, input) => {
-    if (type === 'listing') return `${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
-    if (type === 'social') return `${input?.propertyType || 'Property'} — ${input?.location || 'Unknown'}`
-    if (type === 'email') return `Email to ${input?.buyerName || 'Buyer'}`
-    if (type === 'contract') return 'Contract Summary'
+    if (type === 'listing')      return `${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
+    if (type === 'social')       return `${input?.propertyType || 'Property'} — ${input?.location || 'Unknown'}`
+    if (type === 'email')        return `Email to ${input?.buyerName || 'Buyer'}`
+    if (type === 'contract')     return 'Contract Summary'
+    if (type === 'openhouse')    return `Open House — ${input?.location || 'Unknown'}`
+    if (type === 'neighborhood') return `${input?.neighborhood || 'Area'}, ${input?.city || 'Unknown'}`
+    if (type === 'pricedrop')    return `Price Drop — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
+    if (type === 'videoscript')  return `Video Script — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
     return 'Generation'
   }
 
@@ -359,7 +405,7 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* AI Tools — Hero Section */}
+          {/* AI Tools */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-base font-bold text-gray-800">AI Tools</h2>
@@ -367,7 +413,7 @@ export default function Dashboard() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {TOOLS.map(tool => (
-             <a   
+                <a
                   key={tool.key}
                   href="/generate"
                   className={`bg-white border border-gray-100 rounded-2xl p-5 flex items-start gap-4 transition-all hover:shadow-md cursor-pointer group ${tool.color}`}
