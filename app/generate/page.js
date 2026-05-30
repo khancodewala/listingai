@@ -4,10 +4,14 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
 const TABS = [
-  { id: "listing", label: "🏠 Listing Writer" },
-  { id: "social",  label: "📱 Social Media" },
-  { id: "email",   label: "📧 Buyer Email" },
-  { id: "contract",label: "📄 Contract Summary" },
+  { id: "listing",      label: "🏠 Listing Writer" },
+  { id: "social",       label: "📱 Social Media" },
+  { id: "email",        label: "📧 Buyer Email" },
+  { id: "contract",     label: "📄 Contract Summary" },
+  { id: "openhouse",    label: "🎪 Open House" },
+  { id: "neighborhood", label: "📍 Neighborhood" },
+  { id: "pricedrop",    label: "💰 Price Reduction" },
+  { id: "videoscript",  label: "🎥 Video Script" },
 ];
 
 function Field({ label, value, onChange, placeholder, textarea }) {
@@ -43,6 +47,8 @@ function GenerateBtn({ onClick, loading }) {
     </button>
   );
 }
+
+// ─── EXISTING FORMS (unchanged) ──────────────────────────────────────────────
 
 function ListingForm({ onGenerate, loading }) {
   const [form, setForm] = useState({
@@ -127,32 +133,146 @@ function ContractForm({ onGenerate, loading }) {
   );
 }
 
+// ─── NEW FORMS ────────────────────────────────────────────────────────────────
+
+function OpenHouseForm({ onGenerate, loading }) {
+  const [form, setForm] = useState({
+    propertyType: "", location: "", date: "", time: "",
+    price: "", highlights: "", agentName: "", agentPhone: "",
+  });
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 4-bed family home, luxury apartment" />
+        <Field label="Location / Address" value={form.location} onChange={set("location")} placeholder="e.g. 45 Maple St, Austin TX" />
+        <Field label="Open House Date" value={form.date} onChange={set("date")} placeholder="e.g. Saturday June 7, 2026" />
+        <Field label="Time" value={form.time} onChange={set("time")} placeholder="e.g. 11:00 AM – 2:00 PM" />
+        <Field label="Asking Price" value={form.price} onChange={set("price")} placeholder="e.g. $450,000 or PKR 3.5 Crore" />
+        <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Sarah Johnson" />
+        <Field label="Phone / WhatsApp" value={form.agentPhone} onChange={set("agentPhone")} placeholder="e.g. +1 555 123 4567" />
+      </div>
+      <Field label="Key Highlights" value={form.highlights} onChange={set("highlights")} placeholder="e.g. Renovated kitchen, backyard pool, top school district" textarea />
+      <GenerateBtn onClick={() => onGenerate({ feature: "openhouse", ...form })} loading={loading} />
+    </div>
+  );
+}
+
+function NeighborhoodForm({ onGenerate, loading }) {
+  const [form, setForm] = useState({
+    neighborhood: "", city: "", propertyType: "",
+    targetBuyer: "", nearbyPlaces: "", vibe: "",
+  });
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Neighborhood / Area Name" value={form.neighborhood} onChange={set("neighborhood")} placeholder="e.g. DHA Phase 6, Palm Jumeirah, Upper East Side" />
+        <Field label="City / Country" value={form.city} onChange={set("city")} placeholder="e.g. Lahore Pakistan, Dubai UAE, New York USA" />
+        <Field label="Property Type Being Listed" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 3-bed apartment, commercial office" />
+        <Field label="Target Buyer / Tenant" value={form.targetBuyer} onChange={set("targetBuyer")} placeholder="e.g. Young families, expats, investors" />
+      </div>
+      <Field label="Nearby Places / Amenities" value={form.nearbyPlaces} onChange={set("nearbyPlaces")} placeholder="e.g. Mall of Lahore 5 min, LGS school nearby, parks, hospitals" textarea />
+      <Field label="Vibe / Feel of the Area" value={form.vibe} onChange={set("vibe")} placeholder="e.g. Quiet and residential, trendy and modern, fast-developing" textarea />
+      <GenerateBtn onClick={() => onGenerate({ feature: "neighborhood", ...form })} loading={loading} />
+    </div>
+  );
+}
+
+function PriceDropForm({ onGenerate, loading }) {
+  const [form, setForm] = useState({
+    propertyType: "", location: "", oldPrice: "", newPrice: "",
+    reason: "", features: "", agentName: "",
+  });
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 5-bed villa, 2-bed apartment" />
+        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Bahria Town Karachi, Downtown Dubai" />
+        <Field label="Original Price" value={form.oldPrice} onChange={set("oldPrice")} placeholder="e.g. $320,000 or PKR 4 Crore" />
+        <Field label="New Reduced Price" value={form.newPrice} onChange={set("newPrice")} placeholder="e.g. $285,000 or PKR 3.5 Crore" />
+        <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Ali Raza" />
+      </div>
+      <Field label="Reason for Reduction (optional)" value={form.reason} onChange={set("reason")} placeholder="e.g. Motivated seller, relocating abroad, quick sale needed" textarea />
+      <Field label="Key Property Features" value={form.features} onChange={set("features")} placeholder="e.g. Pool, 3 parking spots, new renovation, corner plot" textarea />
+      <GenerateBtn onClick={() => onGenerate({ feature: "pricedrop", ...form })} loading={loading} />
+    </div>
+  );
+}
+
+function VideoScriptForm({ onGenerate, loading }) {
+  const [form, setForm] = useState({
+    propertyType: "", location: "", price: "", bedrooms: "",
+    features: "", targetBuyer: "", agentName: "", duration: "",
+  });
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse, family home" />
+        <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Islamabad F-7, Downtown LA, JVC Dubai" />
+        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $600,000 or AED 2.5M" />
+        <Field label="Bedrooms" value={form.bedrooms} onChange={set("bedrooms")} placeholder="e.g. 4" />
+        <Field label="Agent / Presenter Name" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Hamza Malik" />
+        <Field label="Video Duration" value={form.duration} onChange={set("duration")} placeholder="e.g. 60 seconds, 2-3 minutes" />
+      </div>
+      <Field label="Key Features to Highlight" value={form.features} onChange={set("features")} placeholder="e.g. Rooftop terrace, smart home, sea view, marble flooring" textarea />
+      <Field label="Target Buyer / Audience" value={form.targetBuyer} onChange={set("targetBuyer")} placeholder="e.g. Investors, luxury buyers, overseas Pakistanis" textarea />
+      <GenerateBtn onClick={() => onGenerate({ feature: "videoscript", ...form })} loading={loading} />
+    </div>
+  );
+}
+
+// ─── FIELD LABELS (existing + new) ───────────────────────────────────────────
+
 const FIELD_LABELS = {
-  propertyType: "Property Type",
-  location: "Location",
-  bedrooms: "Bedrooms",
-  bathrooms: "Bathrooms",
-  size: "Size",
-  price: "Price",
-  features: "Features",
-  notes: "Notes",
-  highlights: "Key Highlights",
-  targetBuyer: "Target Buyer",
-  agentName: "Agent Name",
-  buyerName: "Buyer Name",
+  // existing
+  propertyType:    "Property Type",
+  location:        "Location",
+  bedrooms:        "Bedrooms",
+  bathrooms:       "Bathrooms",
+  size:            "Size",
+  price:           "Price",
+  features:        "Features",
+  notes:           "Notes",
+  highlights:      "Key Highlights",
+  targetBuyer:     "Target Buyer",
+  agentName:       "Agent Name",
+  buyerName:       "Buyer Name",
   propertyAddress: "Property Address",
-  showingDate: "Showing Date",
-  buyerInterests: "Buyer Interests",
-  nextStep: "Next Step",
-  contractText: "Contract Text",
+  showingDate:     "Showing Date",
+  buyerInterests:  "Buyer Interests",
+  nextStep:        "Next Step",
+  contractText:    "Contract Text",
+  // new
+  date:            "Open House Date",
+  time:            "Time",
+  agentPhone:      "Phone / WhatsApp",
+  neighborhood:    "Neighborhood",
+  city:            "City / Country",
+  vibe:            "Area Vibe",
+  nearbyPlaces:    "Nearby Places",
+  oldPrice:        "Original Price",
+  newPrice:        "New Price",
+  reason:          "Reason for Reduction",
+  duration:        "Video Duration",
 };
 
+// ─── TAB LABELS (existing + new) ─────────────────────────────────────────────
+
 const TAB_LABELS = {
-  listing: "Listing Writer",
-  social: "Social Media",
-  email: "Buyer Email",
-  contract: "Contract Summary",
+  listing:      "Listing Writer",
+  social:       "Social Media",
+  email:        "Buyer Email",
+  contract:     "Contract Summary",
+  openhouse:    "Open House",
+  neighborhood: "Neighborhood",
+  pricedrop:    "Price Reduction",
+  videoscript:  "Video Script",
 };
+
+// ─── RESULT PANEL (unchanged) ────────────────────────────────────────────────
 
 function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
   const { feature, ...fields } = inputData || {};
@@ -277,6 +397,8 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
   );
 }
 
+// ─── MAIN PAGE (unchanged logic, forms object extended) ───────────────────────
+
 export default function GeneratePage() {
   const [activeTab, setActiveTab] = useState("listing");
   const [loading, setLoading] = useState(false);
@@ -363,10 +485,14 @@ export default function GeneratePage() {
   };
 
   const forms = {
-    listing:  <ListingForm  onGenerate={handleGenerate} loading={loading} />,
-    social:   <SocialForm   onGenerate={handleGenerate} loading={loading} />,
-    email:    <EmailForm    onGenerate={handleGenerate} loading={loading} />,
-    contract: <ContractForm onGenerate={handleGenerate} loading={loading} />,
+    listing:      <ListingForm      onGenerate={handleGenerate} loading={loading} />,
+    social:       <SocialForm       onGenerate={handleGenerate} loading={loading} />,
+    email:        <EmailForm        onGenerate={handleGenerate} loading={loading} />,
+    contract:     <ContractForm     onGenerate={handleGenerate} loading={loading} />,
+    openhouse:    <OpenHouseForm    onGenerate={handleGenerate} loading={loading} />,
+    neighborhood: <NeighborhoodForm onGenerate={handleGenerate} loading={loading} />,
+    pricedrop:    <PriceDropForm    onGenerate={handleGenerate} loading={loading} />,
+    videoscript:  <VideoScriptForm  onGenerate={handleGenerate} loading={loading} />,
   };
 
   return (
