@@ -15,6 +15,7 @@ const TYPE_LABELS = {
   neighborhood: 'Neighborhood',
   pricedrop:    'Price Reduction',
   videoscript:  'Video Script',
+  bio:          'Realtor Bio',
 }
 
 // ─── TYPE COLORS (existing + new) ────────────────────────────────────────────
@@ -27,6 +28,7 @@ const TYPE_COLORS = {
   neighborhood: 'bg-teal-50 text-teal-700 border border-teal-100',
   pricedrop:    'bg-orange-50 text-orange-700 border border-orange-100',
   videoscript:  'bg-indigo-50 text-indigo-700 border border-indigo-100',
+  bio:          'bg-pink-50 text-pink-700 border border-pink-100',
 }
 
 const PLAN_CONFIG = {
@@ -100,6 +102,14 @@ const TOOLS = [
     desc: 'Write walkthrough scripts for Reels, YouTube & TikTok',
     color: 'hover:border-indigo-300 hover:bg-indigo-50/50',
     accent: 'bg-indigo-100 text-indigo-700',
+  },
+  {
+    key: 'bio',
+    icon: '👤',
+    label: 'Realtor Bio',
+    desc: 'Generate a polished professional bio for your website or profile',
+    color: 'hover:border-pink-300 hover:bg-pink-50/50',
+    accent: 'bg-pink-100 text-pink-700',
   },
 ]
 
@@ -212,6 +222,7 @@ export default function Dashboard() {
     if (type === 'neighborhood') return `${input?.neighborhood || 'Area'}, ${input?.city || 'Unknown'}`
     if (type === 'pricedrop')    return `Price Drop — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
     if (type === 'videoscript')  return `Video Script — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
+    if (type === 'bio')          return `Bio — ${input?.agentName || 'Agent'}`
     return 'Generation'
   }
 
