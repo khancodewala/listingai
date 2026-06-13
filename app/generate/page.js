@@ -459,6 +459,20 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
           }}>
             {result}
           </pre>
+
+          {/* Fair Housing Compliance Notice */}
+          {feature === "listing" && (
+            <div style={{
+              marginTop: "20px", padding: "12px 14px",
+              background: "#f8fafc", border: "1px solid #e2e8f0",
+              borderRadius: "10px", display: "flex", gap: "10px", alignItems: "flex-start",
+            }}>
+              <span style={{ fontSize: "16px" }}>⚖️</span>
+              <p style={{ fontSize: "12px", color: "#64748b", lineHeight: 1.6, margin: 0 }}>
+                <strong style={{ color: "#475569" }}>Fair Housing Notice:</strong> This AI-generated description is a drafting aid. Review before publishing to ensure compliance with the Fair Housing Act — remove any language that could be seen as discriminatory based on race, color, religion, sex, disability, familial status, or national origin.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
