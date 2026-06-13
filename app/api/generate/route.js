@@ -6,6 +6,15 @@ const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+// ─── LANGUAGE NAMES ───────────────────────────────────────────────────────────
+
+const LANGUAGE_NAMES = {
+  en: "English",
+  es: "Spanish",
+  ar: "Arabic",
+  fr: "French",
+};
+
 // ─── SYSTEM PROMPTS (existing + new) ─────────────────────────────────────────
 
 const SYSTEM_PROMPTS = {
@@ -28,6 +37,8 @@ const SYSTEM_PROMPTS = {
     "You are a real estate marketing copywriter. Write a tactful, positive, and motivating price reduction announcement. Frame the reduced price as an exciting opportunity — not a failure. Include: a compelling headline highlighting the new price, the savings amount, key property features, urgency/call-to-action, and the agent's name. Suitable for social media, WhatsApp, and email. Works for any country or currency.",
   videoscript:
     "You are a real estate video script writer. Write a natural, engaging video walkthrough script for the given property. Structure: 1) Hook opening (5-10 sec grab), 2) Welcome & property intro, 3) Room-by-room walkthrough narration with vivid descriptions, 4) Key features highlight, 5) Neighborhood mention, 6) Price & contact CTA. Match the duration requested. Use conversational, enthusiastic tone. Works for any country.",
+  bio:
+    "You are a professional bio writer for real estate agents. Write a polished, engaging realtor bio suitable for a website 'About' page, business card profile, or social media bio. Highlight experience, specialties, achievements, and personality. Structure: an attention-grabbing opening line, a main body (120-180 words) covering experience and specialties, achievements/credentials, and a closing line that builds trust and invites contact. Match the requested tone. Works for any country.",
 };
 
 // ─── PROMPT BUILDER (existing + new) ─────────────────────────────────────────
@@ -60,11 +71,14 @@ function buildPrompt(feature, data) {
   if (feature === "videoscript") {
     return "Write a property video walkthrough script for: Property Type: " + (data.propertyType || "Property") + ", Location: " + (data.location || "Not specified") + ", Price: " + (data.price || "N/A") + ", Bedrooms: " + (data.bedrooms || "N/A") + ", Key Features: " + (data.features || "N/A") + ", Target Buyer/Audience: " + (data.targetBuyer || "General buyers") + ", Presenter/Agent Name: " + (data.agentName || "Agent") + ", Video Duration: " + (data.duration || "60-90 seconds");
   }
+  if (feature === "bio") {
+    return "Write a realtor bio for: Agent Name: " + (data.agentName || "Agent") + ", Years of Experience: " + (data.yearsExperience || "N/A") + ", Location/Market: " + (data.location || "Not specified") + ", Specialties: " + (data.specialties || "N/A") + ", Achievements/Credentials: " + (data.achievements || "N/A") + ", Personal Touch: " + (data.personalTouch || "N/A") + ", Tone: " + (data.tone || "Professional");
+  }
 
   return "Please provide details.";
 }
 
-// ─── API ROUTE (unchanged) ────────────────────────────────────────────────────
+// ─── API ROUTE ────────────────────────────────────────────────────────────────
 
 export async function POST(request) {
   try {
@@ -105,10 +119,19 @@ export async function POST(request) {
       return Response.json({ error: "Invalid feature." }, { status: 400 });
     }
 
+    // Build system prompt, appending language instruction if needed
+    const languageCode = data.language || "en";
+    const languageName = LANGUAGE_NAMES[languageCode] || "English";
+
+    let systemPrompt = SYSTEM_PROMPTS[feature];
+    if (languageCode !== "en") {
+      systemPrompt += ` IMPORTANT: Write your entire response in ${languageName}. All headings, labels, and content must be in ${languageName}, not English.`;
+    }
+
     const message = await client.messages.create({
       model: "claude-sonnet-4-5",
       max_tokens: 1024,
-      system: SYSTEM_PROMPTS[feature],
+      system: systemPrompt,
       messages: [{ role: "user", content: buildPrompt(feature, data) }],
     });
 
@@ -132,3 +155,4 @@ export async function POST(request) {
     return Response.json({ error: "Generation failed. Please try again." }, { status: 500 });
   }
 }
+
