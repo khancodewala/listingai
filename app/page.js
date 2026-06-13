@@ -146,10 +146,10 @@ export default function HomePage() {
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Core Features</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.75rem" }}>Everything a Realtor Needs</h2>
           <p style={{ fontSize: "15px", color: "#7A90A8", maxWidth: "500px", marginBottom: "2.75rem", lineHeight: 1.75 }}>
-            Eight AI tools built for real estate professionals — saving hours every single week.
+            Nine AI tools built for real estate professionals — saving hours every single week.
           </p>
 
-          {/* ── 8 tools grid (existing 4 + new 4) ── */}
+          {/* ── 9 tools grid (existing 4 + new 5) ── */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "1.25rem" }}>
             {[
               // existing
@@ -162,6 +162,7 @@ export default function HomePage() {
               { icon: "📍", title: "Neighborhood Description", desc: "Write compelling area descriptions highlighting schools, amenities, and lifestyle for any city or country worldwide.", tag: "Sell the location" },
               { icon: "💰", title: "Price Reduction Alert",    desc: "Announce price drops tactfully and persuasively — framing the new price as an unmissable opportunity.",               tag: "Re-ignite buyer interest" },
               { icon: "🎥", title: "Property Video Script",    desc: "Get a polished walkthrough script for Reels, YouTube, or TikTok — hook, room-by-room narration, and CTA included.",  tag: "Go viral on social" },
+              { icon: "👤", title: "Realtor Bio Generator",    desc: "Create a polished, professional bio for your website, business card, or social profiles — tailored to your experience and tone.", tag: "Stand out instantly" },
             ].map(f => (
               <div key={f.title} style={{
                 background: "rgba(255,255,255,0.04)",
