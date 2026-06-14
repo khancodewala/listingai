@@ -5,7 +5,7 @@ import GenerationDetailPanel from '@/components/GenerationDetailPanel'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
-// ─── TYPE LABELS (existing + new) ────────────────────────────────────────────
+// ─── TYPE LABELS ──────────────────────────────────────────────────────────────
 const TYPE_LABELS = {
   listing:      'Listing Writer',
   social:       'Social Media',
@@ -16,9 +16,10 @@ const TYPE_LABELS = {
   pricedrop:    'Price Reduction',
   videoscript:  'Video Script',
   bio:          'Realtor Bio',
+  leadmagnet:   'Lead Magnet / Blog',
 }
 
-// ─── TYPE COLORS (existing + new) ────────────────────────────────────────────
+// ─── TYPE COLORS ──────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
   listing:      'bg-blue-50 text-blue-700 border border-blue-100',
   social:       'bg-purple-50 text-purple-700 border border-purple-100',
@@ -29,6 +30,7 @@ const TYPE_COLORS = {
   pricedrop:    'bg-orange-50 text-orange-700 border border-orange-100',
   videoscript:  'bg-indigo-50 text-indigo-700 border border-indigo-100',
   bio:          'bg-pink-50 text-pink-700 border border-pink-100',
+  leadmagnet:   'bg-green-50 text-green-700 border border-green-100',
 }
 
 const PLAN_CONFIG = {
@@ -37,7 +39,7 @@ const PLAN_CONFIG = {
   agency: { color: 'text-purple-600', bar: 'bg-purple-500', light: 'bg-purple-50',  border: 'border-purple-200',badge: 'bg-purple-100 text-purple-700' },
 }
 
-// ─── TOOLS (existing + new) ───────────────────────────────────────────────────
+// ─── TOOLS ────────────────────────────────────────────────────────────────────
 const TOOLS = [
   {
     key: 'listing',
@@ -110,6 +112,14 @@ const TOOLS = [
     desc: 'Generate a polished professional bio for your website or profile',
     color: 'hover:border-pink-300 hover:bg-pink-50/50',
     accent: 'bg-pink-100 text-pink-700',
+  },
+  {
+    key: 'leadmagnet',
+    icon: '🧲',
+    label: 'Lead Magnet / Blog',
+    desc: 'Create blog posts, buyer guides & checklists to attract new leads',
+    color: 'hover:border-green-300 hover:bg-green-50/50',
+    accent: 'bg-green-100 text-green-700',
   },
 ]
 
@@ -223,6 +233,7 @@ export default function Dashboard() {
     if (type === 'pricedrop')    return `Price Drop — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
     if (type === 'videoscript')  return `Video Script — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
     if (type === 'bio')          return `Bio — ${input?.agentName || 'Agent'}`
+    if (type === 'leadmagnet')   return `${input?.topic || 'Content'} — ${input?.targetAudience || 'General Audience'}`
     return 'Generation'
   }
 
