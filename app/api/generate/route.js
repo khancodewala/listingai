@@ -15,7 +15,7 @@ const LANGUAGE_NAMES = {
   fr: "French",
 };
 
-// ─── SYSTEM PROMPTS (existing + new) ─────────────────────────────────────────
+// ─── SYSTEM PROMPTS ───────────────────────────────────────────────────────────
 
 const SYSTEM_PROMPTS = {
   // existing
@@ -27,8 +27,6 @@ const SYSTEM_PROMPTS = {
     "You are a professional real estate agent writing buyer follow-up emails. Write warm, personalized, and professional emails that build rapport and include a clear next step. Keep it concise but persuasive.",
   contract:
     "You are a real estate attorney assistant. Summarize contracts in plain English. Structure: 1) Key Parties, 2) Property Details, 3) Price and Payment Terms, 4) Important Dates, 5) Key Conditions, 6) Important Clauses.",
-
-  // new
   openhouse:
     "You are a real estate marketing expert. Write compelling open house announcements suitable for WhatsApp, SMS, social media, and printed flyers. Include: a strong attention-grabbing headline, property highlights, date/time/location clearly formatted, the agent's contact info, and a warm call-to-action. Keep it concise, exciting, and professional. Works for any country.",
   neighborhood:
@@ -39,12 +37,15 @@ const SYSTEM_PROMPTS = {
     "You are a real estate video script writer. Write a natural, engaging video walkthrough script for the given property. Structure: 1) Hook opening (5-10 sec grab), 2) Welcome & property intro, 3) Room-by-room walkthrough narration with vivid descriptions, 4) Key features highlight, 5) Neighborhood mention, 6) Price & contact CTA. Match the duration requested. Use conversational, enthusiastic tone. Works for any country.",
   bio:
     "You are a professional bio writer for real estate agents. Write a polished, engaging realtor bio suitable for a website 'About' page, business card profile, or social media bio. Highlight experience, specialties, achievements, and personality. Structure: an attention-grabbing opening line, a main body (120-180 words) covering experience and specialties, achievements/credentials, and a closing line that builds trust and invites contact. Match the requested tone. Works for any country.",
+
+  // ─── NEW ──────────────────────────────────────────────────────────────────
+  leadmagnet:
+    "You are a real estate content marketing expert who helps agents attract and convert leads through valuable, educational content. Write high-quality, ready-to-publish content that positions the agent as a trusted local expert. Structure content with a compelling headline, engaging introduction, well-organised body sections with clear headings, practical actionable advice, and a strong call-to-action that invites readers to contact the agent. Content should feel genuinely helpful — not salesy. Works for any country or market.",
 };
 
-// ─── PROMPT BUILDER (existing + new) ─────────────────────────────────────────
+// ─── PROMPT BUILDER ───────────────────────────────────────────────────────────
 
 function buildPrompt(feature, data) {
-  // existing
   if (feature === "listing") {
     return "Write a property listing for: Property Type: " + (data.propertyType || "Property") + ", Location: " + (data.location || "Not specified") + ", Bedrooms: " + (data.bedrooms || "N/A") + ", Bathrooms: " + (data.bathrooms || "N/A") + ", Size: " + (data.size || "N/A") + " sq ft, Price: " + (data.price || "N/A") + ", Key Features: " + (data.features || "N/A") + ", Notes: " + (data.notes || "None");
   }
@@ -57,8 +58,6 @@ function buildPrompt(feature, data) {
   if (feature === "contract") {
     return "Summarize this real estate contract in plain English: " + (data.contractText || "No contract text provided.");
   }
-
-  // new
   if (feature === "openhouse") {
     return "Write an open house announcement for: Property Type: " + (data.propertyType || "Property") + ", Address/Location: " + (data.location || "Not specified") + ", Date: " + (data.date || "This weekend") + ", Time: " + (data.time || "To be confirmed") + ", Asking Price: " + (data.price || "N/A") + ", Key Highlights: " + (data.highlights || "N/A") + ", Agent Name: " + (data.agentName || "Your Agent") + ", Phone/WhatsApp: " + (data.agentPhone || "N/A");
   }
@@ -73,6 +72,33 @@ function buildPrompt(feature, data) {
   }
   if (feature === "bio") {
     return "Write a realtor bio for: Agent Name: " + (data.agentName || "Agent") + ", Years of Experience: " + (data.yearsExperience || "N/A") + ", Location/Market: " + (data.location || "Not specified") + ", Specialties: " + (data.specialties || "N/A") + ", Achievements/Credentials: " + (data.achievements || "N/A") + ", Personal Touch: " + (data.personalTouch || "N/A") + ", Tone: " + (data.tone || "Professional");
+  }
+
+  // ─── NEW ────────────────────────────────────────────────────────────────────
+  if (feature === "leadmagnet") {
+    const contentTypeLabels = {
+      blog_post:          "Blog Post",
+      buyers_guide:       "Buyer's Guide",
+      sellers_guide:      "Seller's Guide",
+      market_report:      "Market Report",
+      checklist:          "Checklist",
+      faq:                "FAQ Article",
+      tips_list:          "Tips List",
+      neighborhood_guide: "Neighborhood Guide",
+    };
+    const typeName = contentTypeLabels[data.contentType] || "Blog Post";
+
+    return (
+      `Write a ${typeName} for a real estate agent with the following details:\n` +
+      `Topic / Title Idea: ${data.topic || "General real estate tips"}\n` +
+      `Target Audience: ${data.targetAudience || "Home buyers and sellers"}\n` +
+      (data.location   ? `Location / Market: ${data.location}\n`   : "") +
+      (data.agentName  ? `Author / Brand: ${data.agentName}\n`     : "") +
+      `Tone: ${data.tone || "Friendly, professional, and educational"}\n` +
+      `Target Length: ${data.wordCount || "approximately 600 words"}\n` +
+      (data.keyPoints  ? `Key Points to Cover:\n${data.keyPoints}\n` : "") +
+      `\nWrite the complete ${typeName} — headline, all sections, and a closing call-to-action inviting readers to contact the agent. Output only the final content, ready to copy and publish.`
+    );
   }
 
   return "Please provide details.";
@@ -128,9 +154,12 @@ export async function POST(request) {
       systemPrompt += ` IMPORTANT: Write your entire response in ${languageName}. All headings, labels, and content must be in ${languageName}, not English.`;
     }
 
+    // Lead magnet content can be longer — allow more tokens
+    const maxTokens = feature === "leadmagnet" ? 2048 : 1024;
+
     const message = await client.messages.create({
       model: "claude-sonnet-4-5",
-      max_tokens: 1024,
+      max_tokens: maxTokens,
       system: systemPrompt,
       messages: [{ role: "user", content: buildPrompt(feature, data) }],
     });
@@ -155,4 +184,3 @@ export async function POST(request) {
     return Response.json({ error: "Generation failed. Please try again." }, { status: 500 });
   }
 }
-

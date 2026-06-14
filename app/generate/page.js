@@ -13,6 +13,7 @@ const TABS = [
   { id: "pricedrop",    label: "💰 Price Reduction" },
   { id: "videoscript",  label: "🎥 Video Script" },
   { id: "bio",          label: "👤 Realtor Bio" },
+  { id: "leadmagnet",   label: "🧲 Lead Magnet / Blog" },
 ];
 
 const LANGUAGES = [
@@ -73,7 +74,7 @@ function GenerateBtn({ onClick, loading }) {
   );
 }
 
-// ─── EXISTING FORMS (unchanged, now accept language) ─────────────────────────
+// ─── EXISTING FORMS ───────────────────────────────────────────────────────────
 
 function ListingForm({ onGenerate, loading, language }) {
   const [form, setForm] = useState({
@@ -157,8 +158,6 @@ function ContractForm({ onGenerate, loading, language }) {
     </div>
   );
 }
-
-// ─── EXISTING NEW FORMS (now accept language) ────────────────────────────────
 
 function OpenHouseForm({ onGenerate, loading, language }) {
   const [form, setForm] = useState({
@@ -249,8 +248,6 @@ function VideoScriptForm({ onGenerate, loading, language }) {
   );
 }
 
-// ─── NEW: REALTOR BIO FORM ────────────────────────────────────────────────────
-
 function BioForm({ onGenerate, loading, language }) {
   const [form, setForm] = useState({
     agentName: "", yearsExperience: "", location: "",
@@ -273,10 +270,119 @@ function BioForm({ onGenerate, loading, language }) {
   );
 }
 
+// ─── NEW: LEAD MAGNET / BLOG POST FORM ───────────────────────────────────────
+
+const CONTENT_TYPES = [
+  { value: "blog_post",      label: "📝 Blog Post" },
+  { value: "buyers_guide",   label: "📘 Buyer's Guide" },
+  { value: "sellers_guide",  label: "📙 Seller's Guide" },
+  { value: "market_report",  label: "📊 Market Report" },
+  { value: "checklist",      label: "✅ Checklist" },
+  { value: "faq",            label: "❓ FAQ Article" },
+  { value: "tips_list",      label: "💡 Tips List" },
+  { value: "neighborhood_guide", label: "🗺️ Neighborhood Guide" },
+];
+
+function LeadMagnetForm({ onGenerate, loading, language }) {
+  const [form, setForm] = useState({
+    contentType: "blog_post",
+    topic: "",
+    targetAudience: "",
+    location: "",
+    agentName: "",
+    keyPoints: "",
+    tone: "",
+    wordCount: "",
+  });
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  return (
+    <div className="space-y-4">
+      {/* Content Type Selector */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Content Type</label>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {CONTENT_TYPES.map((ct) => (
+            <button
+              key={ct.value}
+              type="button"
+              onClick={() => setForm((f) => ({ ...f, contentType: ct.value }))}
+              className={`px-3 py-2 rounded-lg text-xs font-medium border transition-colors text-left ${
+                form.contentType === ct.value
+                  ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+              }`}
+            >
+              {ct.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Fields */}
+      <div className="grid grid-cols-2 gap-4">
+        <Field
+          label="Topic / Title Idea"
+          value={form.topic}
+          onChange={set("topic")}
+          placeholder="e.g. How to buy your first home in Dubai, Top 5 mistakes home sellers make"
+        />
+        <Field
+          label="Target Audience"
+          value={form.targetAudience}
+          onChange={set("targetAudience")}
+          placeholder="e.g. First-time buyers, overseas investors, young couples"
+        />
+        <Field
+          label="Location / Market (optional)"
+          value={form.location}
+          onChange={set("location")}
+          placeholder="e.g. Dubai, Lahore, Austin TX — or leave blank for general"
+        />
+        <Field
+          label="Your Name / Brand (optional)"
+          value={form.agentName}
+          onChange={set("agentName")}
+          placeholder="e.g. Ahmed Khan – Lahore Realty"
+        />
+        <Field
+          label="Tone"
+          value={form.tone}
+          onChange={set("tone")}
+          placeholder="e.g. Friendly & educational, professional, conversational"
+        />
+        <Field
+          label="Approx. Word Count"
+          value={form.wordCount}
+          onChange={set("wordCount")}
+          placeholder="e.g. 500 words, 800 words, short (default: ~600)"
+        />
+      </div>
+
+      <Field
+        label="Key Points to Cover (optional)"
+        value={form.keyPoints}
+        onChange={set("keyPoints")}
+        placeholder="e.g. Down payment tips, mortgage pre-approval, hidden costs, negotiation tactics"
+        textarea
+      />
+
+      {/* Info banner */}
+      <div className="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
+        <span className="text-lg mt-0.5">🧲</span>
+        <p className="text-xs text-blue-700 leading-relaxed">
+          <strong>Lead Magnet tip:</strong> Share the generated content as a free download, blog post, or email newsletter to attract and convert potential buyers and sellers into clients.
+        </p>
+      </div>
+
+      <GenerateBtn onClick={() => onGenerate({ feature: "leadmagnet", language, ...form })} loading={loading} />
+    </div>
+  );
+}
+
 // ─── FIELD LABELS ─────────────────────────────────────────────────────────────
 
 const FIELD_LABELS = {
-  // existing
   propertyType:    "Property Type",
   location:        "Location",
   bedrooms:        "Bedrooms",
@@ -294,7 +400,6 @@ const FIELD_LABELS = {
   buyerInterests:  "Buyer Interests",
   nextStep:        "Next Step",
   contractText:    "Contract Text",
-  // new
   date:            "Open House Date",
   time:            "Time",
   agentPhone:      "Phone / WhatsApp",
@@ -306,13 +411,18 @@ const FIELD_LABELS = {
   newPrice:        "New Price",
   reason:          "Reason for Reduction",
   duration:        "Video Duration",
-  // bio
   yearsExperience: "Years of Experience",
   specialties:     "Specialties",
   achievements:    "Achievements",
   personalTouch:   "Personal Touch",
   tone:            "Tone",
   language:        "Output Language",
+  // lead magnet
+  contentType:     "Content Type",
+  topic:           "Topic / Title Idea",
+  targetAudience:  "Target Audience",
+  keyPoints:       "Key Points",
+  wordCount:       "Word Count",
 };
 
 // ─── TAB LABELS ───────────────────────────────────────────────────────────────
@@ -327,9 +437,10 @@ const TAB_LABELS = {
   pricedrop:    "Price Reduction",
   videoscript:  "Video Script",
   bio:          "Realtor Bio",
+  leadmagnet:   "Lead Magnet / Blog",
 };
 
-// ─── RESULT PANEL (unchanged) ────────────────────────────────────────────────
+// ─── RESULT PANEL ─────────────────────────────────────────────────────────────
 
 function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
   const { feature, language, ...fields } = inputData || {};
@@ -473,6 +584,20 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
               </p>
             </div>
           )}
+
+          {/* Lead Magnet usage tip */}
+          {feature === "leadmagnet" && (
+            <div style={{
+              marginTop: "20px", padding: "12px 14px",
+              background: "#f0fdf4", border: "1px solid #bbf7d0",
+              borderRadius: "10px", display: "flex", gap: "10px", alignItems: "flex-start",
+            }}>
+              <span style={{ fontSize: "16px" }}>🧲</span>
+              <p style={{ fontSize: "12px", color: "#166534", lineHeight: 1.6, margin: 0 }}>
+                <strong>How to use this:</strong> Post it on your website or blog, share it as a free PDF download to collect email leads, or send it as a newsletter to your contact list to position yourself as the local market expert.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -577,6 +702,7 @@ export default function GeneratePage() {
     pricedrop:    <PriceDropForm    onGenerate={handleGenerate} loading={loading} language={language} />,
     videoscript:  <VideoScriptForm  onGenerate={handleGenerate} loading={loading} language={language} />,
     bio:          <BioForm          onGenerate={handleGenerate} loading={loading} language={language} />,
+    leadmagnet:   <LeadMagnetForm   onGenerate={handleGenerate} loading={loading} language={language} />,
   };
 
   return (
