@@ -12,7 +12,117 @@ export default function HomePage() {
   const CTA_IMG     = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80&fit=crop";
 
   return (
-    <main style={{ fontFamily: "'DM Sans', sans-serif", background: "#0B1628", color: "#E8DFC8", overflowX: "hidden" }}>
+    <main style={{ fontFamily: "'DM Sans', sans-serif", background: "#0B1628", color: "#E8DFC8", overflowX: "hidden", maxWidth: "100vw" }}>
+
+      {/* ── Responsive grid styles ── */}
+      <style>{`
+        html, body { overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
+        *, *::before, *::after { box-sizing: border-box; }
+
+        .lai-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+          text-align: center;
+        }
+        .lai-features-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.25rem;
+        }
+        .lai-steps-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+          margin-top: 3rem;
+        }
+        .lai-testimonials-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.25rem;
+        }
+        .lai-pricing-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.25rem;
+          margin-top: 2.5rem;
+        }
+        .lai-hero-buttons {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
+          align-items: center;
+          margin-bottom: 1.75rem;
+        }
+        .lai-hero-btn-primary {
+          background: #C4A35C;
+          color: #0B1628;
+          font-size: 15px;
+          font-weight: 700;
+          padding: 14px 30px;
+          border-radius: 50px;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          box-shadow: 0 4px 24px rgba(196,163,92,0.35);
+          white-space: nowrap;
+        }
+        .lai-hero-btn-secondary {
+          background: rgba(255,255,255,0.10);
+          color: #FFFFFF;
+          font-size: 15px;
+          font-weight: 500;
+          padding: 14px 28px;
+          border: 1px solid rgba(255,255,255,0.30);
+          border-radius: 50px;
+          text-decoration: none;
+          backdrop-filter: blur(8px);
+          white-space: nowrap;
+        }
+
+        @media (max-width: 640px) {
+          .lai-stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+          }
+          .lai-features-grid {
+            grid-template-columns: 1fr;
+          }
+          .lai-steps-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+          .lai-testimonials-grid {
+            grid-template-columns: 1fr;
+          }
+          .lai-pricing-grid {
+            grid-template-columns: 1fr;
+          }
+          .lai-hero-buttons {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .lai-hero-btn-primary,
+          .lai-hero-btn-secondary {
+            text-align: center;
+            justify-content: center;
+            width: 100%;
+          }
+        }
+
+        @media (min-width: 641px) and (max-width: 900px) {
+          .lai-steps-grid {
+            grid-template-columns: 1fr;
+          }
+          .lai-testimonials-grid {
+            grid-template-columns: 1fr;
+          }
+          .lai-pricing-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
 
       {/* ── HERO with full-bleed property photo ── */}
       <section style={{
@@ -20,10 +130,9 @@ export default function HomePage() {
         minHeight: "680px",
         display: "flex",
         alignItems: "center",
-        padding: "6rem 2rem 5rem",
+        padding: "6rem 1.25rem 5rem",
         overflow: "hidden",
       }}>
-        {/* Background photo */}
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${HERO_IMG}')`,
@@ -31,12 +140,10 @@ export default function HomePage() {
           backgroundPosition: "center 40%",
           backgroundRepeat: "no-repeat",
         }} />
-        {/* Dark gradient overlay — left heavy so text reads clearly */}
         <div style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(105deg, rgba(7,14,28,0.93) 0%, rgba(7,14,28,0.78) 45%, rgba(7,14,28,0.30) 100%)",
         }} />
-        {/* Gold shimmer accent */}
         <div style={{
           position: "absolute", inset: 0,
           background: "radial-gradient(ellipse 50% 60% at 15% 80%, rgba(196,163,92,0.08) 0%, transparent 70%)",
@@ -44,7 +151,6 @@ export default function HomePage() {
         }} />
 
         <div style={{ position: "relative", maxWidth: "960px", margin: "0 auto", width: "100%" }}>
-          {/* Badge */}
           <span style={{
             display: "inline-flex", alignItems: "center", gap: "7px",
             background: "rgba(196,163,92,0.15)", border: "1px solid rgba(196,163,92,0.40)",
@@ -57,7 +163,7 @@ export default function HomePage() {
 
           <h1 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: "clamp(2.2rem, 5vw, 3.4rem)",
+            fontSize: "clamp(1.9rem, 5vw, 3.4rem)",
             fontWeight: 700, lineHeight: 1.15,
             color: "#FFFFFF",
             maxWidth: "680px",
@@ -77,23 +183,11 @@ export default function HomePage() {
             buyer emails, and contract summaries — instantly. Works for any property, worldwide.
           </p>
 
-          <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", alignItems: "center", marginBottom: "1.75rem" }}>
-            <Link href="/generate" style={{
-              background: "#C4A35C", color: "#0B1628",
-              fontSize: "15px", fontWeight: 700,
-              padding: "14px 30px", borderRadius: "50px",
-              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px",
-              boxShadow: "0 4px 24px rgba(196,163,92,0.35)",
-            }}>
+          <div className="lai-hero-buttons">
+            <Link href="/generate" className="lai-hero-btn-primary">
               Try Free — 5 Generations →
             </Link>
-            <Link href="/pricing" style={{
-              background: "rgba(255,255,255,0.10)", color: "#FFFFFF",
-              fontSize: "15px", fontWeight: 500,
-              padding: "14px 28px", border: "1px solid rgba(255,255,255,0.30)",
-              borderRadius: "50px", textDecoration: "none",
-              backdropFilter: "blur(8px)",
-            }}>
+            <Link href="/pricing" className="lai-hero-btn-secondary">
               See Pricing
             </Link>
           </div>
@@ -109,31 +203,30 @@ export default function HomePage() {
         background: "rgba(196,163,92,0.08)",
         borderTop: "1px solid rgba(196,163,92,0.20)",
         borderBottom: "1px solid rgba(196,163,92,0.20)",
-        padding: "2rem 2rem",
+        padding: "2rem 1.25rem",
       }}>
-        <div style={{
-          maxWidth: "960px", margin: "0 auto",
-          display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem", textAlign: "center",
-        }}>
-          {[
-            { num: "8,000+", label: "Listings Generated" },
-            { num: "1,200+", label: "Agents Worldwide" },
-            { num: "30 min", label: "Saved Per Listing" },
-            { num: "40+",    label: "Countries Served" },
-          ].map(s => (
-            <div key={s.label}>
-              <span style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: "1.9rem", fontWeight: 700, color: "#C4A35C", display: "block",
-              }}>{s.num}</span>
-              <span style={{ fontSize: "11px", color: "#5A6E85", marginTop: "3px", textTransform: "uppercase", letterSpacing: "0.07em", display: "block" }}>{s.label}</span>
-            </div>
-          ))}
+        <div style={{ maxWidth: "960px", margin: "0 auto" }}>
+          <div className="lai-stats-grid">
+            {[
+              { num: "8,000+", label: "Listings Generated" },
+              { num: "1,200+", label: "Agents Worldwide" },
+              { num: "30 min", label: "Saved Per Listing" },
+              { num: "40+",    label: "Countries Served" },
+            ].map(s => (
+              <div key={s.label}>
+                <span style={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: "1.9rem", fontWeight: 700, color: "#C4A35C", display: "block",
+                }}>{s.num}</span>
+                <span style={{ fontSize: "11px", color: "#5A6E85", marginTop: "3px", textTransform: "uppercase", letterSpacing: "0.07em", display: "block" }}>{s.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* ── FEATURES ── */}
-      <section id="features" style={{ position: "relative", padding: "6rem 2rem", overflow: "hidden" }}>
+      <section id="features" style={{ position: "relative", padding: "6rem 1.25rem", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${SECTION_IMG}')`,
@@ -149,8 +242,7 @@ export default function HomePage() {
             Ten AI tools built for real estate professionals — saving hours every single week.
           </p>
 
-          {/* ── 10 tools grid ── */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "1.25rem" }}>
+          <div className="lai-features-grid">
             {[
               { icon: "🏠", title: "Property Listing Writer",    desc: "Enter property details and get a professional MLS-ready description instantly. Any property type, any country.",                                    tag: "Save 30 min per listing"  },
               { icon: "📱", title: "Social Media Captions",      desc: "Scroll-stopping Instagram and Facebook posts for your listings. Drive more leads from social media effortlessly.",                                  tag: "More reach, less effort"  },
@@ -167,7 +259,6 @@ export default function HomePage() {
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(196,163,92,0.15)",
                 borderRadius: "14px", padding: "1.75rem",
-                transition: "border-color 0.2s",
               }}>
                 <div style={{
                   width: "44px", height: "44px",
@@ -185,13 +276,13 @@ export default function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <div style={{ background: "#0D1D35", padding: "5rem 2rem" }}>
+      <div style={{ background: "#0D1D35", padding: "5rem 1.25rem" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ How It Works</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.5rem" }}>Three Steps to Perfect Copy</h2>
           <p style={{ fontSize: "15px", color: "#7A90A8" }}>No prompting expertise needed. Fill in the details, let AI do the writing.</p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.5rem", marginTop: "3rem" }}>
+          <div className="lai-steps-grid">
             {[
               { n: "1", title: "Enter Property Details", desc: "Fill in bedrooms, features, location, and any special notes about the property." },
               { n: "2", title: "Choose Your Tool",        desc: "Select from listing writer, social captions, buyer email, or contract summarizer." },
@@ -215,12 +306,12 @@ export default function HomePage() {
       </div>
 
       {/* ── TESTIMONIALS ── */}
-      <section style={{ padding: "5rem 2rem", background: "#0B1628" }}>
+      <section style={{ padding: "5rem 1.25rem", background: "#0B1628" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Trusted by Agents Worldwide</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "2.5rem" }}>What Realtors Are Saying</h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.25rem" }}>
+          <div className="lai-testimonials-grid">
             {[
               { text: '"I used to spend 45 minutes writing each listing. Now it\'s under 2 minutes. ListingAI pays for itself on the first property."', name: "Sarah M.", role: "RE/MAX Agent, Dubai" },
               { text: '"The social captions are incredible — my engagement doubled within the first week. I wish I found this tool sooner."',            name: "James T.", role: "Independent Realtor, London" },
@@ -242,13 +333,13 @@ export default function HomePage() {
       </section>
 
       {/* ── PRICING ── */}
-      <div id="pricing" style={{ background: "#0D1D35", padding: "5rem 2rem" }}>
+      <div id="pricing" style={{ background: "#0D1D35", padding: "5rem 1.25rem" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Pricing</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.5rem" }}>Simple, Transparent Pricing</h2>
           <p style={{ fontSize: "15px", color: "#7A90A8", marginBottom: "0" }}>Start free. Upgrade when you're ready.</p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.25rem", marginTop: "2.5rem" }}>
+          <div className="lai-pricing-grid">
             {[
               { name: "Free",   price: "0",  period: "Forever free",  featured: false, features: ["5 generations / month", "All 10 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
               { name: "Pro",    price: "29", period: "per month",      featured: true,  features: ["100 generations / month", "Everything in Free", "Priority support", "Works for any country"], cta: "Start Pro Plan",    href: "/pricing" },
@@ -296,7 +387,7 @@ export default function HomePage() {
       </div>
 
       {/* ── BOTTOM CTA with property photo background ── */}
-      <section style={{ position: "relative", padding: "7rem 2rem", textAlign: "center", overflow: "hidden" }}>
+      <section style={{ position: "relative", padding: "7rem 1.25rem", textAlign: "center", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${CTA_IMG}')`,
