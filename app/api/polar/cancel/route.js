@@ -40,15 +40,22 @@ export async function POST(req) {
       return NextResponse.json({ error: 'No subscription ID found' }, { status: 400 });
     }
 
-    // Call Polar API to cancel the subscription
+    // ⚠️ IMPORTANT: Use PATCH with cancel_at_period_end: true, NOT DELETE.
+    // DELETE on this endpoint immediately revokes the subscription (ends access
+    // right now, no grace period) — that contradicts the cancel modal's promise
+    // that the user keeps access until the end of their billing period.
+    // PATCH with cancel_at_period_end schedules the cancellation correctly:
+    // the subscription stays active, and Polar automatically fires
+    // subscription.revoked on its own at the actual period end.
     const polarRes = await fetch(
       `https://api.polar.sh/v1/subscriptions/${profile.polar_subscription_id}`,
       {
-        method: 'DELETE',
+        method: 'PATCH',
         headers: {
           Authorization: `Bearer ${process.env.POLAR_ACCESS_TOKEN}`,
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ cancel_at_period_end: true }),
       }
     );
 
@@ -72,10 +79,11 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Failed to cancel with Polar' }, { status: 500 });
     }
 
-    console.log(`Cancelled subscription ${profile.polar_subscription_id} for user ${user.id}`);
+    console.log(`Scheduled cancellation (at period end) for subscription ${profile.polar_subscription_id}, user ${user.id}`);
 
-    // Polar webhook will fire subscription.revoked and update Supabase automatically
-    // But we return success immediately so the UI updates
+    // Polar webhook will fire subscription.canceled now, and subscription.revoked
+    // later at the actual period end — at which point Supabase gets downgraded.
+    // We return success immediately so the UI updates.
     return NextResponse.json({ success: true });
 
   } catch (err) {
