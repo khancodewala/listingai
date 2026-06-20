@@ -163,6 +163,7 @@ export default function Dashboard() {
   const [showCancelModal, setShowCancelModal] = useState(false)
   const [cancelling, setCancelling] = useState(false)
   const [cancelSuccess, setCancelSuccess] = useState(false)
+  const [cancelAlreadyCancelled, setCancelAlreadyCancelled] = useState(false)
   const [cancelError, setCancelError] = useState('')
   const [userEmail, setUserEmail] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -249,8 +250,9 @@ export default function Dashboard() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to cancel')
+      setCancelAlreadyCancelled(!!data.alreadyCancelled)
       setCancelSuccess(true)
-      setTimeout(() => { setShowCancelModal(false); setCancelSuccess(false) }, 3000)
+      setTimeout(() => { setShowCancelModal(false); setCancelSuccess(false); setCancelAlreadyCancelled(false) }, 3000)
     } catch (err) {
       setCancelError(err.message || 'Something went wrong. Please try again.')
     } finally {
@@ -532,8 +534,14 @@ export default function Dashboard() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">Subscription Cancelled</h3>
-                <p className="text-gray-500 text-sm">You will keep access until the end of your billing period.</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  {cancelAlreadyCancelled ? 'Already Set to Cancel' : 'Subscription Cancelled'}
+                </h3>
+                <p className="text-gray-500 text-sm">
+                  {cancelAlreadyCancelled
+                    ? 'Your subscription is already scheduled to end at your current billing period — no further action needed.'
+                    : 'You will keep access until the end of your billing period.'}
+                </p>
               </div>
             ) : (
               <>

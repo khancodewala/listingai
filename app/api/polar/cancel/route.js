@@ -55,6 +55,20 @@ export async function POST(req) {
     if (!polarRes.ok) {
       const errorData = await polarRes.json();
       console.error('Polar cancel error:', errorData);
+
+      // Polar says this subscription is already cancelled (or scheduled to cancel
+      // at period end). That's not actually a failure from the user's perspective —
+      // their cancellation request has already been honored. Treat it as success
+      // instead of surfacing a scary error, and let the existing webhook handler
+      // drive the actual plan downgrade in Supabase when the period ends.
+      if (errorData?.error === 'AlreadyCanceledSubscription') {
+        console.log(`Subscription ${profile.polar_subscription_id} already cancelled on Polar for user ${user.id} — treating as success`);
+        return NextResponse.json({
+          success: true,
+          alreadyCancelled: true,
+        });
+      }
+
       return NextResponse.json({ error: 'Failed to cancel with Polar' }, { status: 500 });
     }
 
