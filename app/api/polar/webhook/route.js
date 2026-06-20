@@ -63,7 +63,14 @@ export async function POST(req) {
     else console.log(`Updated user ${userId} to plan ${plan}, subscription ${subscriptionId}`);
   }
 
-  if (event.type === 'subscription.revoked' || event.type === 'subscription.canceled') {
+  // ⚠️ Only subscription.revoked should downgrade the user to free.
+  // subscription.canceled fires immediately when a customer cancels, but per
+  // Polar's docs the subscription stays active with cancel_at_period_end: true
+  // until the billing period actually ends — access should continue until then,
+  // matching the grace-period promise shown in the app's cancel modal.
+  // subscription.revoked fires only when access should actually be removed
+  // (period end reached, or an immediate/forced cancellation).
+  if (event.type === 'subscription.revoked') {
     const { error } = await supabase
       .from('profiles')
       .update({ plan: 'free', polar_subscription_id: null })
@@ -71,6 +78,12 @@ export async function POST(req) {
 
     if (error) console.error('Supabase revoke error:', error);
     else console.log(`Revoked subscription for user ${userId}, downgraded to free`);
+  }
+
+  // subscription.canceled is logged for visibility but no longer changes plan —
+  // the user correctly keeps their current plan until subscription.revoked fires.
+  if (event.type === 'subscription.canceled') {
+    console.log(`Subscription canceled (grace period active) for user ${userId} — plan unchanged until revoked`);
   }
 
   return NextResponse.json({ received: true });
