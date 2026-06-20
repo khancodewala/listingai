@@ -54,7 +54,6 @@ export async function POST(req) {
 
     if (!polarRes.ok) {
       const errorData = await polarRes.json();
-      console.error('Polar cancel error:', errorData);
 
       // Polar says this subscription is already cancelled (or scheduled to cancel
       // at period end). That's not actually a failure from the user's perspective —
@@ -69,6 +68,7 @@ export async function POST(req) {
         });
       }
 
+      console.error('Polar cancel error:', errorData);
       return NextResponse.json({ error: 'Failed to cancel with Polar' }, { status: 500 });
     }
 
