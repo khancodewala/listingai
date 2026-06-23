@@ -6,7 +6,7 @@ const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// ─── LANGUAGE NAMES ───────────────────────────────────────────────────────────
+// --- LANGUAGE NAMES -----------------------------------------------------------
 
 const LANGUAGE_NAMES = {
   en: "English",
@@ -15,10 +15,9 @@ const LANGUAGE_NAMES = {
   fr: "French",
 };
 
-// ─── SYSTEM PROMPTS ───────────────────────────────────────────────────────────
+// --- SYSTEM PROMPTS -----------------------------------------------------------
 
 const SYSTEM_PROMPTS = {
-  // existing
   listing:
     "You are an expert real estate copywriter. Write professional, engaging, and persuasive property listing descriptions that highlight key features, benefits, and lifestyle appeal. Format with a compelling headline, main description (150-200 words), and a bullet-point highlights section.",
   social:
@@ -37,13 +36,11 @@ const SYSTEM_PROMPTS = {
     "You are a real estate video script writer. Write a natural, engaging video walkthrough script for the given property. Structure: 1) Hook opening (5-10 sec grab), 2) Welcome & property intro, 3) Room-by-room walkthrough narration with vivid descriptions, 4) Key features highlight, 5) Neighborhood mention, 6) Price & contact CTA. Match the duration requested. Use conversational, enthusiastic tone. Works for any country.",
   bio:
     "You are a professional bio writer for real estate agents. Write a polished, engaging realtor bio suitable for a website 'About' page, business card profile, or social media bio. Highlight experience, specialties, achievements, and personality. Structure: an attention-grabbing opening line, a main body (120-180 words) covering experience and specialties, achievements/credentials, and a closing line that builds trust and invites contact. Match the requested tone. Works for any country.",
-
-  // ─── NEW ──────────────────────────────────────────────────────────────────
   leadmagnet:
     "You are a real estate content marketing expert who helps agents attract and convert leads through valuable, educational content. Write high-quality, ready-to-publish content that positions the agent as a trusted local expert. Structure content with a compelling headline, engaging introduction, well-organised body sections with clear headings, practical actionable advice, and a strong call-to-action that invites readers to contact the agent. Content should feel genuinely helpful — not salesy. Works for any country or market.",
 };
 
-// ─── PROMPT BUILDER ───────────────────────────────────────────────────────────
+// --- PROMPT BUILDER -----------------------------------------------------------
 
 function buildPrompt(feature, data) {
   if (feature === "listing") {
@@ -73,8 +70,6 @@ function buildPrompt(feature, data) {
   if (feature === "bio") {
     return "Write a realtor bio for: Agent Name: " + (data.agentName || "Agent") + ", Years of Experience: " + (data.yearsExperience || "N/A") + ", Location/Market: " + (data.location || "Not specified") + ", Specialties: " + (data.specialties || "N/A") + ", Achievements/Credentials: " + (data.achievements || "N/A") + ", Personal Touch: " + (data.personalTouch || "N/A") + ", Tone: " + (data.tone || "Professional");
   }
-
-  // ─── NEW ────────────────────────────────────────────────────────────────────
   if (feature === "leadmagnet") {
     const contentTypeLabels = {
       blog_post:          "Blog Post",
@@ -104,7 +99,7 @@ function buildPrompt(feature, data) {
   return "Please provide details.";
 }
 
-// ─── API ROUTE ────────────────────────────────────────────────────────────────
+// --- API ROUTE ----------------------------------------------------------------
 
 export async function POST(request) {
   try {
@@ -166,12 +161,20 @@ export async function POST(request) {
 
     const result = message.content[0].text;
 
-    // ---- STEP 4: Save to generations history ----
+    // ---- STEP 4: Save to generations history (with token usage) ----
+    const inputTokens = message.usage?.input_tokens || 0;
+    const outputTokens = message.usage?.output_tokens || 0;
+    // Claude Sonnet pricing: $3 per 1M input tokens, $15 per 1M output tokens
+    const costUsd = (inputTokens / 1_000_000 * 3) + (outputTokens / 1_000_000 * 15);
+
     await supabaseAdmin.from('generations').insert({
       user_id: user.id,
       type: feature,
       input: data,
       output: result,
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      cost_usd: costUsd,
     });
 
     return Response.json({ success: true, result });
