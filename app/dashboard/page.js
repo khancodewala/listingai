@@ -5,7 +5,6 @@ import GenerationDetailPanel from '@/components/GenerationDetailPanel'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
-// ─── TYPE LABELS ──────────────────────────────────────────────────────────────
 const TYPE_LABELS = {
   listing:      'Listing Writer',
   social:       'Social Media',
@@ -19,7 +18,6 @@ const TYPE_LABELS = {
   leadmagnet:   'Lead Magnet / Blog',
 }
 
-// ─── TYPE COLORS ──────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
   listing:      'bg-blue-50 text-blue-700 border border-blue-100',
   social:       'bg-purple-50 text-purple-700 border border-purple-100',
@@ -34,100 +32,29 @@ const TYPE_COLORS = {
 }
 
 const PLAN_CONFIG = {
-  free:   { color: 'text-slate-600',  bar: 'bg-slate-400',  light: 'bg-slate-50',   border: 'border-slate-200', badge: 'bg-slate-100 text-slate-600' },
-  pro:    { color: 'text-blue-600',   bar: 'bg-blue-500',   light: 'bg-blue-50',    border: 'border-blue-200',  badge: 'bg-blue-100 text-blue-700' },
-  agency: { color: 'text-purple-600', bar: 'bg-purple-500', light: 'bg-purple-50',  border: 'border-purple-200',badge: 'bg-purple-100 text-purple-700' },
+  free:   { color: 'text-slate-600',  bar: 'bg-slate-400',  light: 'bg-slate-50',  border: 'border-slate-200', badge: 'bg-slate-100 text-slate-600' },
+  pro:    { color: 'text-blue-600',   bar: 'bg-blue-500',   light: 'bg-blue-50',   border: 'border-blue-200',  badge: 'bg-blue-100 text-blue-700' },
+  agency: { color: 'text-purple-600', bar: 'bg-purple-500', light: 'bg-purple-50', border: 'border-purple-200', badge: 'bg-purple-100 text-purple-700' },
 }
 
-// ─── TOOLS ────────────────────────────────────────────────────────────────────
 const TOOLS = [
-  {
-    key: 'listing',
-    icon: '🏠',
-    label: 'Listing Writer',
-    desc: 'Generate professional MLS property descriptions in seconds',
-    color: 'hover:border-blue-300 hover:bg-blue-50/50',
-    accent: 'bg-blue-100 text-blue-700',
-  },
-  {
-    key: 'social',
-    icon: '📱',
-    label: 'Social Media',
-    desc: 'Create engaging Instagram & Facebook captions for listings',
-    color: 'hover:border-purple-300 hover:bg-purple-50/50',
-    accent: 'bg-purple-100 text-purple-700',
-  },
-  {
-    key: 'email',
-    icon: '✉️',
-    label: 'Buyer Email',
-    desc: 'Write personalized emails to buyers about properties',
-    color: 'hover:border-emerald-300 hover:bg-emerald-50/50',
-    accent: 'bg-emerald-100 text-emerald-700',
-  },
-  {
-    key: 'contract',
-    icon: '📄',
-    label: 'Contract Summary',
-    desc: 'Summarize complex real estate contracts into plain English',
-    color: 'hover:border-amber-300 hover:bg-amber-50/50',
-    accent: 'bg-amber-100 text-amber-700',
-  },
-  {
-    key: 'openhouse',
-    icon: '🎪',
-    label: 'Open House',
-    desc: 'Create announcements for WhatsApp, SMS, and social media',
-    color: 'hover:border-rose-300 hover:bg-rose-50/50',
-    accent: 'bg-rose-100 text-rose-700',
-  },
-  {
-    key: 'neighborhood',
-    icon: '📍',
-    label: 'Neighborhood',
-    desc: 'Write compelling area descriptions for any city worldwide',
-    color: 'hover:border-teal-300 hover:bg-teal-50/50',
-    accent: 'bg-teal-100 text-teal-700',
-  },
-  {
-    key: 'pricedrop',
-    icon: '💰',
-    label: 'Price Reduction',
-    desc: 'Announce price drops tactfully to attract motivated buyers',
-    color: 'hover:border-orange-300 hover:bg-orange-50/50',
-    accent: 'bg-orange-100 text-orange-700',
-  },
-  {
-    key: 'videoscript',
-    icon: '🎥',
-    label: 'Video Script',
-    desc: 'Write walkthrough scripts for Reels, YouTube & TikTok',
-    color: 'hover:border-indigo-300 hover:bg-indigo-50/50',
-    accent: 'bg-indigo-100 text-indigo-700',
-  },
-  {
-    key: 'bio',
-    icon: '👤',
-    label: 'Realtor Bio',
-    desc: 'Generate a polished professional bio for your website or profile',
-    color: 'hover:border-pink-300 hover:bg-pink-50/50',
-    accent: 'bg-pink-100 text-pink-700',
-  },
-  {
-    key: 'leadmagnet',
-    icon: '🧲',
-    label: 'Lead Magnet / Blog',
-    desc: 'Create blog posts, buyer guides & checklists to attract new leads',
-    color: 'hover:border-green-300 hover:bg-green-50/50',
-    accent: 'bg-green-100 text-green-700',
-  },
+  { key: 'listing',      icon: '🏠', label: 'Listing Writer',    desc: 'Generate professional MLS property descriptions in seconds',           color: 'hover:border-blue-300 hover:bg-blue-50/50',      accent: 'bg-blue-100 text-blue-700' },
+  { key: 'social',       icon: '📱', label: 'Social Media',       desc: 'Create engaging Instagram and Facebook captions for listings',         color: 'hover:border-purple-300 hover:bg-purple-50/50',  accent: 'bg-purple-100 text-purple-700' },
+  { key: 'email',        icon: '✉️', label: 'Buyer Email',        desc: 'Write personalized emails to buyers about properties',                 color: 'hover:border-emerald-300 hover:bg-emerald-50/50', accent: 'bg-emerald-100 text-emerald-700' },
+  { key: 'contract',     icon: '📄', label: 'Contract Summary',   desc: 'Summarize complex real estate contracts into plain English',           color: 'hover:border-amber-300 hover:bg-amber-50/50',    accent: 'bg-amber-100 text-amber-700' },
+  { key: 'openhouse',    icon: '🎪', label: 'Open House',         desc: 'Create announcements for WhatsApp, SMS, and social media',            color: 'hover:border-rose-300 hover:bg-rose-50/50',      accent: 'bg-rose-100 text-rose-700' },
+  { key: 'neighborhood', icon: '📍', label: 'Neighborhood',       desc: 'Write compelling area descriptions for any city worldwide',           color: 'hover:border-teal-300 hover:bg-teal-50/50',      accent: 'bg-teal-100 text-teal-700' },
+  { key: 'pricedrop',    icon: '💰', label: 'Price Reduction',    desc: 'Announce price drops tactfully to attract motivated buyers',          color: 'hover:border-orange-300 hover:bg-orange-50/50',  accent: 'bg-orange-100 text-orange-700' },
+  { key: 'videoscript',  icon: '🎥', label: 'Video Script',       desc: 'Write walkthrough scripts for Reels, YouTube and TikTok',            color: 'hover:border-indigo-300 hover:bg-indigo-50/50',  accent: 'bg-indigo-100 text-indigo-700' },
+  { key: 'bio',          icon: '👤', label: 'Realtor Bio',        desc: 'Generate a polished professional bio for your website or profile',    color: 'hover:border-pink-300 hover:bg-pink-50/50',      accent: 'bg-pink-100 text-pink-700' },
+  { key: 'leadmagnet',   icon: '🧲', label: 'Lead Magnet / Blog', desc: 'Create blog posts, buyer guides and checklists to attract new leads', color: 'hover:border-green-300 hover:bg-green-50/50',    accent: 'bg-green-100 text-green-700' },
 ]
 
 const NAV_ITEMS = [
-  { icon: '⚡', label: 'Dashboard', href: '/dashboard', active: true },
-  { icon: '🤖', label: 'AI Generator', href: '/generate', active: false },
-  { icon: '📋', label: 'History', href: '/dashboard#history', active: false },
-  { icon: '💰', label: 'Pricing', href: '/pricing', active: false },
+  { icon: '⚡', label: 'Dashboard',    href: '/dashboard',         active: true },
+  { icon: '🤖', label: 'AI Generator', href: '/generate',          active: false },
+  { icon: '📋', label: 'History',      href: '/dashboard#history', active: false },
+  { icon: '💰', label: 'Pricing',      href: '/pricing',           active: false },
 ]
 
 function getGreeting() {
@@ -167,6 +94,9 @@ export default function Dashboard() {
   const [cancelError, setCancelError] = useState('')
   const [userEmail, setUserEmail] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [polarCustomerId, setPolarCustomerId] = useState(null)
+  const [paymentIssue, setPaymentIssue] = useState(false)
+  const [portalLoading, setPortalLoading] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -175,7 +105,11 @@ export default function Dashboard() {
         if (!session) { setLoading(false); return }
         setUserEmail(session.user.email || '')
         const [{ data: profile }, usageRes, { data: gens }] = await Promise.all([
-          supabase.from('profiles').select('plan').eq('id', session.user.id).single(),
+          supabase
+            .from('profiles')
+            .select('plan, polar_customer_id, payment_issue')
+            .eq('id', session.user.id)
+            .single(),
           fetch('/api/usage', { headers: { Authorization: `Bearer ${session.access_token}` } }),
           supabase
             .from('generations')
@@ -186,6 +120,8 @@ export default function Dashboard() {
         ])
         const usageData = await usageRes.json()
         setPlan(profile?.plan || 'free')
+        setPolarCustomerId(profile?.polar_customer_id || null)
+        setPaymentIssue(profile?.payment_issue || false)
         setUsage(usageData.used || 0)
         setGenerations(gens || [])
       } catch (err) {
@@ -226,15 +162,15 @@ export default function Dashboard() {
 
   const getTitle = (type, input) => {
     if (type === 'listing')      return `${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
-    if (type === 'social')       return `${input?.propertyType || 'Property'} — ${input?.location || 'Unknown'}`
+    if (type === 'social')       return `${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
     if (type === 'email')        return `Email to ${input?.buyerName || 'Buyer'}`
     if (type === 'contract')     return 'Contract Summary'
-    if (type === 'openhouse')    return `Open House — ${input?.location || 'Unknown'}`
+    if (type === 'openhouse')    return `Open House in ${input?.location || 'Unknown'}`
     if (type === 'neighborhood') return `${input?.neighborhood || 'Area'}, ${input?.city || 'Unknown'}`
-    if (type === 'pricedrop')    return `Price Drop — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
-    if (type === 'videoscript')  return `Video Script — ${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
-    if (type === 'bio')          return `Bio — ${input?.agentName || 'Agent'}`
-    if (type === 'leadmagnet')   return `${input?.topic || 'Content'} — ${input?.targetAudience || 'General Audience'}`
+    if (type === 'pricedrop')    return `Price Drop in ${input?.location || 'Unknown'}`
+    if (type === 'videoscript')  return `Video Script in ${input?.location || 'Unknown'}`
+    if (type === 'bio')          return `Bio for ${input?.agentName || 'Agent'}`
+    if (type === 'leadmagnet')   return `${input?.topic || 'Content'} for ${input?.targetAudience || 'General Audience'}`
     return 'Generation'
   }
 
@@ -252,11 +188,36 @@ export default function Dashboard() {
       if (!res.ok) throw new Error(data.error || 'Failed to cancel')
       setCancelAlreadyCancelled(!!data.alreadyCancelled)
       setCancelSuccess(true)
-      setTimeout(() => { setShowCancelModal(false); setCancelSuccess(false); setCancelAlreadyCancelled(false) }, 3000)
+      setTimeout(() => {
+        setShowCancelModal(false)
+        setCancelSuccess(false)
+        setCancelAlreadyCancelled(false)
+      }, 3000)
     } catch (err) {
       setCancelError(err.message || 'Something went wrong. Please try again.')
     } finally {
       setCancelling(false)
+    }
+  }
+
+  const handleManageBilling = async () => {
+    setPortalLoading(true)
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) throw new Error('Not logged in')
+      const res = await fetch('/api/polar/portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: session.user.id }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to open billing portal')
+      window.location.href = data.url
+    } catch (err) {
+      console.error('Portal error:', err)
+      alert(err.message || 'Could not open billing portal right now.')
+    } finally {
+      setPortalLoading(false)
     }
   }
 
@@ -273,27 +234,27 @@ export default function Dashboard() {
           <span className="text-lg font-bold text-white">ListingAI</span>
         </a>
       </div>
-
       <nav className="flex-1 px-3 py-4 space-y-1">
         {NAV_ITEMS.map(item => (
           <a
             key={item.label}
             href={item.href}
-            className={item.active ? 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white' : 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-800'}
+            className={item.active
+              ? 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white'
+              : 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-800'}
           >
             <span className="text-base">{item.icon}</span>
             {item.label}
           </a>
         ))}
       </nav>
-
       <div className="px-3 py-4 border-t border-gray-800 space-y-3">
         {plan === 'free' && (
           <a
             href="/pricing"
             className="block w-full text-center bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all"
           >
-            Upgrade to Pro ⭐
+            Upgrade to Pro
           </a>
         )}
         <div className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-800 transition-all cursor-pointer">
@@ -318,12 +279,10 @@ export default function Dashboard() {
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
 
-      {/* Desktop Sidebar */}
       <div className="hidden md:flex flex-col w-64 flex-shrink-0 shadow-lg">
         <Sidebar />
       </div>
 
-      {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
           <div className="w-64 flex flex-col shadow-2xl">
@@ -333,10 +292,8 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
 
-        {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100 sticky top-0 z-40">
           <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-gray-100">
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -351,7 +308,6 @@ export default function Dashboard() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
 
-          {/* Greeting */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-gray-900">
               {getGreeting()}, {firstName.charAt(0).toUpperCase() + firstName.slice(1)} 👋
@@ -359,7 +315,22 @@ export default function Dashboard() {
             <p className="text-gray-500 text-sm mt-1">Here is what is happening with your ListingAI account today.</p>
           </div>
 
-          {/* Upgrade Banner for Free Users */}
+          {!loading && paymentIssue && plan !== 'free' && (
+            <div className="mb-6 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <p className="text-white font-semibold text-sm">⚠️ Payment issue — your {planLabel} access is at risk</p>
+                <p className="text-red-100 text-xs mt-0.5">We could not process your last payment. Update your card to avoid being downgraded to Free.</p>
+              </div>
+              <button
+                onClick={handleManageBilling}
+                disabled={portalLoading}
+                className="flex-shrink-0 bg-white text-red-600 font-bold text-sm px-5 py-2 rounded-xl hover:bg-red-50 transition-all disabled:opacity-60"
+              >
+                {portalLoading ? 'Opening...' : 'Update Payment'}
+              </button>
+            </div>
+          )}
+
           {!loading && plan === 'free' && (
             <div className="mb-6 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div>
@@ -370,15 +341,14 @@ export default function Dashboard() {
                 href="/pricing"
                 className="flex-shrink-0 bg-white text-blue-700 font-bold text-sm px-5 py-2 rounded-xl hover:bg-blue-50 transition-all"
               >
-                Upgrade Now →
+                Upgrade Now
               </a>
             </div>
           )}
 
-          {/* Stats Row */}
           {loading ? (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-              {[1,2,3,4].map(i => (
+              {[1, 2, 3, 4].map(i => (
                 <div key={i} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 animate-pulse">
                   <div className="h-3 bg-gray-100 rounded w-2/3 mb-3"></div>
                   <div className="h-7 bg-gray-100 rounded w-1/2"></div>
@@ -416,7 +386,6 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Activity Chart */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-bold text-gray-800">Activity — Last 7 Days</h2>
@@ -429,7 +398,6 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* AI Tools */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-base font-bold text-gray-800">AI Tools</h2>
@@ -457,16 +425,14 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Generations */}
           <div id="history" className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-50">
               <h2 className="text-sm font-bold text-gray-800">Recent Generations</h2>
               <span className="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">{generations.length} entries</span>
             </div>
-
             {loading ? (
               <div className="p-5 space-y-3">
-                {[1,2,3].map(i => (
+                {[1, 2, 3].map(i => (
                   <div key={i} className="animate-pulse h-14 bg-gray-50 rounded-xl"></div>
                 ))}
               </div>
@@ -475,7 +441,7 @@ export default function Dashboard() {
                 <span className="text-5xl mb-3">✨</span>
                 <p className="text-gray-600 font-semibold mb-1">No generations yet</p>
                 <p className="text-gray-400 text-sm mb-4">Use any AI tool above to create your first content</p>
-                <a href="/generate" className="text-sm text-blue-600 font-semibold hover:underline">Start generating →</a>
+                <a href="/generate" className="text-sm text-blue-600 font-semibold hover:underline">Start generating</a>
               </div>
             ) : (
               <div className="divide-y divide-gray-50">
@@ -508,9 +474,17 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* Cancel Subscription Link */}
           {!loading && plan !== 'free' && (
-            <div className="mt-4 text-center">
+            <div className="mt-4 text-center flex items-center justify-center gap-4">
+              {polarCustomerId && (
+                <button
+                  onClick={handleManageBilling}
+                  disabled={portalLoading}
+                  className="text-xs text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-60"
+                >
+                  {portalLoading ? 'Opening...' : 'Manage billing'}
+                </button>
+              )}
               <button
                 onClick={() => setShowCancelModal(true)}
                 className="text-xs text-gray-400 hover:text-red-500 transition-colors"
@@ -523,7 +497,6 @@ export default function Dashboard() {
         </div>
       </main>
 
-      {/* Cancel Modal */}
       {showCancelModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center px-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
