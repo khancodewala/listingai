@@ -26,7 +26,7 @@ export async function POST(req) {
       .single();
 
     if (profileError || !profile?.polar_customer_id) {
-      return NextResponse.json({ error: 'No billing account found for this user' }, { status: 404 });
+      return NextResponse.json({ redirectToPricing: true }, { status: 200 });
     }
 
     const session = await polar.customerSessions.create({

@@ -201,26 +201,29 @@ export default function Dashboard() {
   }
 
   const handleManageBilling = async () => {
-    setPortalLoading(true)
-    try {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session) throw new Error('Not logged in')
-      const res = await fetch('/api/polar/portal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: session.user.id }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Failed to open billing portal')
-      window.location.href = data.url
-    } catch (err) {
-      console.error('Portal error:', err)
-      alert(err.message || 'Could not open billing portal right now.')
-    } finally {
-      setPortalLoading(false)
+  setPortalLoading(true)
+  try {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) throw new Error('Not logged in')
+    const res = await fetch('/api/polar/portal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: session.user.id }),
+    })
+    const data = await res.json()
+    if (data.redirectToPricing) {
+      window.location.href = '/pricing'
+      return
     }
+    if (!res.ok) throw new Error(data.error || 'Failed to open billing portal')
+    window.location.href = data.url
+  } catch (err) {
+    console.error('Portal error:', err)
+    alert('Could not open billing portal. Please try again or contact support.')
+  } finally {
+    setPortalLoading(false)
   }
-
+}
   const handleLogout = async () => {
     await supabase.auth.signOut()
     window.location.href = '/'
