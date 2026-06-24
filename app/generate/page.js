@@ -23,6 +23,13 @@ const LANGUAGES = [
   { code: "fr", label: "🇫🇷 French" },
 ];
 
+function getPricePlaceholder(language) {
+  if (language === "es") return "e.g. €250,000 or $250,000 or MXN 4,500,000";
+  if (language === "fr") return "e.g. €250,000 or CHF 250,000 or CAD 350,000";
+  if (language === "ar") return "e.g. AED 900,000 or SAR 950,000 or $250,000";
+  return "e.g. $250,000 or PKR 2.5 Crore or AED 900,000";
+}
+
 function Field({ label, value, onChange, placeholder, textarea }) {
   const cls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
   return (
@@ -74,8 +81,6 @@ function GenerateBtn({ onClick, loading }) {
   );
 }
 
-// ─── EXISTING FORMS ───────────────────────────────────────────────────────────
-
 function ListingForm({ onGenerate, loading, language }) {
   const [form, setForm] = useState({
     propertyType: "", location: "", bedrooms: "", bathrooms: "",
@@ -90,7 +95,7 @@ function ListingForm({ onGenerate, loading, language }) {
         <Field label="Bedrooms" value={form.bedrooms} onChange={set("bedrooms")} placeholder="e.g. 4" />
         <Field label="Bathrooms" value={form.bathrooms} onChange={set("bathrooms")} placeholder="e.g. 3" />
         <Field label="Size" value={form.size} onChange={set("size")} placeholder="e.g. 2400 sq ft or 220 sqm" />
-        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $250,000 or PKR 2.5 Crore or AED 900,000" />
+        <Field label="Price" value={form.price} onChange={set("price")} placeholder={getPricePlaceholder(language)} />
       </div>
       <Field label="Key Features" value={form.features} onChange={set("features")} placeholder="e.g. Pool, Gym, Parking, Garden, Sea View" textarea />
       <Field label="Additional Notes (optional)" value={form.notes} onChange={set("notes")} placeholder="Anything else to highlight..." textarea />
@@ -109,7 +114,7 @@ function SocialForm({ onGenerate, loading, language }) {
       <div className="grid grid-cols-2 gap-4">
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse, family home" />
         <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Beverly Hills CA, Palm Jumeirah, Gulberg Lahore" />
-        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $500,000 or AED 1.2M or PKR 3 Crore" />
+        <Field label="Price" value={form.price} onChange={set("price")} placeholder={getPricePlaceholder(language)} />
         <Field label="Target Buyer" value={form.targetBuyer} onChange={set("targetBuyer")} placeholder="e.g. Young professionals, families, investors" />
       </div>
       <Field label="Key Highlights" value={form.highlights} onChange={set("highlights")} placeholder="e.g. Stunning city views, modern kitchen, pool, gym" textarea />
@@ -172,7 +177,7 @@ function OpenHouseForm({ onGenerate, loading, language }) {
         <Field label="Location / Address" value={form.location} onChange={set("location")} placeholder="e.g. 45 Maple St, Austin TX" />
         <Field label="Open House Date" value={form.date} onChange={set("date")} placeholder="e.g. Saturday June 7, 2026" />
         <Field label="Time" value={form.time} onChange={set("time")} placeholder="e.g. 11:00 AM – 2:00 PM" />
-        <Field label="Asking Price" value={form.price} onChange={set("price")} placeholder="e.g. $450,000 or PKR 3.5 Crore" />
+        <Field label="Asking Price" value={form.price} onChange={set("price")} placeholder={getPricePlaceholder(language)} />
         <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Sarah Johnson" />
         <Field label="Phone / WhatsApp" value={form.agentPhone} onChange={set("agentPhone")} placeholder="e.g. +1 555 123 4567" />
       </div>
@@ -214,8 +219,8 @@ function PriceDropForm({ onGenerate, loading, language }) {
       <div className="grid grid-cols-2 gap-4">
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 5-bed villa, 2-bed apartment" />
         <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Bahria Town Karachi, Downtown Dubai" />
-        <Field label="Original Price" value={form.oldPrice} onChange={set("oldPrice")} placeholder="e.g. $320,000 or PKR 4 Crore" />
-        <Field label="New Reduced Price" value={form.newPrice} onChange={set("newPrice")} placeholder="e.g. $285,000 or PKR 3.5 Crore" />
+        <Field label="Original Price" value={form.oldPrice} onChange={set("oldPrice")} placeholder={getPricePlaceholder(language)} />
+        <Field label="New Reduced Price" value={form.newPrice} onChange={set("newPrice")} placeholder={getPricePlaceholder(language)} />
         <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Ali Raza" />
       </div>
       <Field label="Reason for Reduction (optional)" value={form.reason} onChange={set("reason")} placeholder="e.g. Motivated seller, relocating abroad, quick sale needed" textarea />
@@ -236,7 +241,7 @@ function VideoScriptForm({ onGenerate, loading, language }) {
       <div className="grid grid-cols-2 gap-4">
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse, family home" />
         <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Islamabad F-7, Downtown LA, JVC Dubai" />
-        <Field label="Price" value={form.price} onChange={set("price")} placeholder="e.g. $600,000 or AED 2.5M" />
+        <Field label="Price" value={form.price} onChange={set("price")} placeholder={getPricePlaceholder(language)} />
         <Field label="Bedrooms" value={form.bedrooms} onChange={set("bedrooms")} placeholder="e.g. 4" />
         <Field label="Agent / Presenter Name" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Hamza Malik" />
         <Field label="Video Duration" value={form.duration} onChange={set("duration")} placeholder="e.g. 60 seconds, 2-3 minutes" />
@@ -270,16 +275,14 @@ function BioForm({ onGenerate, loading, language }) {
   );
 }
 
-// ─── NEW: LEAD MAGNET / BLOG POST FORM ───────────────────────────────────────
-
 const CONTENT_TYPES = [
-  { value: "blog_post",      label: "📝 Blog Post" },
-  { value: "buyers_guide",   label: "📘 Buyer's Guide" },
-  { value: "sellers_guide",  label: "📙 Seller's Guide" },
-  { value: "market_report",  label: "📊 Market Report" },
-  { value: "checklist",      label: "✅ Checklist" },
-  { value: "faq",            label: "❓ FAQ Article" },
-  { value: "tips_list",      label: "💡 Tips List" },
+  { value: "blog_post",          label: "📝 Blog Post" },
+  { value: "buyers_guide",       label: "📘 Buyer's Guide" },
+  { value: "sellers_guide",      label: "📙 Seller's Guide" },
+  { value: "market_report",      label: "📊 Market Report" },
+  { value: "checklist",          label: "✅ Checklist" },
+  { value: "faq",                label: "❓ FAQ Article" },
+  { value: "tips_list",          label: "💡 Tips List" },
   { value: "neighborhood_guide", label: "🗺️ Neighborhood Guide" },
 ];
 
@@ -298,7 +301,6 @@ function LeadMagnetForm({ onGenerate, loading, language }) {
 
   return (
     <div className="space-y-4">
-      {/* Content Type Selector */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Content Type</label>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -319,55 +321,17 @@ function LeadMagnetForm({ onGenerate, loading, language }) {
         </div>
       </div>
 
-      {/* Fields */}
       <div className="grid grid-cols-2 gap-4">
-        <Field
-          label="Topic / Title Idea"
-          value={form.topic}
-          onChange={set("topic")}
-          placeholder="e.g. How to buy your first home in Dubai, Top 5 mistakes home sellers make"
-        />
-        <Field
-          label="Target Audience"
-          value={form.targetAudience}
-          onChange={set("targetAudience")}
-          placeholder="e.g. First-time buyers, overseas investors, young couples"
-        />
-        <Field
-          label="Location / Market (optional)"
-          value={form.location}
-          onChange={set("location")}
-          placeholder="e.g. Dubai, Lahore, Austin TX — or leave blank for general"
-        />
-        <Field
-          label="Your Name / Brand (optional)"
-          value={form.agentName}
-          onChange={set("agentName")}
-          placeholder="e.g. Ahmed Khan – Lahore Realty"
-        />
-        <Field
-          label="Tone"
-          value={form.tone}
-          onChange={set("tone")}
-          placeholder="e.g. Friendly & educational, professional, conversational"
-        />
-        <Field
-          label="Approx. Word Count"
-          value={form.wordCount}
-          onChange={set("wordCount")}
-          placeholder="e.g. 500 words, 800 words, short (default: ~600)"
-        />
+        <Field label="Topic / Title Idea" value={form.topic} onChange={set("topic")} placeholder="e.g. How to buy your first home in Dubai, Top 5 mistakes home sellers make" />
+        <Field label="Target Audience" value={form.targetAudience} onChange={set("targetAudience")} placeholder="e.g. First-time buyers, overseas investors, young couples" />
+        <Field label="Location / Market (optional)" value={form.location} onChange={set("location")} placeholder="e.g. Dubai, Lahore, Austin TX — or leave blank for general" />
+        <Field label="Your Name / Brand (optional)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Ahmed Khan – Lahore Realty" />
+        <Field label="Tone" value={form.tone} onChange={set("tone")} placeholder="e.g. Friendly & educational, professional, conversational" />
+        <Field label="Approx. Word Count" value={form.wordCount} onChange={set("wordCount")} placeholder="e.g. 500 words, 800 words, short (default: ~600)" />
       </div>
 
-      <Field
-        label="Key Points to Cover (optional)"
-        value={form.keyPoints}
-        onChange={set("keyPoints")}
-        placeholder="e.g. Down payment tips, mortgage pre-approval, hidden costs, negotiation tactics"
-        textarea
-      />
+      <Field label="Key Points to Cover (optional)" value={form.keyPoints} onChange={set("keyPoints")} placeholder="e.g. Down payment tips, mortgage pre-approval, hidden costs, negotiation tactics" textarea />
 
-      {/* Info banner */}
       <div className="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
         <span className="text-lg mt-0.5">🧲</span>
         <p className="text-xs text-blue-700 leading-relaxed">
@@ -379,8 +343,6 @@ function LeadMagnetForm({ onGenerate, loading, language }) {
     </div>
   );
 }
-
-// ─── FIELD LABELS ─────────────────────────────────────────────────────────────
 
 const FIELD_LABELS = {
   propertyType:    "Property Type",
@@ -417,15 +379,12 @@ const FIELD_LABELS = {
   personalTouch:   "Personal Touch",
   tone:            "Tone",
   language:        "Output Language",
-  // lead magnet
   contentType:     "Content Type",
   topic:           "Topic / Title Idea",
   targetAudience:  "Target Audience",
   keyPoints:       "Key Points",
   wordCount:       "Word Count",
 };
-
-// ─── TAB LABELS ───────────────────────────────────────────────────────────────
 
 const TAB_LABELS = {
   listing:      "Listing Writer",
@@ -440,15 +399,12 @@ const TAB_LABELS = {
   leadmagnet:   "Lead Magnet / Blog",
 };
 
-// ─── RESULT PANEL ─────────────────────────────────────────────────────────────
-
 function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
   const { feature, language, ...fields } = inputData || {};
   const inputEntries = Object.entries(fields).filter(([, v]) => v && v.trim && v.trim() !== "");
 
   return (
     <>
-      {/* Backdrop */}
       <div
         onClick={onClose}
         style={{
@@ -458,7 +414,6 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
         }}
       />
 
-      {/* Slide-over panel */}
       <div style={{
         position: "fixed", top: 0, right: 0,
         height: "100vh", width: "100%", maxWidth: "540px",
@@ -470,7 +425,6 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
       }}>
         <style>{`@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }`}</style>
 
-        {/* Header */}
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
           padding: "16px 20px", borderBottom: "1px solid #e5e7eb",
@@ -521,10 +475,8 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
           </div>
         </div>
 
-        {/* Scrollable content */}
         <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
 
-          {/* Input Details */}
           {inputEntries.length > 0 && (
             <div style={{ marginBottom: "24px" }}>
               <p style={{
@@ -533,9 +485,7 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
               }}>
                 Input Details
               </p>
-              <div style={{
-                display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px",
-              }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                 {inputEntries.map(([key, value]) => (
                   <div key={key}>
                     <p style={{ fontSize: "11px", color: "#9ca3af", margin: "0 0 2px" }}>
@@ -550,12 +500,10 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
             </div>
           )}
 
-          {/* Divider */}
           {inputEntries.length > 0 && (
             <div style={{ borderTop: "1px solid #e5e7eb", marginBottom: "20px" }} />
           )}
 
-          {/* AI Output */}
           <p style={{
             fontSize: "11px", fontWeight: "600", color: "#9ca3af",
             letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "12px",
@@ -571,7 +519,6 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
             {result}
           </pre>
 
-          {/* Fair Housing Compliance Notice */}
           {feature === "listing" && (
             <div style={{
               marginTop: "20px", padding: "12px 14px",
@@ -585,7 +532,6 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
             </div>
           )}
 
-          {/* Lead Magnet usage tip */}
           {feature === "leadmagnet" && (
             <div style={{
               marginTop: "20px", padding: "12px 14px",
@@ -603,8 +549,6 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
     </>
   );
 }
-
-// ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 
 export default function GeneratePage() {
   const [activeTab, setActiveTab] = useState("listing");
@@ -761,7 +705,6 @@ export default function GeneratePage() {
 
       </div>
 
-      {/* Slide-over result panel */}
       {result && (
         <ResultPanel
           result={result}
