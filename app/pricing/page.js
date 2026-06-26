@@ -105,79 +105,46 @@ export default function PricingPage() {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f9fafb", padding: "60px 24px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="min-h-screen bg-gray-50 py-16 px-6">
+      <div className="max-w-5xl mx-auto">
 
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <h1 style={{ fontSize: "36px", fontWeight: "700", color: "#111827", margin: "0 0 12px" }}>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">
             Simple, Transparent Pricing
           </h1>
-          <p style={{ fontSize: "18px", color: "#6b7280", margin: "0" }}>
+          <p className="text-lg text-gray-500">
             Choose the plan that works for you. Upgrade or cancel anytime.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              style={{
-                background: "#ffffff",
-                borderRadius: "16px",
-                border: plan.highlighted ? "2px solid #1d4ed8" : "1px solid #e5e7eb",
-                padding: "32px 24px",
-                position: "relative",
-              }}
+              className={`bg-white rounded-2xl p-8 relative flex flex-col ${
+                plan.highlighted
+                  ? "border-2 border-blue-600 shadow-lg"
+                  : "border border-gray-200"
+              }`}
             >
               {plan.highlighted && (
-                <div style={{
-                  position: "absolute",
-                  top: "-14px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "#1d4ed8",
-                  color: "#ffffff",
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  padding: "4px 16px",
-                  borderRadius: "20px",
-                }}>
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
                   Most Popular
                 </div>
               )}
 
-              <h2 style={{ fontSize: "20px", fontWeight: "700", color: "#111827", margin: "0 0 8px" }}>
-                {plan.name}
-              </h2>
-              <p style={{ fontSize: "14px", color: "#6b7280", margin: "0 0 20px" }}>
-                {plan.description}
-              </p>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h2>
+              <p className="text-sm text-gray-500 mb-5">{plan.description}</p>
 
-              <div style={{ marginBottom: "24px" }}>
-                <span style={{ fontSize: "40px", fontWeight: "700", color: "#111827" }}>
-                  {plan.price}
-                </span>
-                <span style={{ fontSize: "14px", color: "#6b7280", marginLeft: "4px" }}>
-                  /{plan.period}
-                </span>
+              <div className="mb-6">
+                <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
+                <span className="text-sm text-gray-500 ml-1">/{plan.period}</span>
               </div>
 
               {plan.planKey === "free" ? (
-            <a    
+                <a
                   href="/signup"
-                  style={{
-                    display: "block",
-                    textAlign: "center",
-                    background: "#ffffff",
-                    color: "#1d4ed8",
-                    border: "2px solid #1d4ed8",
-                    borderRadius: "8px",
-                    padding: "12px",
-                    fontWeight: "600",
-                    fontSize: "15px",
-                    textDecoration: "none",
-                    marginBottom: "28px",
-                  }}
+                  className="block text-center bg-white text-blue-600 border-2 border-blue-600 rounded-lg py-3 font-semibold text-sm mb-7 hover:bg-blue-50 transition-colors"
                 >
                   Get Started Free
                 </a>
@@ -185,37 +152,27 @@ export default function PricingPage() {
                 <button
                   onClick={() => handleUpgrade(plan.planKey)}
                   disabled={loading === plan.planKey}
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    textAlign: "center",
-                    background: plan.highlighted ? "#1d4ed8" : "#ffffff",
-                    color: plan.highlighted ? "#ffffff" : "#1d4ed8",
-                    border: "2px solid #1d4ed8",
-                    borderRadius: "8px",
-                    padding: "12px",
-                    fontWeight: "600",
-                    fontSize: "15px",
-                    cursor: loading === plan.planKey ? "not-allowed" : "pointer",
-                    opacity: loading === plan.planKey ? 0.7 : 1,
-                    marginBottom: "28px",
-                  }}
+                  className={`block w-full text-center rounded-lg py-3 font-semibold text-sm mb-7 transition-colors disabled:opacity-70 disabled:cursor-not-allowed ${
+                    plan.highlighted
+                      ? "bg-blue-600 text-white hover:bg-blue-700 border-2 border-blue-600"
+                      : "bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50"
+                  }`}
                 >
                   {loading === plan.planKey ? "Redirecting..." : plan.buttonText}
                 </button>
               )}
 
-              <div>
+              <div className="flex-1">
                 {plan.features.map((feature) => (
-                  <div key={feature} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                    <span style={{ color: "#16a34a", fontSize: "16px" }}>+</span>
-                    <span style={{ fontSize: "14px", color: "#374151" }}>{feature}</span>
+                  <div key={feature} className="flex items-center gap-2.5 mb-2.5">
+                    <span className="text-green-500 font-bold text-base">+</span>
+                    <span className="text-sm text-gray-700">{feature}</span>
                   </div>
                 ))}
                 {plan.notIncluded.map((feature) => (
-                  <div key={feature} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                    <span style={{ color: "#d1d5db", fontSize: "16px" }}>-</span>
-                    <span style={{ fontSize: "14px", color: "#9ca3af" }}>{feature}</span>
+                  <div key={feature} className="flex items-center gap-2.5 mb-2.5">
+                    <span className="text-gray-300 font-bold text-base">-</span>
+                    <span className="text-sm text-gray-400">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -224,7 +181,7 @@ export default function PricingPage() {
           ))}
         </div>
 
-        <p style={{ textAlign: "center", color: "#6b7280", fontSize: "14px", marginTop: "40px" }}>
+        <p className="text-center text-gray-400 text-sm mt-10">
           Works for real estate agents worldwide. Payments in USD. Cancel anytime.
         </p>
 
