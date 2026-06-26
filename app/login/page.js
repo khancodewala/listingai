@@ -51,7 +51,8 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mb-6">
+
+        <div className="mb-2">
           <label className="block text-gray-700 font-medium mb-2">Password</label>
           <input
             type="password"
@@ -60,6 +61,12 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+        </div>
+
+        <div className="text-right mb-6">
+          <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+            Forgot password?
+          </a>
         </div>
 
         <button
