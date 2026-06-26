@@ -39,7 +39,19 @@ export async function POST(req) {
   const plan = metadata?.plan;
   const subscriptionId = event.data?.id || event.data?.subscription?.id;
 
-  console.log('EXTRACTED:', { userId, plan, subscriptionId, eventType: event.type });
+  // Support both camelCase (SDK) and snake_case (raw JSON)
+  const customerId =
+    event.data?.customerId ||
+    event.data?.customer_id ||
+    event.data?.customer?.id ||
+    null;
+
+  const currentPeriodEnd =
+    event.data?.currentPeriodEnd ||
+    event.data?.current_period_end ||
+    null;
+
+  console.log('EXTRACTED:', { userId, plan, subscriptionId, customerId, currentPeriodEnd, eventType: event.type });
 
   if (!userId || !plan) {
     console.error('Missing userId or plan in metadata:', metadata);
@@ -64,8 +76,8 @@ export async function POST(req) {
       .update({
         plan,
         polar_subscription_id: subscriptionId || null,
-        polar_customer_id: event.data.customer_id || null,
-        plan_expires_at: event.data.current_period_end || null,
+        polar_customer_id: customerId,
+        plan_expires_at: currentPeriodEnd || null,
         renewal_reminder_sent_at: null,
         payment_issue: false,
         payment_issue_since: null,
@@ -73,7 +85,7 @@ export async function POST(req) {
       .eq('id', userId);
 
     if (error) console.error('Supabase update error:', error);
-    else console.log(`Updated user ${userId} to plan ${plan}, next renewal ${event.data.current_period_end}`);
+    else console.log(`Updated user ${userId} to plan ${plan}, customer_id ${customerId}, next renewal ${currentPeriodEnd}`);
   }
 
   // ─────────────────────────────────────────────────────────
