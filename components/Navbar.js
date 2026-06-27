@@ -27,66 +27,140 @@ export default function Navbar() {
     window.location.href = "/";
   };
 
-  if (pathname === '/dashboard') return null;
+  if (pathname === "/dashboard") return null;
 
   return (
-    <nav style={{
-      background: "#ffffff",
-      borderBottom: "1px solid #e5e7eb",
-      padding: "12px 24px",
-      position: "sticky",
-      top: 0,
-      zIndex: 100,
-    }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Link href="/" style={{ fontWeight: "700", fontSize: "20px", color: "#1d4ed8", textDecoration: "none" }}>
-          🏠 ListingAI
-        </Link>
+    <>
+      <style>{`
+        .nav-link {
+          color: #A8B8C8;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 500;
+          transition: color 0.2s ease;
+        }
+        .nav-link:hover { color: #C4A35C; }
+        .nav-mobile-link {
+          color: #A8B8C8;
+          text-decoration: none;
+          font-size: 15px;
+          font-weight: 500;
+          padding: 10px 0;
+          border-bottom: 1px solid rgba(196,163,92,0.10);
+          transition: color 0.2s ease;
+        }
+        .nav-mobile-link:hover { color: #C4A35C; }
+        .nav-desktop { display: flex; gap: 24px; align-items: center; }
+        .nav-hamburger { display: none; }
+        @media (max-width: 640px) {
+          .nav-desktop { display: none; }
+          .nav-hamburger { display: block; }
+        }
+      `}</style>
 
-        <div style={{ display: "flex", gap: "24px", alignItems: "center" }} className="desktop-nav">
-          <Link href="/generate" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>AI Generator</Link>
-          <Link href="/pricing" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Pricing</Link>
-          <Link href="/dashboard" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Dashboard</Link>
-          {user ? (
-            <>
-              <span style={{ color: "#6b7280", fontSize: "14px" }}>{user.email}</span>
-              <button onClick={handleLogout} style={{ background: "#ef4444", color: "#fff", border: "none", fontSize: "14px", fontWeight: "500", padding: "8px 16px", borderRadius: "8px", cursor: "pointer" }}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link href="/login" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>Login</Link>
-              <Link href="/signup" style={{ background: "#1d4ed8", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: "500", padding: "8px 16px", borderRadius: "8px" }}>Sign Up</Link>
-            </>
-          )}
+      <nav style={{
+        background: "#0B1628",
+        borderBottom: "1px solid rgba(196,163,92,0.15)",
+        padding: "14px 24px",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        fontFamily: "'DM Sans', sans-serif",
+      }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+
+          {/* Logo */}
+          <Link href="/" style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontWeight: 700, fontSize: "20px",
+            color: "#C4A35C", textDecoration: "none",
+            display: "flex", alignItems: "center", gap: "8px",
+          }}>
+            🏠 ListingAI
+          </Link>
+
+          {/* Desktop Nav */}
+          <div className="nav-desktop">
+            <Link href="/generate" className="nav-link">AI Generator</Link>
+            <Link href="/pricing" className="nav-link">Pricing</Link>
+            <Link href="/dashboard" className="nav-link">Dashboard</Link>
+            {user ? (
+              <>
+                <span style={{ color: "#5A6E85", fontSize: "13px" }}>{user.email}</span>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    background: "#ef4444", color: "#fff",
+                    border: "none", fontSize: "14px", fontWeight: 600,
+                    padding: "8px 18px", borderRadius: "8px", cursor: "pointer",
+                  }}
+                >Logout</button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="nav-link">Login</Link>
+                <Link href="/signup" style={{
+                  background: "#C4A35C", color: "#0B1628",
+                  textDecoration: "none", fontSize: "14px", fontWeight: 700,
+                  padding: "8px 20px", borderRadius: "50px",
+                }}>Sign Up</Link>
+              </>
+            )}
+          </div>
+
+          {/* Hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="nav-hamburger"
+            style={{
+              background: "none", border: "none",
+              cursor: "pointer", fontSize: "22px",
+              color: "#C4A35C",
+            }}
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
         </div>
 
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="mobile-menu-btn"
-          style={{ background: "none", border: "none", cursor: "pointer", fontSize: "24px" }}
-        >
-          {menuOpen ? "✕" : "☰"}
-        </button>
-      </div>
-
-      {menuOpen && (
-        <div className="mobile-nav" style={{ paddingTop: "12px", display: "flex", flexDirection: "column", gap: "12px" }}>
-          <Link href="/generate" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>AI Generator</Link>
-          <Link href="/pricing" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Pricing</Link>
-          <Link href="/dashboard" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Dashboard</Link>
-          {user ? (
-            <>
-              <span style={{ color: "#6b7280", fontSize: "14px" }}>{user.email}</span>
-              <button onClick={handleLogout} style={{ background: "#ef4444", color: "#fff", border: "none", fontSize: "15px", fontWeight: "500", padding: "10px 16px", borderRadius: "8px", cursor: "pointer", textAlign: "left" }}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link href="/login" onClick={() => setMenuOpen(false)} style={{ color: "#374151", textDecoration: "none", fontSize: "15px", fontWeight: "500" }}>Login</Link>
-              <Link href="/signup" onClick={() => setMenuOpen(false)} style={{ background: "#1d4ed8", color: "#fff", textDecoration: "none", fontSize: "15px", fontWeight: "500", padding: "10px 16px", borderRadius: "8px", textAlign: "center" }}>Sign Up</Link>
-            </>
-          )}
-        </div>
-      )}
-    </nav>
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div style={{
+            maxWidth: "1100px", margin: "0 auto",
+            paddingTop: "12px", paddingBottom: "8px",
+            display: "flex", flexDirection: "column",
+            borderTop: "1px solid rgba(196,163,92,0.10)",
+            marginTop: "12px",
+          }}>
+            <Link href="/generate" onClick={() => setMenuOpen(false)} className="nav-mobile-link">AI Generator</Link>
+            <Link href="/pricing" onClick={() => setMenuOpen(false)} className="nav-mobile-link">Pricing</Link>
+            <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="nav-mobile-link">Dashboard</Link>
+            {user ? (
+              <>
+                <span style={{ color: "#5A6E85", fontSize: "13px", padding: "10px 0" }}>{user.email}</span>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    background: "#ef4444", color: "#fff",
+                    border: "none", fontSize: "15px", fontWeight: 600,
+                    padding: "11px 16px", borderRadius: "8px",
+                    cursor: "pointer", textAlign: "left", marginTop: "4px",
+                  }}
+                >Logout</button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" onClick={() => setMenuOpen(false)} className="nav-mobile-link">Login</Link>
+                <Link href="/signup" onClick={() => setMenuOpen(false)} style={{
+                  background: "#C4A35C", color: "#0B1628",
+                  textDecoration: "none", fontSize: "15px", fontWeight: 700,
+                  padding: "11px 16px", borderRadius: "50px",
+                  textAlign: "center", marginTop: "8px",
+                }}>Sign Up</Link>
+              </>
+            )}
+          </div>
+        )}
+      </nav>
+    </>
   );
 }
