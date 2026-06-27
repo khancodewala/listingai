@@ -344,16 +344,18 @@ export default function PricingPage() {
             🔒 Founding Member Offer
           </div>
           <div style={{ fontSize: "13px", color: "#7A90A8", lineHeight: 1.75 }}>
-            First 50 agents who sign up for Pro get the rate locked at{" "}
-            <strong style={{ color: "#E8DFC8" }}>$29/month for 12 months</strong> — guaranteed,
-            even if pricing increases. <Link href="/signup" style={{ color: "#C4A35C", textDecoration: "underline" }}>Claim your spot →</Link>
+            {"First 50 agents who sign up for Pro get the rate locked at "}
+            <strong style={{ color: "#E8DFC8" }}>$29/month for 12 months</strong>
+            {" — guaranteed, even if pricing increases. "}
+            <Link href="/signup" style={{ color: "#C4A35C", textDecoration: "underline" }}>Claim your spot →</Link>
           </div>
         </div>
 
         {/* ── FOOTER NOTE ── */}
         <p style={{
-          textAlign: "center", fontSize: "12px",
-          color: "#3A4E65", marginTop: "2rem",
+          textAlign: "center", fontSize: "13px",
+          color: "rgba(196,163,92,0.70)", marginTop: "2rem",
+          letterSpacing: "0.03em",
         }}>
           Works for real estate agents worldwide · Payments in USD · Cancel anytime
         </p>
