@@ -36,7 +36,7 @@ export default function HomePage() {
           gap: 1.5rem;
           margin-top: 3rem;
         }
-        .lai-testimonials-grid {
+        .lai-social-proof-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 1.25rem;
@@ -80,6 +80,67 @@ export default function HomePage() {
           backdrop-filter: blur(8px);
           white-space: nowrap;
         }
+        .lai-hero-section {
+          position: relative;
+          min-height: 680px;
+          display: flex;
+          align-items: center;
+          padding: 6rem 1.25rem 5rem;
+          overflow: hidden;
+        }
+        .lai-section-lg {
+          padding: 6rem 1.25rem;
+        }
+        .lai-section-md {
+          padding: 5rem 1.25rem;
+        }
+        .lai-cta-section {
+          position: relative;
+          padding: 7rem 1.25rem;
+          text-align: center;
+          overflow: hidden;
+        }
+        .lai-cta-btn {
+          background: #C4A35C;
+          color: #0B1628;
+          font-size: 16px;
+          font-weight: 700;
+          padding: 16px 42px;
+          border-radius: 50px;
+          text-decoration: none;
+          display: inline-block;
+          box-shadow: 0 4px 30px rgba(196,163,92,0.40);
+        }
+        .lai-pricing-badge {
+          position: absolute;
+          top: -13px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #C4A35C;
+          color: #0B1628;
+          font-size: 10px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          padding: 4px 16px;
+          border-radius: 100px;
+          white-space: nowrap;
+        }
+        .lai-feature-card {
+          display: block;
+          text-decoration: none;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(196,163,92,0.15);
+          border-radius: 14px;
+          padding: 1.75rem;
+          transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+          cursor: pointer;
+        }
+        .lai-feature-card:hover {
+          border-color: rgba(196,163,92,0.50);
+          background: rgba(196,163,92,0.06);
+          transform: translateY(-2px);
+        }
 
         @media (max-width: 640px) {
           .lai-stats-grid {
@@ -93,7 +154,7 @@ export default function HomePage() {
             grid-template-columns: 1fr;
             gap: 1rem;
           }
-          .lai-testimonials-grid {
+          .lai-social-proof-grid {
             grid-template-columns: 1fr;
           }
           .lai-pricing-grid {
@@ -109,30 +170,55 @@ export default function HomePage() {
             justify-content: center;
             width: 100%;
           }
+          .lai-hero-section {
+            min-height: auto;
+            padding: 4rem 1.25rem 3rem;
+          }
+          .lai-section-lg {
+            padding: 3.5rem 1.25rem;
+          }
+          .lai-section-md {
+            padding: 3rem 1.25rem;
+          }
+          .lai-cta-section {
+            padding: 4rem 1.25rem;
+          }
+          .lai-cta-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 16px 24px;
+          }
+          .lai-pricing-badge {
+            font-size: 9px;
+            padding: 4px 12px;
+          }
         }
 
         @media (min-width: 641px) and (max-width: 900px) {
           .lai-steps-grid {
             grid-template-columns: 1fr;
           }
-          .lai-testimonials-grid {
+          .lai-social-proof-grid {
             grid-template-columns: 1fr;
           }
           .lai-pricing-grid {
             grid-template-columns: 1fr;
           }
+          .lai-hero-section {
+            padding: 5rem 1.25rem 4rem;
+          }
+          .lai-section-lg {
+            padding: 4.5rem 1.25rem;
+          }
+          .lai-section-md {
+            padding: 4rem 1.25rem;
+          }
         }
       `}</style>
 
       {/* ── HERO with full-bleed property photo ── */}
-      <section style={{
-        position: "relative",
-        minHeight: "680px",
-        display: "flex",
-        alignItems: "center",
-        padding: "6rem 1.25rem 5rem",
-        overflow: "hidden",
-      }}>
+      <section className="lai-hero-section">
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${HERO_IMG}')`,
@@ -198,7 +284,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── STATS BAR ── */}
+      {/* ── STATS BAR — capability facts only ── */}
       <div style={{
         background: "rgba(196,163,92,0.08)",
         borderTop: "1px solid rgba(196,163,92,0.20)",
@@ -208,10 +294,10 @@ export default function HomePage() {
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div className="lai-stats-grid">
             {[
-              { num: "8,000+", label: "Listings Generated" },
-              { num: "1,200+", label: "Agents Worldwide" },
-              { num: "30 min", label: "Saved Per Listing" },
-              { num: "40+",    label: "Countries Served" },
+              { num: "10",      label: "AI Writing Tools"        },
+              { num: "~2 min",  label: "Avg. Generation Time"    },
+              { num: "4",       label: "Languages Supported"     },
+              { num: "Global",  label: "Works Any Country"       },
             ].map(s => (
               <div key={s.label}>
                 <span style={{
@@ -226,7 +312,7 @@ export default function HomePage() {
       </div>
 
       {/* ── FEATURES ── */}
-      <section id="features" style={{ position: "relative", padding: "6rem 1.25rem", overflow: "hidden" }}>
+      <section className="lai-section-lg" style={{ position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${SECTION_IMG}')`,
@@ -255,11 +341,7 @@ export default function HomePage() {
               { icon: "👤", title: "Realtor Bio Generator",      desc: "Create a polished, professional bio for your website, business card, or social profiles — tailored to your experience and tone.",                  tag: "Stand out instantly"      },
               { icon: "🧲", title: "Lead Magnet / Blog Writer",  desc: "Generate blog posts, buyer's guides, checklists, and FAQ articles that attract leads and position you as the local market expert.",               tag: "Turn readers into clients" },
             ].map(f => (
-              <div key={f.title} style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(196,163,92,0.15)",
-                borderRadius: "14px", padding: "1.75rem",
-              }}>
+              <Link key={f.title} href="/generate" className="lai-feature-card">
                 <div style={{
                   width: "44px", height: "44px",
                   background: "rgba(196,163,92,0.12)", borderRadius: "10px",
@@ -269,14 +351,14 @@ export default function HomePage() {
                 <h3 style={{ fontSize: "15px", fontWeight: 600, color: "#E8DFC8", marginBottom: "0.5rem" }}>{f.title}</h3>
                 <p style={{ fontSize: "13px", color: "#6B80A0", lineHeight: 1.7 }}>{f.desc}</p>
                 <span style={{ display: "inline-block", marginTop: "0.75rem", fontSize: "12px", color: "#C4A35C", fontWeight: 500 }}>→ {f.tag}</span>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <div style={{ background: "#0D1D35", padding: "5rem 1.25rem" }}>
+      <div style={{ background: "#0D1D35" }} className="lai-section-md">
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ How It Works</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.5rem" }}>Three Steps to Perfect Copy</h2>
@@ -285,7 +367,7 @@ export default function HomePage() {
           <div className="lai-steps-grid">
             {[
               { n: "1", title: "Enter Property Details", desc: "Fill in bedrooms, features, location, and any special notes about the property." },
-              { n: "2", title: "Choose Your Tool",        desc: "Select from listing writer, social captions, buyer email, or contract summarizer." },
+              { n: "2", title: "Choose Your Tool",        desc: "Select from listing writer, social captions, buyer email, contract summarizer, and 6 more." },
               { n: "3", title: "Copy & Publish",          desc: "Copy your AI-generated content with one click — ready for MLS, email, or Instagram." },
             ].map(s => (
               <div key={s.n} style={{ textAlign: "center", padding: "1.5rem 1rem" }}>
@@ -305,35 +387,104 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── TESTIMONIALS ── */}
-      <section style={{ padding: "5rem 1.25rem", background: "#0B1628" }}>
+      {/* ── SOCIAL PROOF — 3 conversion cards ── */}
+      <section className="lai-section-md" style={{ background: "#0B1628" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Trusted by Agents Worldwide</div>
-          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "2.5rem" }}>What Realtors Are Saying</h2>
+          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Why Agents Choose ListingAI</div>
+          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "2.5rem" }}>Built for Real Estate. Trusted from Day One.</h2>
 
-          <div className="lai-testimonials-grid">
-            {[
-              { text: '"I used to spend 45 minutes writing each listing. Now it\'s under 2 minutes. ListingAI pays for itself on the first property."', name: "Sarah M.", role: "RE/MAX Agent, Dubai" },
-              { text: '"The social captions are incredible — my engagement doubled within the first week. I wish I found this tool sooner."',            name: "James T.", role: "Independent Realtor, London" },
-              { text: '"The contract summarizer alone has saved our agency hours every week in legal back-and-forth. Worth every penny."',             name: "Priya K.", role: "Agency Director, Singapore" },
-            ].map(t => (
-              <div key={t.name} style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(196,163,92,0.12)",
-                borderRadius: "14px", padding: "1.5rem",
-              }}>
-                <div style={{ color: "#C4A35C", fontSize: "14px", letterSpacing: "3px", marginBottom: "0.75rem" }}>★★★★★</div>
-                <p style={{ fontSize: "13px", color: "#8A9BB5", lineHeight: 1.8, marginBottom: "1.25rem", fontStyle: "italic" }}>{t.text}</p>
-                <div style={{ fontSize: "13px", color: "#E8DFC8", fontWeight: 600 }}>{t.name}</div>
-                <div style={{ fontSize: "11px", color: "#4A5E78", marginTop: "3px" }}>{t.role}</div>
+          <div className="lai-social-proof-grid">
+
+            {/* Card 1 — Founder's Note */}
+            <div style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(196,163,92,0.20)",
+              borderRadius: "14px", padding: "1.75rem",
+              display: "flex", flexDirection: "column", justifyContent: "space-between",
+            }}>
+              <div>
+                <div style={{ fontSize: "22px", marginBottom: "1rem" }}>✍️</div>
+                <p style={{ fontSize: "13px", color: "#8A9BB5", lineHeight: 1.85, fontStyle: "italic", marginBottom: "1.25rem" }}>
+                  "I built ListingAI because writing listing descriptions, social captions, buyer emails,
+                  and contract summaries was taking agents hours every week. With ListingAI, the same
+                  work takes under 2 minutes. I built it, I use it, and I stand behind every tool in it."
+                </p>
               </div>
-            ))}
+              <div>
+                <div style={{ fontSize: "13px", color: "#E8DFC8", fontWeight: 600 }}>Tauqeer Ahmed</div>
+                <div style={{ fontSize: "11px", color: "#4A5E78", marginTop: "3px" }}>Founder, ListingAI</div>
+              </div>
+            </div>
+
+            {/* Card 2 — Founding Member Offer */}
+            <div style={{
+              background: "rgba(196,163,92,0.06)",
+              border: "1.5px solid rgba(196,163,92,0.40)",
+              borderRadius: "14px", padding: "1.75rem",
+              display: "flex", flexDirection: "column", justifyContent: "space-between",
+            }}>
+              <div>
+                <div style={{ fontSize: "22px", marginBottom: "1rem" }}>🔒</div>
+                <div style={{
+                  display: "inline-block", fontSize: "10px", fontWeight: 700,
+                  textTransform: "uppercase", letterSpacing: "0.08em",
+                  color: "#0B1628", background: "#C4A35C",
+                  padding: "3px 12px", borderRadius: "100px", marginBottom: "0.85rem",
+                }}>Founding Member Offer</div>
+                <p style={{ fontSize: "13px", color: "#8A9BB5", lineHeight: 1.85, marginBottom: "1.25rem" }}>
+                  We're onboarding our <strong style={{ color: "#C4A35C" }}>first 50 agents</strong> at a special rate.
+                  Sign up now and lock in Pro at <strong style={{ color: "#C4A35C" }}>$29/month for 12 months</strong> —
+                  guaranteed, even if pricing increases.
+                </p>
+              </div>
+              <Link href="/signup" style={{
+                display: "block", textAlign: "center",
+                padding: "11px", borderRadius: "50px",
+                fontSize: "13px", fontWeight: 700, textDecoration: "none",
+                background: "#C4A35C", color: "#0B1628",
+              }}>
+                Claim Your Spot →
+              </Link>
+            </div>
+
+            {/* Card 3 — Zero Risk */}
+            <div style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(196,163,92,0.20)",
+              borderRadius: "14px", padding: "1.75rem",
+              display: "flex", flexDirection: "column", justifyContent: "space-between",
+            }}>
+              <div>
+                <div style={{ fontSize: "22px", marginBottom: "1rem" }}>✦</div>
+                <div style={{
+                  display: "inline-block", fontSize: "10px", fontWeight: 700,
+                  textTransform: "uppercase", letterSpacing: "0.08em",
+                  color: "#C4A35C", border: "1px solid rgba(196,163,92,0.40)",
+                  padding: "3px 12px", borderRadius: "100px", marginBottom: "0.85rem",
+                }}>Zero Risk Guarantee</div>
+                <p style={{ fontSize: "13px", color: "#8A9BB5", lineHeight: 1.85, marginBottom: "1.25rem" }}>
+                  Start with <strong style={{ color: "#E8DFC8" }}>5 free generations</strong> — no credit card,
+                  no commitment. Try all 10 AI tools and see the quality yourself
+                  before spending a single dollar.
+                </p>
+              </div>
+              <Link href="/generate" style={{
+                display: "block", textAlign: "center",
+                padding: "11px", borderRadius: "50px",
+                fontSize: "13px", fontWeight: 700, textDecoration: "none",
+                border: "1px solid rgba(196,163,92,0.40)",
+                color: "#C4A35C", background: "transparent",
+              }}>
+                Try Free Now →
+              </Link>
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* ── PRICING ── */}
-      <div id="pricing" style={{ background: "#0D1D35", padding: "5rem 1.25rem" }}>
+      <div id="pricing" style={{ background: "#0D1D35" }} className="lai-section-md">
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Pricing</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.5rem" }}>Simple, Transparent Pricing</h2>
@@ -352,12 +503,7 @@ export default function HomePage() {
                 position: "relative",
               }}>
                 {p.featured && (
-                  <div style={{
-                    position: "absolute", top: "-13px", left: "50%", transform: "translateX(-50%)",
-                    background: "#C4A35C", color: "#0B1628",
-                    fontSize: "10px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em",
-                    padding: "4px 16px", borderRadius: "100px", whiteSpace: "nowrap",
-                  }}>Most Popular</div>
+                  <div className="lai-pricing-badge">Most Popular</div>
                 )}
                 <div style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#5A6E85", marginBottom: "0.5rem" }}>{p.name}</div>
                 <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", color: "#F5EDD8", fontWeight: 700, lineHeight: 1 }}>
@@ -387,7 +533,7 @@ export default function HomePage() {
       </div>
 
       {/* ── BOTTOM CTA with property photo background ── */}
-      <section style={{ position: "relative", padding: "7rem 1.25rem", textAlign: "center", overflow: "hidden" }}>
+      <section className="lai-cta-section" style={{ overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${CTA_IMG}')`,
@@ -410,16 +556,10 @@ export default function HomePage() {
             <em style={{ fontStyle: "italic", color: "#C4A35C" }}>One Click Away</em>
           </h2>
           <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.55)", marginBottom: "2.25rem", lineHeight: 1.75 }}>
-            Join 1,200+ real estate professionals who save hours every week.
+            Join the first agents using ListingAI to save hours every week.
             Start with 5 free generations — no card required.
           </p>
-          <Link href="/generate" style={{
-            background: "#C4A35C", color: "#0B1628",
-            fontSize: "16px", fontWeight: 700,
-            padding: "16px 42px", borderRadius: "50px",
-            textDecoration: "none", display: "inline-block",
-            boxShadow: "0 4px 30px rgba(196,163,92,0.40)",
-          }}>
+          <Link href="/generate" className="lai-cta-btn">
             Start Writing for Free →
           </Link>
         </div>
