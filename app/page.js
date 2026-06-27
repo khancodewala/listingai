@@ -505,9 +505,9 @@ export default function HomePage() {
                 {p.featured && (
                   <div className="lai-pricing-badge">Most Popular</div>
                 )}
-                <div style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#5A6E85", marginBottom: "0.5rem" }}>{p.name}</div>
-                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", color: "#F5EDD8", fontWeight: 700, lineHeight: 1 }}>
-                  <sup style={{ fontSize: "1.1rem", verticalAlign: "top", marginTop: "8px" }}>$</sup>{p.price}
+                <div style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#5A6E85", marginBottom: "0.75rem" }}>{p.name}</div>
+                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", color: "#F5EDD8", fontWeight: 700, lineHeight: 1, display: "flex", alignItems: "flex-start", gap: "2px" }}>
+                  <sup style={{ fontSize: "1rem", lineHeight: 1, marginTop: "6px" }}>$</sup>{p.price}
                 </div>
                 <div style={{ fontSize: "12px", color: "#4A5E78", marginBottom: "1.25rem", marginTop: "4px" }}>{p.period}</div>
                 <hr style={{ border: "none", borderTop: "1px solid rgba(196,163,92,0.10)", margin: "1.25rem 0" }} />
