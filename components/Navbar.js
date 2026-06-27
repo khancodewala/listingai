@@ -33,7 +33,7 @@ export default function Navbar() {
     <>
       <style>{`
         .nav-link {
-          color: #A8B8C8;
+          color: #D8E4F0;
           text-decoration: none;
           font-size: 14px;
           font-weight: 500;
@@ -41,7 +41,7 @@ export default function Navbar() {
         }
         .nav-link:hover { color: #C4A35C; }
         .nav-mobile-link {
-          color: #A8B8C8;
+          color: #D8E4F0;
           text-decoration: none;
           font-size: 15px;
           font-weight: 500;
@@ -86,7 +86,7 @@ export default function Navbar() {
             <Link href="/dashboard" className="nav-link">Dashboard</Link>
             {user ? (
               <>
-                <span style={{ color: "#5A6E85", fontSize: "13px" }}>{user.email}</span>
+                <span style={{ color: "#A8B8C8", fontSize: "13px" }}>{user.email}</span>
                 <button
                   onClick={handleLogout}
                   style={{
@@ -136,7 +136,7 @@ export default function Navbar() {
             <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="nav-mobile-link">Dashboard</Link>
             {user ? (
               <>
-                <span style={{ color: "#5A6E85", fontSize: "13px", padding: "10px 0" }}>{user.email}</span>
+                <span style={{ color: "#A8B8C8", fontSize: "13px", padding: "10px 0" }}>{user.email}</span>
                 <button
                   onClick={handleLogout}
                   style={{
