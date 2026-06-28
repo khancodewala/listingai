@@ -588,9 +588,8 @@ export default function GeneratePage() {
     <div style={{ minHeight: "100vh", background: "#0B1628", fontFamily: "'DM Sans', sans-serif", padding: "2.5rem 1.25rem 4rem" }}>
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .gen-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
-        .gen-tabs::-webkit-scrollbar { display: none; }
-        .gen-tab { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid rgba(196,163,92,0.20); background: rgba(255,255,255,0.03); color: #7A90A8; transition: all 0.15s ease; font-family: inherit; flex-shrink: 0; }
+        .gen-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
+        .gen-tab { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid rgba(196,163,92,0.20); background: rgba(255,255,255,0.03); color: #7A90A8; transition: all 0.15s ease; font-family: inherit; }
         .gen-tab:hover { color: #C4A35C; border-color: rgba(196,163,92,0.40); }
         .gen-tab.active { background: rgba(196,163,92,0.15); border-color: rgba(196,163,92,0.60); color: #C4A35C; }
         .form-grid-mobile { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
