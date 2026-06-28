@@ -283,10 +283,12 @@ export default function Dashboard() {
   return (
     <div style={{ display: 'flex', height: '100vh', background: '#0B1628', overflow: 'hidden', fontFamily: "'DM Sans', sans-serif" }}>
       <style>{`
-        .dash-tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(196,163,92,0.12); border-radius: 16px; padding: 18px; display: flex; align-items: flex-start; gap: 14px; text-decoration: none; transition: all 0.2s ease; }
-        .dash-tool-card:hover { background: rgba(196,163,92,0.06); border-color: rgba(196,163,92,0.35); transform: translateY(-1px); }
-        .dash-history-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(196,163,92,0.06); transition: background 0.15s ease; }
-        .dash-history-row:hover { background: rgba(196,163,92,0.04); }
+        .dash-tool-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(196,163,92,0.18); border-radius: 16px; padding: 18px; display: flex; align-items: flex-start; gap: 14px; text-decoration: none; transition: all 0.2s ease; }
+        .dash-tool-card:hover { background: rgba(196,163,92,0.08); border-color: rgba(196,163,92,0.40); transform: translateY(-1px); }
+        .dash-tool-title { font-size: 13px; font-weight: 700; color: #D8E4F0; margin: 0 0 4px; }
+        .dash-tool-desc { font-size: 12px; color: #7A90A8; margin: 0; line-height: 1.5; }
+        .dash-history-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; cursor: pointer; border-bottom: 1px solid rgba(196,163,92,0.08); transition: background 0.15s ease; }
+        .dash-history-row:hover { background: rgba(196,163,92,0.05); }
         .dash-history-row:last-child { border-bottom: none; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
@@ -439,8 +441,8 @@ export default function Dashboard() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
                   }}>{tool.icon}</div>
                   <div style={{ minWidth: 0 }}>
-                    <p style={{ fontSize: '13px', fontWeight: 700, color: '#E8DFC8', margin: '0 0 3px' }}>{tool.label}</p>
-                    <p style={{ fontSize: '12px', color: '#4A5E78', margin: 0, lineHeight: 1.5 }}>{tool.desc}</p>
+                    <p className="dash-tool-title">{tool.label}</p>
+                    <p className="dash-tool-desc">{tool.desc}</p>
                   </div>
                   <svg style={{ width: '14px', height: '14px', color: '#4A5E78', flexShrink: 0, marginTop: '2px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -474,7 +476,7 @@ export default function Dashboard() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
                       <span style={{ fontSize: '18px', flexShrink: 0 }}>{TOOLS.find(t => t.key === gen.type)?.icon || '📝'}</span>
                       <div style={{ minWidth: 0 }}>
-                        <p style={{ fontSize: '13px', fontWeight: 600, color: '#E8DFC8', margin: '0 0 3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <p style={{ fontSize: '13px', fontWeight: 600, color: '#D8E4F0', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {getTitle(gen.type, gen.input)}
                         </p>
                         <span style={{
@@ -501,11 +503,11 @@ export default function Dashboard() {
           {!loading && plan !== 'free' && (
             <div style={{ marginTop: '16px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
               {polarCustomerId && (
-                <button onClick={handleManageBilling} disabled={portalLoading} style={{ background: 'none', border: 'none', fontSize: '12px', color: '#4A5E78', cursor: 'pointer', fontFamily: 'inherit' }}>
+                <button onClick={handleManageBilling} disabled={portalLoading} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#A8B8C8', cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' }}>
                   {portalLoading ? 'Opening...' : 'Manage billing'}
                 </button>
               )}
-              <button onClick={() => setShowCancelModal(true)} style={{ background: 'none', border: 'none', fontSize: '12px', color: '#4A5E78', cursor: 'pointer', fontFamily: 'inherit' }}>
+              <button onClick={() => setShowCancelModal(true)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#F87171', cursor: 'pointer', fontFamily: 'inherit' }}>
                 Cancel subscription
               </button>
             </div>
