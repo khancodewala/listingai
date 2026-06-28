@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
 const TABS = [
   { id: "listing",      label: "🏠 Listing Writer" },
@@ -30,29 +31,60 @@ function getPricePlaceholder(language) {
   return "e.g. $250,000 or PKR 2.5 Crore or AED 900,000";
 }
 
+// ── Dark-themed field component ──
 function Field({ label, value, onChange, placeholder, textarea }) {
-  const cls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const inputStyle = {
+    width: "100%",
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(196,163,92,0.20)",
+    borderRadius: "10px",
+    padding: "10px 14px",
+    fontSize: "13px",
+    color: "#E8DFC8",
+    outline: "none",
+    fontFamily: "inherit",
+    resize: textarea ? "vertical" : undefined,
+    minHeight: textarea ? "80px" : undefined,
+    transition: "border-color 0.2s ease",
+  };
   return (
-    <div className="col-span-1">
-      <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+    <div style={{ gridColumn: "span 1" }}>
+      <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#7A90A8", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        {label}
+      </label>
       {textarea
-        ? <textarea className={cls + " min-h-[80px] resize-y"} value={value} onChange={onChange} placeholder={placeholder} />
-        : <input className={cls} value={value} onChange={onChange} placeholder={placeholder} />}
+        ? <textarea style={inputStyle} value={value} onChange={onChange} placeholder={placeholder}
+            onFocus={e => e.target.style.borderColor = "rgba(196,163,92,0.60)"}
+            onBlur={e => e.target.style.borderColor = "rgba(196,163,92,0.20)"}
+          />
+        : <input style={inputStyle} value={value} onChange={onChange} placeholder={placeholder}
+            onFocus={e => e.target.style.borderColor = "rgba(196,163,92,0.60)"}
+            onBlur={e => e.target.style.borderColor = "rgba(196,163,92,0.20)"}
+          />}
     </div>
   );
 }
 
 function LanguageSelector({ language, setLanguage }) {
   return (
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-1">Output Language</label>
+    <div style={{ marginBottom: "1.25rem" }}>
+      <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#7A90A8", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        Output Language
+      </label>
       <select
-        className="w-full sm:w-64 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+        style={{
+          width: "100%", maxWidth: "260px",
+          background: "rgba(255,255,255,0.05)",
+          border: "1px solid rgba(196,163,92,0.20)",
+          borderRadius: "10px", padding: "10px 14px",
+          fontSize: "13px", color: "#E8DFC8",
+          outline: "none", fontFamily: "inherit",
+        }}
         value={language}
         onChange={(e) => setLanguage(e.target.value)}
       >
         {LANGUAGES.map((l) => (
-          <option key={l.code} value={l.code}>{l.label}</option>
+          <option key={l.code} value={l.code} style={{ background: "#0D1D35" }}>{l.label}</option>
         ))}
       </select>
     </div>
@@ -64,32 +96,41 @@ function GenerateBtn({ onClick, loading }) {
     <button
       onClick={onClick}
       disabled={loading}
-      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+      style={{
+        width: "100%",
+        background: loading ? "rgba(196,163,92,0.45)" : "#C4A35C",
+        color: "#0B1628",
+        fontWeight: 700, fontSize: "15px",
+        padding: "13px 24px",
+        borderRadius: "50px",
+        border: "none", cursor: loading ? "not-allowed" : "pointer",
+        display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+        transition: "opacity 0.2s ease",
+        fontFamily: "inherit",
+      }}
     >
       {loading ? (
         <>
-          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+          <svg style={{ animation: "spin 1s linear infinite", width: "16px", height: "16px" }} viewBox="0 0 24 24" fill="none">
+            <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
           </svg>
           Generating...
         </>
-      ) : (
-        "✨ Generate with AI"
-      )}
+      ) : "✨ Generate with AI"}
     </button>
   );
 }
 
+const gridStyle = { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" };
+const spaceY = { display: "flex", flexDirection: "column", gap: "1rem" };
+
 function ListingForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    propertyType: "", location: "", bedrooms: "", bathrooms: "",
-    size: "", price: "", features: "", notes: "",
-  });
+  const [form, setForm] = useState({ propertyType: "", location: "", bedrooms: "", bathrooms: "", size: "", price: "", features: "", notes: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 3-bed villa, studio apartment" />
         <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Manhattan NY, Dubai Marina, DHA Lahore" />
         <Field label="Bedrooms" value={form.bedrooms} onChange={set("bedrooms")} placeholder="e.g. 4" />
@@ -105,13 +146,11 @@ function ListingForm({ onGenerate, loading, language }) {
 }
 
 function SocialForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    propertyType: "", location: "", price: "", highlights: "", targetBuyer: "",
-  });
+  const [form, setForm] = useState({ propertyType: "", location: "", price: "", highlights: "", targetBuyer: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse, family home" />
         <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Beverly Hills CA, Palm Jumeirah, Gulberg Lahore" />
         <Field label="Price" value={form.price} onChange={set("price")} placeholder={getPricePlaceholder(language)} />
@@ -124,14 +163,11 @@ function SocialForm({ onGenerate, loading, language }) {
 }
 
 function EmailForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    agentName: "", buyerName: "", propertyAddress: "",
-    showingDate: "", buyerInterests: "", nextStep: "",
-  });
+  const [form, setForm] = useState({ agentName: "", buyerName: "", propertyAddress: "", showingDate: "", buyerInterests: "", nextStep: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Your Name (Agent)" value={form.agentName} onChange={set("agentName")} placeholder="e.g. John Smith, Ahmed Khan" />
         <Field label="Buyer's Name" value={form.buyerName} onChange={set("buyerName")} placeholder="e.g. Mr. Robert, Ms. Sarah" />
         <Field label="Property Address" value={form.propertyAddress} onChange={set("propertyAddress")} placeholder="e.g. 123 Main St NY, Flat 5 Dubai Marina" />
@@ -147,32 +183,20 @@ function EmailForm({ onGenerate, loading, language }) {
 function ContractForm({ onGenerate, loading, language }) {
   const [contractText, setContractText] = useState("");
   return (
-    <div className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Paste Contract Text
-        </label>
-        <textarea
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[200px] resize-y"
-          placeholder="Paste any real estate contract text here. Claude AI will summarize it in plain English for any country..."
-          value={contractText}
-          onChange={(e) => setContractText(e.target.value)}
-        />
-      </div>
+    <div style={spaceY}>
+      <Field label="Paste Contract Text" value={contractText} onChange={(e) => setContractText(e.target.value)}
+        placeholder="Paste any real estate contract text here. Claude AI will summarize it in plain English for any country..." textarea />
       <GenerateBtn onClick={() => onGenerate({ feature: "contract", language, contractText })} loading={loading} />
     </div>
   );
 }
 
 function OpenHouseForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    propertyType: "", location: "", date: "", time: "",
-    price: "", highlights: "", agentName: "", agentPhone: "",
-  });
+  const [form, setForm] = useState({ propertyType: "", location: "", date: "", time: "", price: "", highlights: "", agentName: "", agentPhone: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 4-bed family home, luxury apartment" />
         <Field label="Location / Address" value={form.location} onChange={set("location")} placeholder="e.g. 45 Maple St, Austin TX" />
         <Field label="Open House Date" value={form.date} onChange={set("date")} placeholder="e.g. Saturday June 7, 2026" />
@@ -188,14 +212,11 @@ function OpenHouseForm({ onGenerate, loading, language }) {
 }
 
 function NeighborhoodForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    neighborhood: "", city: "", propertyType: "",
-    targetBuyer: "", nearbyPlaces: "", vibe: "",
-  });
+  const [form, setForm] = useState({ neighborhood: "", city: "", propertyType: "", targetBuyer: "", nearbyPlaces: "", vibe: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Neighborhood / Area Name" value={form.neighborhood} onChange={set("neighborhood")} placeholder="e.g. DHA Phase 6, Palm Jumeirah, Upper East Side" />
         <Field label="City / Country" value={form.city} onChange={set("city")} placeholder="e.g. Lahore Pakistan, Dubai UAE, New York USA" />
         <Field label="Property Type Being Listed" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 3-bed apartment, commercial office" />
@@ -209,14 +230,11 @@ function NeighborhoodForm({ onGenerate, loading, language }) {
 }
 
 function PriceDropForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    propertyType: "", location: "", oldPrice: "", newPrice: "",
-    reason: "", features: "", agentName: "",
-  });
+  const [form, setForm] = useState({ propertyType: "", location: "", oldPrice: "", newPrice: "", reason: "", features: "", agentName: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. 5-bed villa, 2-bed apartment" />
         <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Bahria Town Karachi, Downtown Dubai" />
         <Field label="Original Price" value={form.oldPrice} onChange={set("oldPrice")} placeholder={getPricePlaceholder(language)} />
@@ -231,14 +249,11 @@ function PriceDropForm({ onGenerate, loading, language }) {
 }
 
 function VideoScriptForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    propertyType: "", location: "", price: "", bedrooms: "",
-    features: "", targetBuyer: "", agentName: "", duration: "",
-  });
+  const [form, setForm] = useState({ propertyType: "", location: "", price: "", bedrooms: "", features: "", targetBuyer: "", agentName: "", duration: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Property Type" value={form.propertyType} onChange={set("propertyType")} placeholder="e.g. Luxury penthouse, family home" />
         <Field label="Location" value={form.location} onChange={set("location")} placeholder="e.g. Islamabad F-7, Downtown LA, JVC Dubai" />
         <Field label="Price" value={form.price} onChange={set("price")} placeholder={getPricePlaceholder(language)} />
@@ -254,14 +269,11 @@ function VideoScriptForm({ onGenerate, loading, language }) {
 }
 
 function BioForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    agentName: "", yearsExperience: "", location: "",
-    specialties: "", achievements: "", personalTouch: "", tone: "",
-  });
+  const [form, setForm] = useState({ agentName: "", yearsExperience: "", location: "", specialties: "", achievements: "", personalTouch: "", tone: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div style={spaceY}>
+      <div style={gridStyle}>
         <Field label="Agent Name" value={form.agentName} onChange={set("agentName")} placeholder="e.g. Sarah Johnson, Ahmed Khan" />
         <Field label="Years of Experience" value={form.yearsExperience} onChange={set("yearsExperience")} placeholder="e.g. 7" />
         <Field label="Location / Market" value={form.location} onChange={set("location")} placeholder="e.g. Austin TX, Dubai UAE, Lahore Pakistan" />
@@ -287,41 +299,41 @@ const CONTENT_TYPES = [
 ];
 
 function LeadMagnetForm({ onGenerate, loading, language }) {
-  const [form, setForm] = useState({
-    contentType: "blog_post",
-    topic: "",
-    targetAudience: "",
-    location: "",
-    agentName: "",
-    keyPoints: "",
-    tone: "",
-    wordCount: "",
-  });
+  const [form, setForm] = useState({ contentType: "blog_post", topic: "", targetAudience: "", location: "", agentName: "", keyPoints: "", tone: "", wordCount: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-
   return (
-    <div className="space-y-4">
+    <div style={spaceY}>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Content Type</label>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#7A90A8", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          Content Type
+        </label>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
           {CONTENT_TYPES.map((ct) => (
             <button
               key={ct.value}
               type="button"
               onClick={() => setForm((f) => ({ ...f, contentType: ct.value }))}
-              className={`px-3 py-2 rounded-lg text-xs font-medium border transition-colors text-left ${
-                form.contentType === ct.value
-                  ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
-              }`}
+              style={{
+                padding: "9px 12px", borderRadius: "10px",
+                fontSize: "12px", fontWeight: 600,
+                textAlign: "left", cursor: "pointer",
+                border: form.contentType === ct.value
+                  ? "1.5px solid rgba(196,163,92,0.70)"
+                  : "1px solid rgba(196,163,92,0.15)",
+                background: form.contentType === ct.value
+                  ? "rgba(196,163,92,0.15)"
+                  : "rgba(255,255,255,0.03)",
+                color: form.contentType === ct.value ? "#C4A35C" : "#7A90A8",
+                transition: "all 0.15s ease",
+                fontFamily: "inherit",
+              }}
             >
               {ct.label}
             </button>
           ))}
         </div>
       </div>
-
-      <div className="grid grid-cols-2 gap-4">
+      <div style={gridStyle}>
         <Field label="Topic / Title Idea" value={form.topic} onChange={set("topic")} placeholder="e.g. How to buy your first home in Dubai, Top 5 mistakes home sellers make" />
         <Field label="Target Audience" value={form.targetAudience} onChange={set("targetAudience")} placeholder="e.g. First-time buyers, overseas investors, young couples" />
         <Field label="Location / Market (optional)" value={form.location} onChange={set("location")} placeholder="e.g. Dubai, Lahore, Austin TX — or leave blank for general" />
@@ -329,192 +341,145 @@ function LeadMagnetForm({ onGenerate, loading, language }) {
         <Field label="Tone" value={form.tone} onChange={set("tone")} placeholder="e.g. Friendly & educational, professional, conversational" />
         <Field label="Approx. Word Count" value={form.wordCount} onChange={set("wordCount")} placeholder="e.g. 500 words, 800 words, short (default: ~600)" />
       </div>
-
       <Field label="Key Points to Cover (optional)" value={form.keyPoints} onChange={set("keyPoints")} placeholder="e.g. Down payment tips, mortgage pre-approval, hidden costs, negotiation tactics" textarea />
-
-      <div className="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-lg px-4 py-3">
-        <span className="text-lg mt-0.5">🧲</span>
-        <p className="text-xs text-blue-700 leading-relaxed">
-          <strong>Lead Magnet tip:</strong> Share the generated content as a free download, blog post, or email newsletter to attract and convert potential buyers and sellers into clients.
+      <div style={{
+        display: "flex", gap: "10px", alignItems: "flex-start",
+        background: "rgba(196,163,92,0.06)", border: "1px solid rgba(196,163,92,0.20)",
+        borderRadius: "10px", padding: "12px 14px",
+      }}>
+        <span style={{ fontSize: "16px" }}>🧲</span>
+        <p style={{ fontSize: "12px", color: "#7A90A8", lineHeight: 1.6, margin: 0 }}>
+          <strong style={{ color: "#C4A35C" }}>Lead Magnet tip:</strong> Share the generated content as a free download, blog post, or email newsletter to attract and convert potential buyers and sellers into clients.
         </p>
       </div>
-
       <GenerateBtn onClick={() => onGenerate({ feature: "leadmagnet", language, ...form })} loading={loading} />
     </div>
   );
 }
 
 const FIELD_LABELS = {
-  propertyType:    "Property Type",
-  location:        "Location",
-  bedrooms:        "Bedrooms",
-  bathrooms:       "Bathrooms",
-  size:            "Size",
-  price:           "Price",
-  features:        "Features",
-  notes:           "Notes",
-  highlights:      "Key Highlights",
-  targetBuyer:     "Target Buyer",
-  agentName:       "Agent Name",
-  buyerName:       "Buyer Name",
-  propertyAddress: "Property Address",
-  showingDate:     "Showing Date",
-  buyerInterests:  "Buyer Interests",
-  nextStep:        "Next Step",
-  contractText:    "Contract Text",
-  date:            "Open House Date",
-  time:            "Time",
-  agentPhone:      "Phone / WhatsApp",
-  neighborhood:    "Neighborhood",
-  city:            "City / Country",
-  vibe:            "Area Vibe",
-  nearbyPlaces:    "Nearby Places",
-  oldPrice:        "Original Price",
-  newPrice:        "New Price",
-  reason:          "Reason for Reduction",
-  duration:        "Video Duration",
-  yearsExperience: "Years of Experience",
-  specialties:     "Specialties",
-  achievements:    "Achievements",
-  personalTouch:   "Personal Touch",
-  tone:            "Tone",
-  language:        "Output Language",
-  contentType:     "Content Type",
-  topic:           "Topic / Title Idea",
-  targetAudience:  "Target Audience",
-  keyPoints:       "Key Points",
-  wordCount:       "Word Count",
+  propertyType: "Property Type", location: "Location", bedrooms: "Bedrooms",
+  bathrooms: "Bathrooms", size: "Size", price: "Price", features: "Features",
+  notes: "Notes", highlights: "Key Highlights", targetBuyer: "Target Buyer",
+  agentName: "Agent Name", buyerName: "Buyer Name", propertyAddress: "Property Address",
+  showingDate: "Showing Date", buyerInterests: "Buyer Interests", nextStep: "Next Step",
+  contractText: "Contract Text", date: "Open House Date", time: "Time",
+  agentPhone: "Phone / WhatsApp", neighborhood: "Neighborhood", city: "City / Country",
+  vibe: "Area Vibe", nearbyPlaces: "Nearby Places", oldPrice: "Original Price",
+  newPrice: "New Price", reason: "Reason for Reduction", duration: "Video Duration",
+  yearsExperience: "Years of Experience", specialties: "Specialties",
+  achievements: "Achievements", personalTouch: "Personal Touch", tone: "Tone",
+  language: "Output Language", contentType: "Content Type", topic: "Topic / Title Idea",
+  targetAudience: "Target Audience", keyPoints: "Key Points", wordCount: "Word Count",
 };
 
 const TAB_LABELS = {
-  listing:      "Listing Writer",
-  social:       "Social Media",
-  email:        "Buyer Email",
-  contract:     "Contract Summary",
-  openhouse:    "Open House",
-  neighborhood: "Neighborhood",
-  pricedrop:    "Price Reduction",
-  videoscript:  "Video Script",
-  bio:          "Realtor Bio",
-  leadmagnet:   "Lead Magnet / Blog",
+  listing: "Listing Writer", social: "Social Media", email: "Buyer Email",
+  contract: "Contract Summary", openhouse: "Open House", neighborhood: "Neighborhood",
+  pricedrop: "Price Reduction", videoscript: "Video Script", bio: "Realtor Bio",
+  leadmagnet: "Lead Magnet / Blog",
 };
 
-function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
-  const { feature, language, ...fields } = inputData || {};
+function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
+  const { feature, language: lang, ...fields } = inputData || {};
   const inputEntries = Object.entries(fields).filter(([, v]) => v && v.trim && v.trim() !== "");
 
   return (
     <>
-      <div
-        onClick={onClose}
-        style={{
-          position: "fixed", inset: 0,
-          background: "rgba(0,0,0,0.3)",
-          zIndex: 150,
-        }}
-      />
-
+      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 150 }} />
       <div style={{
         position: "fixed", top: 0, right: 0,
         height: "100vh", width: "100%", maxWidth: "540px",
-        background: "#fff", zIndex: 200,
-        boxShadow: "-4px 0 24px rgba(0,0,0,0.12)",
+        background: "#0D1D35",
+        border: "1px solid rgba(196,163,92,0.20)",
+        zIndex: 200,
+        boxShadow: "-4px 0 32px rgba(0,0,0,0.40)",
         display: "flex", flexDirection: "column",
         overflow: "hidden",
         animation: "slideIn 0.25s ease-out",
       }}>
-        <style>{`@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }`}</style>
+        <style>{`
+          @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+          @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+          ::-webkit-scrollbar { width: 6px; }
+          ::-webkit-scrollbar-track { background: transparent; }
+          ::-webkit-scrollbar-thumb { background: rgba(196,163,92,0.25); border-radius: 3px; }
+          input::placeholder, textarea::placeholder, select { color: #4A5E78 !important; }
+        `}</style>
 
+        {/* Panel header */}
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "16px 20px", borderBottom: "1px solid #e5e7eb",
-          background: "#fff", flexShrink: 0,
+          padding: "16px 20px",
+          borderBottom: "1px solid rgba(196,163,92,0.15)",
+          flexShrink: 0,
         }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{
-              background: "#eff6ff", color: "#1d4ed8",
-              fontSize: "12px", fontWeight: "600",
-              padding: "3px 10px", borderRadius: "20px",
+              background: "rgba(196,163,92,0.15)", color: "#C4A35C",
+              fontSize: "12px", fontWeight: 700,
+              padding: "3px 12px", borderRadius: "20px",
+              border: "1px solid rgba(196,163,92,0.30)",
             }}>
               {TAB_LABELS[feature] || feature}
             </span>
-            {language && language !== "en" && (
+            {lang && lang !== "en" && (
               <span style={{
-                background: "#fef3c7", color: "#92400e",
-                fontSize: "12px", fontWeight: "600",
+                background: "rgba(196,163,92,0.08)", color: "#A8B8C8",
+                fontSize: "12px", fontWeight: 600,
                 padding: "3px 10px", borderRadius: "20px",
+                border: "1px solid rgba(196,163,92,0.15)",
               }}>
-                {LANGUAGES.find((l) => l.code === language)?.label || language}
+                {LANGUAGES.find((l) => l.code === lang)?.label || lang}
               </span>
             )}
           </div>
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-            <button
-              onClick={onCopy}
-              style={{
-                fontSize: "13px",
-                background: copied ? "#f0fdf4" : "#f9fafb",
-                border: `1px solid ${copied ? "#86efac" : "#d1d5db"}`,
-                color: copied ? "#16a34a" : "#374151",
-                padding: "6px 14px", borderRadius: "8px", cursor: "pointer",
-                fontWeight: "500",
-              }}
-            >
+            <button onClick={onCopy} style={{
+              fontSize: "13px", fontWeight: 600, cursor: "pointer",
+              background: copied ? "rgba(196,163,92,0.15)" : "rgba(255,255,255,0.05)",
+              border: `1px solid ${copied ? "rgba(196,163,92,0.50)" : "rgba(196,163,92,0.20)"}`,
+              color: copied ? "#C4A35C" : "#A8B8C8",
+              padding: "6px 14px", borderRadius: "8px",
+              fontFamily: "inherit",
+            }}>
               {copied ? "✔ Copied!" : "Copy"}
             </button>
-            <button
-              onClick={onClose}
-              style={{
-                fontSize: "20px", background: "none", border: "none",
-                cursor: "pointer", color: "#6b7280", lineHeight: 1,
-                padding: "4px 8px", borderRadius: "6px",
-              }}
-            >
-              ✕
-            </button>
+            <button onClick={onClose} style={{
+              fontSize: "20px", background: "none", border: "none",
+              cursor: "pointer", color: "#5A6E85", lineHeight: 1,
+              padding: "4px 8px", borderRadius: "6px",
+            }}>✕</button>
           </div>
         </div>
 
+        {/* Panel body */}
         <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
-
           {inputEntries.length > 0 && (
-            <div style={{ marginBottom: "24px" }}>
-              <p style={{
-                fontSize: "11px", fontWeight: "600", color: "#9ca3af",
-                letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "12px",
-              }}>
+            <div style={{ marginBottom: "20px" }}>
+              <p style={{ fontSize: "11px", fontWeight: 700, color: "#4A5E78", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: "12px" }}>
                 Input Details
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                 {inputEntries.map(([key, value]) => (
                   <div key={key}>
-                    <p style={{ fontSize: "11px", color: "#9ca3af", margin: "0 0 2px" }}>
-                      {FIELD_LABELS[key] || key}
-                    </p>
-                    <p style={{ fontSize: "14px", fontWeight: "500", color: "#111827", margin: 0 }}>
-                      {value}
-                    </p>
+                    <p style={{ fontSize: "11px", color: "#4A5E78", margin: "0 0 2px" }}>{FIELD_LABELS[key] || key}</p>
+                    <p style={{ fontSize: "13px", fontWeight: 500, color: "#A8B8C8", margin: 0 }}>{value}</p>
                   </div>
                 ))}
               </div>
+              <div style={{ borderTop: "1px solid rgba(196,163,92,0.10)", marginTop: "20px", marginBottom: "20px" }} />
             </div>
           )}
 
-          {inputEntries.length > 0 && (
-            <div style={{ borderTop: "1px solid #e5e7eb", marginBottom: "20px" }} />
-          )}
-
-          <p style={{
-            fontSize: "11px", fontWeight: "600", color: "#9ca3af",
-            letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "12px",
-          }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, color: "#4A5E78", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: "12px" }}>
             AI Output
           </p>
           <pre style={{
-            whiteSpace: "pre-wrap", fontSize: "14px", color: "#1f2937",
-            fontFamily: "inherit", lineHeight: "1.7", margin: 0,
-            direction: language === "ar" ? "rtl" : "ltr",
-            textAlign: language === "ar" ? "right" : "left",
+            whiteSpace: "pre-wrap", fontSize: "14px", color: "#E8DFC8",
+            fontFamily: "inherit", lineHeight: 1.75, margin: 0,
+            direction: lang === "ar" ? "rtl" : "ltr",
+            textAlign: lang === "ar" ? "right" : "left",
           }}>
             {result}
           </pre>
@@ -522,12 +487,12 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
           {feature === "listing" && (
             <div style={{
               marginTop: "20px", padding: "12px 14px",
-              background: "#f8fafc", border: "1px solid #e2e8f0",
+              background: "rgba(196,163,92,0.06)", border: "1px solid rgba(196,163,92,0.18)",
               borderRadius: "10px", display: "flex", gap: "10px", alignItems: "flex-start",
             }}>
               <span style={{ fontSize: "16px" }}>⚖️</span>
-              <p style={{ fontSize: "12px", color: "#64748b", lineHeight: 1.6, margin: 0 }}>
-                <strong style={{ color: "#475569" }}>Fair Housing Notice:</strong> This AI-generated description is a drafting aid. Review before publishing to ensure compliance with the Fair Housing Act — remove any language that could be seen as discriminatory based on race, color, religion, sex, disability, familial status, or national origin.
+              <p style={{ fontSize: "12px", color: "#7A90A8", lineHeight: 1.6, margin: 0 }}>
+                <strong style={{ color: "#A8B8C8" }}>Fair Housing Notice:</strong> This AI-generated description is a drafting aid. Review before publishing to ensure compliance with the Fair Housing Act.
               </p>
             </div>
           )}
@@ -535,12 +500,12 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose }) {
           {feature === "leadmagnet" && (
             <div style={{
               marginTop: "20px", padding: "12px 14px",
-              background: "#f0fdf4", border: "1px solid #bbf7d0",
+              background: "rgba(196,163,92,0.06)", border: "1px solid rgba(196,163,92,0.18)",
               borderRadius: "10px", display: "flex", gap: "10px", alignItems: "flex-start",
             }}>
               <span style={{ fontSize: "16px" }}>🧲</span>
-              <p style={{ fontSize: "12px", color: "#166534", lineHeight: 1.6, margin: 0 }}>
-                <strong>How to use this:</strong> Post it on your website or blog, share it as a free PDF download to collect email leads, or send it as a newsletter to your contact list to position yourself as the local market expert.
+              <p style={{ fontSize: "12px", color: "#7A90A8", lineHeight: 1.6, margin: 0 }}>
+                <strong style={{ color: "#C4A35C" }}>How to use this:</strong> Post it on your website or blog, share it as a free PDF download to collect email leads, or send it as a newsletter to your contact list.
               </p>
             </div>
           )}
@@ -565,63 +530,37 @@ export default function GeneratePage() {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       if (session) {
-        const res = await fetch("/api/usage", {
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        });
+        const res = await fetch("/api/usage", { headers: { Authorization: `Bearer ${session.access_token}` } });
         const data = await res.json();
-        if (data.used !== undefined) {
-          setUsage({ used: data.used, limit: data.limit, plan: data.plan });
-        }
+        if (data.used !== undefined) setUsage({ used: data.used, limit: data.limit, plan: data.plan });
       }
     });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => setSession(session));
     return () => subscription.unsubscribe();
   }, []);
 
   const handleGenerate = async (payload) => {
-    if (!session) {
-      setError("Please log in to generate content.");
-      return;
-    }
-    setLoading(true);
-    setResult("");
-    setInputData(null);
-    setError("");
-
+    if (!session) { setError("Please log in to generate content."); return; }
+    setLoading(true); setResult(""); setInputData(null); setError("");
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${session.access_token}`,
-        },
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${session.access_token}` },
         body: JSON.stringify(payload),
       });
-
       const data = await res.json();
-
       if (res.status === 429 && data.error === "limit_reached") {
         setError(`⚠️ ${data.message}`);
         setUsage({ used: data.used, limit: data.limit, plan: data.plan });
         return;
       }
-
       if (!res.ok || !data.success) {
         setError(data.error || "Something went wrong. Please try again.");
       } else {
-        setResult(data.result);
-        setInputData(payload);
-        const usageRes = await fetch("/api/usage", {
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        });
+        setResult(data.result); setInputData(payload);
+        const usageRes = await fetch("/api/usage", { headers: { Authorization: `Bearer ${session.access_token}` } });
         const usageData = await usageRes.json();
-        if (usageData.used !== undefined) {
-          setUsage({ used: usageData.used, limit: usageData.limit, plan: usageData.plan });
-        }
+        if (usageData.used !== undefined) setUsage({ used: usageData.used, limit: usageData.limit, plan: usageData.plan });
       }
     } catch (err) {
       setError("Network error. Please check your connection.");
@@ -630,11 +569,7 @@ export default function GeneratePage() {
     }
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(result);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const handleCopy = () => { navigator.clipboard.writeText(result); setCopied(true); setTimeout(() => setCopied(false), 2000); };
 
   const forms = {
     listing:      <ListingForm      onGenerate={handleGenerate} loading={loading} language={language} />,
@@ -650,54 +585,93 @@ export default function GeneratePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
-      <div className="max-w-3xl mx-auto">
+    <div style={{ minHeight: "100vh", background: "#0B1628", fontFamily: "'DM Sans', sans-serif", padding: "2.5rem 1.25rem 4rem" }}>
+      <style>{`
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .gen-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .gen-tabs::-webkit-scrollbar { display: none; }
+        .gen-tab { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid rgba(196,163,92,0.20); background: rgba(255,255,255,0.03); color: #7A90A8; transition: all 0.15s ease; font-family: inherit; flex-shrink: 0; }
+        .gen-tab:hover { color: #C4A35C; border-color: rgba(196,163,92,0.40); }
+        .gen-tab.active { background: rgba(196,163,92,0.15); border-color: rgba(196,163,92,0.60); color: #C4A35C; }
+        .form-grid-mobile { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 480px) { .form-grid-mobile { grid-template-columns: 1fr; } }
+      `}</style>
 
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">AI Generator</h1>
-          <p className="text-gray-500 mt-2">Powered by Claude · Works for any country worldwide 🌍</p>
+      <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+          <div style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", marginBottom: "0.5rem" }}>✦ AI Generator</div>
+          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 700, color: "#F5EDD8", marginBottom: "0.5rem" }}>
+            Write Better Listings, Faster
+          </h1>
+          <p style={{ fontSize: "14px", color: "#5A6E85" }}>Powered by Claude · Works for any country worldwide 🌍</p>
         </div>
 
+        {/* Usage bar */}
         {session && usage && (
-          <div className="mb-4 bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between text-sm">
-            <span className="text-gray-600">
-              Generations used this month: <strong>{usage.used} / {usage.limit ?? "∞"}</strong>
+          <div style={{
+            marginBottom: "1.25rem",
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(196,163,92,0.15)",
+            borderRadius: "12px", padding: "12px 16px",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            fontSize: "13px",
+          }}>
+            <span style={{ color: "#7A90A8" }}>
+              Generations used: <strong style={{ color: "#E8DFC8" }}>{usage.used} / {usage.limit ?? "∞"}</strong>
             </span>
             {usage.limit && usage.used >= usage.limit && (
-              <a href="/pricing" className="text-blue-600 font-semibold hover:underline">
+              <Link href="/pricing" style={{ color: "#C4A35C", fontWeight: 700, textDecoration: "none", fontSize: "13px" }}>
                 Upgrade Plan →
-              </a>
+              </Link>
             )}
           </div>
         )}
 
+        {/* Not logged in warning */}
         {!session && (
-          <div className="mb-4 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded-xl px-4 py-3">
-            ⚠️ Please <a href="/login" className="font-semibold underline">log in</a> to use the AI generator.
+          <div style={{
+            marginBottom: "1.25rem",
+            background: "rgba(196,163,92,0.06)",
+            border: "1px solid rgba(196,163,92,0.25)",
+            borderRadius: "12px", padding: "12px 16px",
+            fontSize: "13px", color: "#A8B8C8",
+          }}>
+            ⚠️ Please <Link href="/login" style={{ color: "#C4A35C", fontWeight: 700, textDecoration: "underline" }}>log in</Link> to use the AI generator.
           </div>
         )}
 
-        <div className="flex gap-2 mb-6 flex-wrap">
+        {/* Tool tabs */}
+        <div className="gen-tabs">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => { setActiveTab(tab.id); setResult(""); setError(""); setInputData(null); }}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === tab.id
-                  ? "bg-blue-600 text-white shadow"
-                  : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
-              }`}
+              className={`gen-tab${activeTab === tab.id ? " active" : ""}`}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        {/* Form card */}
+        <div style={{
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(196,163,92,0.15)",
+          borderRadius: "20px", padding: "1.75rem",
+        }}>
           <LanguageSelector language={language} setLanguage={setLanguage} />
           {forms[activeTab]}
+
           {error && (
-            <div className="mt-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+            <div style={{
+              marginTop: "1rem",
+              background: "rgba(239,68,68,0.08)",
+              border: "1px solid rgba(239,68,68,0.25)",
+              borderRadius: "10px", padding: "12px 16px",
+              fontSize: "13px", color: "#FCA5A5",
+            }}>
               {error}
             </div>
           )}
@@ -712,6 +686,7 @@ export default function GeneratePage() {
           onCopy={handleCopy}
           copied={copied}
           onClose={() => { setResult(""); setInputData(null); }}
+          language={language}
         />
       )}
     </div>
