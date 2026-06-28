@@ -19,39 +19,52 @@ const TYPE_LABELS = {
 }
 
 const TYPE_COLORS = {
-  listing:      'bg-blue-50 text-blue-700 border border-blue-100',
-  social:       'bg-purple-50 text-purple-700 border border-purple-100',
-  email:        'bg-emerald-50 text-emerald-700 border border-emerald-100',
-  contract:     'bg-amber-50 text-amber-700 border border-amber-100',
-  openhouse:    'bg-rose-50 text-rose-700 border border-rose-100',
-  neighborhood: 'bg-teal-50 text-teal-700 border border-teal-100',
-  pricedrop:    'bg-orange-50 text-orange-700 border border-orange-100',
-  videoscript:  'bg-indigo-50 text-indigo-700 border border-indigo-100',
-  bio:          'bg-pink-50 text-pink-700 border border-pink-100',
-  leadmagnet:   'bg-green-50 text-green-700 border border-green-100',
+  listing:      'rgba(196,163,92,0.15)',
+  social:       'rgba(139,92,246,0.15)',
+  email:        'rgba(16,185,129,0.15)',
+  contract:     'rgba(245,158,11,0.15)',
+  openhouse:    'rgba(239,68,68,0.15)',
+  neighborhood: 'rgba(20,184,166,0.15)',
+  pricedrop:    'rgba(249,115,22,0.15)',
+  videoscript:  'rgba(99,102,241,0.15)',
+  bio:          'rgba(236,72,153,0.15)',
+  leadmagnet:   'rgba(34,197,94,0.15)',
+}
+
+const TYPE_TEXT_COLORS = {
+  listing:      '#C4A35C',
+  social:       '#A78BFA',
+  email:        '#34D399',
+  contract:     '#FCD34D',
+  openhouse:    '#F87171',
+  neighborhood: '#2DD4BF',
+  pricedrop:    '#FB923C',
+  videoscript:  '#818CF8',
+  bio:          '#F472B6',
+  leadmagnet:   '#4ADE80',
 }
 
 const PLAN_CONFIG = {
-  free:   { color: 'text-slate-600',  bar: 'bg-slate-400',  light: 'bg-slate-50',  border: 'border-slate-200', badge: 'bg-slate-100 text-slate-600' },
-  pro:    { color: 'text-blue-600',   bar: 'bg-blue-500',   light: 'bg-blue-50',   border: 'border-blue-200',  badge: 'bg-blue-100 text-blue-700' },
-  agency: { color: 'text-purple-600', bar: 'bg-purple-500', light: 'bg-purple-50', border: 'border-purple-200', badge: 'bg-purple-100 text-purple-700' },
+  free:   { color: '#7A90A8', bar: '#5A6E85',  badge: 'rgba(90,110,133,0.20)',  badgeText: '#7A90A8'  },
+  pro:    { color: '#C4A35C', bar: '#C4A35C',  badge: 'rgba(196,163,92,0.20)', badgeText: '#C4A35C'  },
+  agency: { color: '#A78BFA', bar: '#A78BFA',  badge: 'rgba(167,139,250,0.20)', badgeText: '#A78BFA' },
 }
 
 const TOOLS = [
-  { key: 'listing',      icon: '🏠', label: 'Listing Writer',    desc: 'Generate professional MLS property descriptions in seconds',           color: 'hover:border-blue-300 hover:bg-blue-50/50',      accent: 'bg-blue-100 text-blue-700' },
-  { key: 'social',       icon: '📱', label: 'Social Media',       desc: 'Create engaging Instagram and Facebook captions for listings',         color: 'hover:border-purple-300 hover:bg-purple-50/50',  accent: 'bg-purple-100 text-purple-700' },
-  { key: 'email',        icon: '✉️', label: 'Buyer Email',        desc: 'Write personalized emails to buyers about properties',                 color: 'hover:border-emerald-300 hover:bg-emerald-50/50', accent: 'bg-emerald-100 text-emerald-700' },
-  { key: 'contract',     icon: '📄', label: 'Contract Summary',   desc: 'Summarize complex real estate contracts into plain English',           color: 'hover:border-amber-300 hover:bg-amber-50/50',    accent: 'bg-amber-100 text-amber-700' },
-  { key: 'openhouse',    icon: '🎪', label: 'Open House',         desc: 'Create announcements for WhatsApp, SMS, and social media',            color: 'hover:border-rose-300 hover:bg-rose-50/50',      accent: 'bg-rose-100 text-rose-700' },
-  { key: 'neighborhood', icon: '📍', label: 'Neighborhood',       desc: 'Write compelling area descriptions for any city worldwide',           color: 'hover:border-teal-300 hover:bg-teal-50/50',      accent: 'bg-teal-100 text-teal-700' },
-  { key: 'pricedrop',    icon: '💰', label: 'Price Reduction',    desc: 'Announce price drops tactfully to attract motivated buyers',          color: 'hover:border-orange-300 hover:bg-orange-50/50',  accent: 'bg-orange-100 text-orange-700' },
-  { key: 'videoscript',  icon: '🎥', label: 'Video Script',       desc: 'Write walkthrough scripts for Reels, YouTube and TikTok',            color: 'hover:border-indigo-300 hover:bg-indigo-50/50',  accent: 'bg-indigo-100 text-indigo-700' },
-  { key: 'bio',          icon: '👤', label: 'Realtor Bio',        desc: 'Generate a polished professional bio for your website or profile',    color: 'hover:border-pink-300 hover:bg-pink-50/50',      accent: 'bg-pink-100 text-pink-700' },
-  { key: 'leadmagnet',   icon: '🧲', label: 'Lead Magnet / Blog', desc: 'Create blog posts, buyer guides and checklists to attract new leads', color: 'hover:border-green-300 hover:bg-green-50/50',    accent: 'bg-green-100 text-green-700' },
+  { key: 'listing',      icon: '🏠', label: 'Listing Writer',    desc: 'Generate professional MLS property descriptions in seconds'           },
+  { key: 'social',       icon: '📱', label: 'Social Media',       desc: 'Create engaging Instagram and Facebook captions for listings'         },
+  { key: 'email',        icon: '✉️', label: 'Buyer Email',        desc: 'Write personalized emails to buyers about properties'                 },
+  { key: 'contract',     icon: '📄', label: 'Contract Summary',   desc: 'Summarize complex real estate contracts into plain English'           },
+  { key: 'openhouse',    icon: '🎪', label: 'Open House',         desc: 'Create announcements for WhatsApp, SMS, and social media'            },
+  { key: 'neighborhood', icon: '📍', label: 'Neighborhood',       desc: 'Write compelling area descriptions for any city worldwide'           },
+  { key: 'pricedrop',    icon: '💰', label: 'Price Reduction',    desc: 'Announce price drops tactfully to attract motivated buyers'          },
+  { key: 'videoscript',  icon: '🎥', label: 'Video Script',       desc: 'Write walkthrough scripts for Reels, YouTube and TikTok'            },
+  { key: 'bio',          icon: '👤', label: 'Realtor Bio',        desc: 'Generate a polished professional bio for your website or profile'    },
+  { key: 'leadmagnet',   icon: '🧲', label: 'Lead Magnet / Blog', desc: 'Create blog posts, buyer guides and checklists to attract new leads' },
 ]
 
 const NAV_ITEMS = [
-  { icon: '⚡', label: 'Dashboard',    href: '/dashboard',         active: true },
+  { icon: '⚡', label: 'Dashboard',    href: '/dashboard',         active: true  },
   { icon: '🤖', label: 'AI Generator', href: '/generate',          active: false },
   { icon: '📋', label: 'History',      href: '/dashboard#history', active: false },
   { icon: '💰', label: 'Pricing',      href: '/pricing',           active: false },
@@ -67,14 +80,16 @@ function getGreeting() {
 function MiniBarChart({ data }) {
   const max = Math.max(...data.map(d => d.count), 1)
   return (
-    <div className="flex items-end gap-1.5 h-16">
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', height: '64px' }}>
       {data.map((d, i) => (
-        <div key={i} className="flex flex-col items-center gap-1 flex-1">
-          <div
-            className="w-full rounded-t-sm bg-blue-500 opacity-80 transition-all duration-500"
-            style={{ height: `${Math.max(4, (d.count / max) * 52)}px` }}
-          ></div>
-          <span className="text-xs text-gray-400">{d.day}</span>
+        <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', flex: 1 }}>
+          <div style={{
+            width: '100%', borderRadius: '3px 3px 0 0',
+            background: d.count > 0 ? '#C4A35C' : 'rgba(196,163,92,0.15)',
+            height: `${Math.max(4, (d.count / max) * 52)}px`,
+            transition: 'height 0.4s ease',
+          }} />
+          <span style={{ fontSize: '10px', color: '#4A5E78' }}>{d.day}</span>
         </div>
       ))}
     </div>
@@ -105,18 +120,9 @@ export default function Dashboard() {
         if (!session) { setLoading(false); return }
         setUserEmail(session.user.email || '')
         const [{ data: profile }, usageRes, { data: gens }] = await Promise.all([
-          supabase
-            .from('profiles')
-            .select('plan, polar_customer_id, payment_issue')
-            .eq('id', session.user.id)
-            .single(),
+          supabase.from('profiles').select('plan, polar_customer_id, payment_issue').eq('id', session.user.id).single(),
           fetch('/api/usage', { headers: { Authorization: `Bearer ${session.access_token}` } }),
-          supabase
-            .from('generations')
-            .select('id, type, input, output, created_at')
-            .eq('user_id', session.user.id)
-            .order('created_at', { ascending: false })
-            .limit(20)
+          supabase.from('generations').select('id, type, input, output, created_at').eq('user_id', session.user.id).order('created_at', { ascending: false }).limit(20)
         ])
         const usageData = await usageRes.json()
         setPlan(profile?.plan || 'free')
@@ -144,21 +150,17 @@ export default function Dashboard() {
   const chartData = (() => {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const last7 = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date()
-      d.setDate(d.getDate() - (6 - i))
+      const d = new Date(); d.setDate(d.getDate() - (6 - i))
       return { day: days[d.getDay()], date: d.toDateString(), count: 0 }
     })
     generations.forEach(g => {
-      const gDate = new Date(g.created_at).toDateString()
-      const slot = last7.find(d => d.date === gDate)
+      const slot = last7.find(d => d.date === new Date(g.created_at).toDateString())
       if (slot) slot.count++
     })
     return last7
   })()
 
-  const formatDate = (ts) => new Date(ts).toLocaleDateString('en-US', {
-    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-  })
+  const formatDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
 
   const getTitle = (type, input) => {
     if (type === 'listing')      return `${input?.propertyType || 'Property'} in ${input?.location || 'Unknown'}`
@@ -175,24 +177,16 @@ export default function Dashboard() {
   }
 
   const handleCancelSubscription = async () => {
-    setCancelling(true)
-    setCancelError('')
+    setCancelling(true); setCancelError('')
     try {
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) throw new Error('Not logged in')
-      const res = await fetch('/api/polar/cancel', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      })
+      const res = await fetch('/api/polar/cancel', { method: 'POST', headers: { Authorization: `Bearer ${session.access_token}` } })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to cancel')
       setCancelAlreadyCancelled(!!data.alreadyCancelled)
       setCancelSuccess(true)
-      setTimeout(() => {
-        setShowCancelModal(false)
-        setCancelSuccess(false)
-        setCancelAlreadyCancelled(false)
-      }, 3000)
+      setTimeout(() => { setShowCancelModal(false); setCancelSuccess(false); setCancelAlreadyCancelled(false) }, 3000)
     } catch (err) {
       setCancelError(err.message || 'Something went wrong. Please try again.')
     } finally {
@@ -201,226 +195,254 @@ export default function Dashboard() {
   }
 
   const handleManageBilling = async () => {
-  setPortalLoading(true)
-  try {
-    const { data: { session } } = await supabase.auth.getSession()
-    if (!session) throw new Error('Not logged in')
-    const res = await fetch('/api/polar/portal', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: session.user.id }),
-    })
-    const data = await res.json()
-    if (data.redirectToPricing) {
-      window.location.href = '/pricing'
-      return
+    setPortalLoading(true)
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) throw new Error('Not logged in')
+      const res = await fetch('/api/polar/portal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: session.user.id }) })
+      const data = await res.json()
+      if (data.redirectToPricing) { window.location.href = '/pricing'; return }
+      if (!res.ok) throw new Error(data.error || 'Failed to open billing portal')
+      window.location.href = data.url
+    } catch (err) {
+      alert('Could not open billing portal. Please try again or contact support.')
+    } finally {
+      setPortalLoading(false)
     }
-    if (!res.ok) throw new Error(data.error || 'Failed to open billing portal')
-    window.location.href = data.url
-  } catch (err) {
-    console.error('Portal error:', err)
-    alert('Could not open billing portal. Please try again or contact support.')
-  } finally {
-    setPortalLoading(false)
   }
-}
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-    window.location.href = '/'
+
+  const handleLogout = async () => { await supabase.auth.signOut(); window.location.href = '/' }
+
+  const S = {
+    sidebar: { display: 'flex', flexDirection: 'column', height: '100%', background: '#071020', borderRight: '1px solid rgba(196,163,92,0.12)' },
+    sidebarLogo: { padding: '20px', borderBottom: '1px solid rgba(196,163,92,0.12)' },
+    sidebarLogoLink: { display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' },
+    sidebarLogoText: { fontSize: '18px', fontWeight: 700, color: '#C4A35C', fontFamily: "'Playfair Display', Georgia, serif" },
+    sidebarNav: { flex: 1, padding: '12px' },
+    sidebarFooter: { padding: '12px', borderTop: '1px solid rgba(196,163,92,0.12)' },
+    card: { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(196,163,92,0.12)', borderRadius: '16px', padding: '16px' },
   }
 
   const Sidebar = () => (
-    <aside className="flex flex-col h-full bg-gray-900 text-white w-64">
-      <div className="px-5 py-5 border-b border-gray-800">
-        <a href="/" className="flex items-center gap-2">
-          <span className="text-2xl">🏠</span>
-          <span className="text-lg font-bold text-white">ListingAI</span>
+    <aside style={S.sidebar}>
+      <div style={S.sidebarLogo}>
+        <a href="/" style={S.sidebarLogoLink}>
+          <span style={{ fontSize: '22px' }}>🏠</span>
+          <span style={S.sidebarLogoText}>ListingAI</span>
         </a>
       </div>
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav style={S.sidebarNav}>
         {NAV_ITEMS.map(item => (
-          <a
-            key={item.label}
-            href={item.href}
-            className={item.active
-              ? 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white'
-              : 'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-800'}
-          >
-            <span className="text-base">{item.icon}</span>
+          <a key={item.label} href={item.href} style={{
+            display: 'flex', alignItems: 'center', gap: '10px',
+            padding: '10px 12px', borderRadius: '10px',
+            fontSize: '13px', fontWeight: 600, textDecoration: 'none',
+            marginBottom: '2px',
+            background: item.active ? 'rgba(196,163,92,0.15)' : 'transparent',
+            color: item.active ? '#C4A35C' : '#5A6E85',
+            border: item.active ? '1px solid rgba(196,163,92,0.30)' : '1px solid transparent',
+            transition: 'all 0.15s ease',
+          }}>
+            <span style={{ fontSize: '15px' }}>{item.icon}</span>
             {item.label}
           </a>
         ))}
       </nav>
-      <div className="px-3 py-4 border-t border-gray-800 space-y-3">
+      <div style={S.sidebarFooter}>
         {plan === 'free' && (
-          <a
-            href="/pricing"
-            className="block w-full text-center bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all"
-          >
-            Upgrade to Pro
-          </a>
+          <a href="/pricing" style={{
+            display: 'block', width: '100%', textAlign: 'center',
+            background: '#C4A35C', color: '#0B1628',
+            fontSize: '13px', fontWeight: 700,
+            padding: '10px', borderRadius: '50px',
+            textDecoration: 'none', marginBottom: '12px',
+          }}>Upgrade to Pro</a>
         )}
-        <div className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-800 transition-all cursor-pointer">
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-            {avatarInitials}
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-white truncate">{userEmail}</p>
-            <p className={`text-xs font-medium ${pc.color}`}>{planLabel} Plan</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px', borderRadius: '10px' }}>
+          <div style={{
+            width: '34px', height: '34px', borderRadius: '50%',
+            background: 'rgba(196,163,92,0.20)', border: '1px solid rgba(196,163,92,0.40)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#C4A35C', fontSize: '12px', fontWeight: 700, flexShrink: 0,
+          }}>{avatarInitials}</div>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <p style={{ fontSize: '12px', fontWeight: 600, color: '#A8B8C8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userEmail}</p>
+            <p style={{ fontSize: '11px', color: pc.color, margin: 0 }}>{planLabel} Plan</p>
           </div>
         </div>
-        <button
-          onClick={handleLogout}
-          className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-gray-500 hover:text-red-400 hover:bg-gray-800 rounded-lg transition-all"
-        >
-          <span>🚪</span> Logout
-        </button>
+        <button onClick={handleLogout} style={{
+          width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px',
+          padding: '8px 12px', fontSize: '12px', color: '#4A5E78',
+          background: 'none', border: 'none', cursor: 'pointer', borderRadius: '8px',
+          marginTop: '4px', fontFamily: 'inherit',
+        }}>🚪 Logout</button>
       </div>
     </aside>
   )
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div style={{ display: 'flex', height: '100vh', background: '#0B1628', overflow: 'hidden', fontFamily: "'DM Sans', sans-serif" }}>
+      <style>{`
+        .dash-tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(196,163,92,0.12); border-radius: 16px; padding: 18px; display: flex; align-items: flex-start; gap: 14px; text-decoration: none; transition: all 0.2s ease; }
+        .dash-tool-card:hover { background: rgba(196,163,92,0.06); border-color: rgba(196,163,92,0.35); transform: translateY(-1px); }
+        .dash-history-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(196,163,92,0.06); transition: background 0.15s ease; }
+        .dash-history-row:hover { background: rgba(196,163,92,0.04); }
+        .dash-history-row:last-child { border-bottom: none; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+      `}</style>
 
-      <div className="hidden md:flex flex-col w-64 flex-shrink-0 shadow-lg">
+      {/* Desktop sidebar */}
+      <div style={{ display: 'none', width: '220px', flexShrink: 0 }} className="md-sidebar">
         <Sidebar />
       </div>
+      <style>{`@media (min-width: 768px) { .md-sidebar { display: flex !important; flex-direction: column; } }`}</style>
 
+      {/* Mobile sidebar overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-50 flex md:hidden">
-          <div className="w-64 flex flex-col shadow-2xl">
-            <Sidebar />
-          </div>
-          <div className="flex-1 bg-black/50" onClick={() => setSidebarOpen(false)}></div>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex' }}>
+          <div style={{ width: '220px', flexShrink: 0 }}><Sidebar /></div>
+          <div style={{ flex: 1, background: 'rgba(0,0,0,0.60)' }} onClick={() => setSidebarOpen(false)} />
         </div>
       )}
 
-      <main className="flex-1 overflow-y-auto">
+      {/* Main content */}
+      <main style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
 
-        <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100 sticky top-0 z-40">
-          <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-gray-100">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-          <span className="font-bold text-gray-800">🏠 ListingAI</span>
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">
-            {avatarInitials}
-          </div>
+        {/* Mobile top bar */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '12px 16px',
+          background: '#071020',
+          borderBottom: '1px solid rgba(196,163,92,0.12)',
+          position: 'sticky', top: 0, zIndex: 40,
+        }} className="mobile-topbar">
+          <style>{`@media (min-width: 768px) { .mobile-topbar { display: none !important; } }`}</style>
+          <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C4A35C', fontSize: '20px' }}>☰</button>
+          <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#C4A35C', fontSize: '16px' }}>🏠 ListingAI</span>
+          <div style={{
+            width: '32px', height: '32px', borderRadius: '50%',
+            background: 'rgba(196,163,92,0.20)', border: '1px solid rgba(196,163,92,0.40)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#C4A35C', fontSize: '12px', fontWeight: 700,
+          }}>{avatarInitials}</div>
         </div>
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '2rem 1.25rem 4rem', width: '100%' }}>
 
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">
+          {/* Greeting */}
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, color: '#F5EDD8', marginBottom: '4px' }}>
               {getGreeting()}, {firstName.charAt(0).toUpperCase() + firstName.slice(1)} 👋
             </h1>
-            <p className="text-gray-500 text-sm mt-1">Here is what is happening with your ListingAI account today.</p>
+            <p style={{ fontSize: '13px', color: '#4A5E78' }}>Here is what is happening with your ListingAI account today.</p>
           </div>
 
+          {/* Payment issue banner */}
           {!loading && paymentIssue && plan !== 'free' && (
-            <div className="mb-6 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div style={{
+              marginBottom: '1.25rem', borderRadius: '14px', padding: '16px 20px',
+              background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.30)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap',
+            }}>
               <div>
-                <p className="text-white font-semibold text-sm">⚠️ Payment issue — your {planLabel} access is at risk</p>
-                <p className="text-red-100 text-xs mt-0.5">We could not process your last payment. Update your card to avoid being downgraded to Free.</p>
+                <p style={{ fontSize: '13px', fontWeight: 700, color: '#FCA5A5', margin: '0 0 2px' }}>⚠️ Payment issue — your {planLabel} access is at risk</p>
+                <p style={{ fontSize: '12px', color: '#7A90A8', margin: 0 }}>We could not process your last payment. Update your card to avoid being downgraded.</p>
               </div>
-              <button
-                onClick={handleManageBilling}
-                disabled={portalLoading}
-                className="flex-shrink-0 bg-white text-red-600 font-bold text-sm px-5 py-2 rounded-xl hover:bg-red-50 transition-all disabled:opacity-60"
-              >
-                {portalLoading ? 'Opening...' : 'Update Payment'}
-              </button>
+              <button onClick={handleManageBilling} disabled={portalLoading} style={{
+                background: '#ef4444', color: '#fff', border: 'none',
+                fontSize: '13px', fontWeight: 700, padding: '8px 18px', borderRadius: '50px',
+                cursor: 'pointer', flexShrink: 0, fontFamily: 'inherit',
+              }}>{portalLoading ? 'Opening...' : 'Update Payment'}</button>
             </div>
           )}
 
+          {/* Free plan upgrade banner */}
           {!loading && plan === 'free' && (
-            <div className="mb-6 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div style={{
+              marginBottom: '1.25rem', borderRadius: '14px', padding: '16px 20px',
+              background: 'rgba(196,163,92,0.08)', border: '1px solid rgba(196,163,92,0.30)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap',
+            }}>
               <div>
-                <p className="text-white font-semibold text-sm">You are on the Free plan — {remaining} generations left</p>
-                <p className="text-blue-100 text-xs mt-0.5">Upgrade to Pro for 100 generations/month and unlock full access.</p>
+                <p style={{ fontSize: '13px', fontWeight: 700, color: '#C4A35C', margin: '0 0 2px' }}>You are on the Free plan — {remaining} generations left</p>
+                <p style={{ fontSize: '12px', color: '#7A90A8', margin: 0 }}>Upgrade to Pro for 100 generations/month and unlock full access.</p>
               </div>
-              <a
-                href="/pricing"
-                className="flex-shrink-0 bg-white text-blue-700 font-bold text-sm px-5 py-2 rounded-xl hover:bg-blue-50 transition-all"
-              >
-                Upgrade Now
-              </a>
+              <a href="/pricing" style={{
+                background: '#C4A35C', color: '#0B1628',
+                fontSize: '13px', fontWeight: 700, padding: '8px 18px', borderRadius: '50px',
+                textDecoration: 'none', flexShrink: 0,
+              }}>Upgrade Now</a>
             </div>
           )}
 
-          {loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 animate-pulse">
-                  <div className="h-3 bg-gray-100 rounded w-2/3 mb-3"></div>
-                  <div className="h-7 bg-gray-100 rounded w-1/2"></div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Total Used</p>
-                <p className="text-3xl font-bold text-gray-900">{usage}</p>
-                <p className="text-xs text-gray-400 mt-1">All time</p>
+          {/* Stat cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '1.25rem' }}
+            className="stat-grid">
+            <style>{`@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr) !important; } }`}</style>
+            {loading ? [1,2,3,4].map(i => (
+              <div key={i} style={{ ...S.card, animation: 'pulse 1.5s ease infinite' }}>
+                <div style={{ height: '10px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', width: '60%', marginBottom: '12px' }} />
+                <div style={{ height: '28px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', width: '40%' }} />
               </div>
-              <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Remaining</p>
-                <p className={`text-3xl font-bold ${pc.color}`}>{remaining}</p>
-                <div className="mt-2 w-full bg-gray-100 rounded-full h-1">
-                  <div className={`h-1 rounded-full ${pc.bar}`} style={{ width: `${100 - usagePercent}%` }}></div>
+            )) : (<>
+              <div style={S.card}>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Total Used</p>
+                <p style={{ fontSize: '2rem', fontWeight: 700, color: '#F5EDD8', margin: '0 0 2px' }}>{usage}</p>
+                <p style={{ fontSize: '11px', color: '#4A5E78', margin: 0 }}>All time</p>
+              </div>
+              <div style={S.card}>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Remaining</p>
+                <p style={{ fontSize: '2rem', fontWeight: 700, color: pc.color, margin: '0 0 6px' }}>{remaining}</p>
+                <div style={{ width: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: '4px', height: '4px' }}>
+                  <div style={{ height: '4px', borderRadius: '4px', background: pc.bar, width: `${100 - usagePercent}%`, transition: 'width 0.5s ease' }} />
                 </div>
               </div>
-              <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Current Plan</p>
-                <p className={`text-3xl font-bold ${pc.color}`}>{planLabel}</p>
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full mt-1 inline-block ${pc.badge}`}>
+              <div style={S.card}>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Current Plan</p>
+                <p style={{ fontSize: '2rem', fontWeight: 700, color: pc.color, margin: '0 0 4px' }}>{planLabel}</p>
+                <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 10px', borderRadius: '100px', background: pc.badge, color: pc.badgeText }}>
                   {limit === Infinity ? 'Unlimited' : `${limit} gen/mo`}
                 </span>
               </div>
-              <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">This Week</p>
-                <p className="text-3xl font-bold text-gray-900">
-                  {chartData.reduce((sum, d) => sum + d.count, 0)}
-                </p>
-                <p className="text-xs text-gray-400 mt-1">generations</p>
+              <div style={S.card}>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>This Week</p>
+                <p style={{ fontSize: '2rem', fontWeight: 700, color: '#F5EDD8', margin: '0 0 2px' }}>{chartData.reduce((s, d) => s + d.count, 0)}</p>
+                <p style={{ fontSize: '11px', color: '#4A5E78', margin: 0 }}>generations</p>
               </div>
-            </div>
-          )}
-
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-bold text-gray-800">Activity — Last 7 Days</h2>
-              <span className="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">Generations per day</span>
-            </div>
-            {loading ? (
-              <div className="h-16 bg-gray-50 rounded-lg animate-pulse"></div>
-            ) : (
-              <MiniBarChart data={chartData} />
-            )}
+            </>)}
           </div>
 
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base font-bold text-gray-800">AI Tools</h2>
-              <span className="text-xs text-gray-400">Click any tool to start</span>
+          {/* Activity chart */}
+          <div style={{ ...S.card, marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+              <h2 style={{ fontSize: '13px', fontWeight: 700, color: '#A8B8C8', margin: 0 }}>Activity — Last 7 Days</h2>
+              <span style={{ fontSize: '11px', color: '#4A5E78', background: 'rgba(255,255,255,0.04)', padding: '3px 10px', borderRadius: '100px' }}>Generations per day</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {loading ? <div style={{ height: '64px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', animation: 'pulse 1.5s ease infinite' }} />
+              : <MiniBarChart data={chartData} />}
+          </div>
+
+          {/* AI Tools */}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#A8B8C8', margin: 0 }}>AI Tools</h2>
+              <span style={{ fontSize: '11px', color: '#4A5E78' }}>Click any tool to start</span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }} className="tools-grid">
+              <style>{`@media (max-width: 480px) { .tools-grid { grid-template-columns: 1fr !important; } }`}</style>
               {TOOLS.map(tool => (
-                <a
-                  key={tool.key}
-                  href="/generate"
-                  className={`bg-white border border-gray-100 rounded-2xl p-5 flex items-start gap-4 transition-all hover:shadow-md cursor-pointer group ${tool.color}`}
-                >
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 ${tool.accent}`}>
-                    {tool.icon}
+                <a key={tool.key} href="/generate" className="dash-tool-card">
+                  <div style={{
+                    width: '42px', height: '42px', borderRadius: '10px', flexShrink: 0,
+                    background: 'rgba(196,163,92,0.10)', border: '1px solid rgba(196,163,92,0.15)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
+                  }}>{tool.icon}</div>
+                  <div style={{ minWidth: 0 }}>
+                    <p style={{ fontSize: '13px', fontWeight: 700, color: '#E8DFC8', margin: '0 0 3px' }}>{tool.label}</p>
+                    <p style={{ fontSize: '12px', color: '#4A5E78', margin: 0, lineHeight: 1.5 }}>{tool.desc}</p>
                   </div>
-                  <div className="min-w-0">
-                    <p className="font-bold text-gray-800 text-sm group-hover:text-gray-900">{tool.label}</p>
-                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{tool.desc}</p>
-                  </div>
-                  <svg className="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg style={{ width: '14px', height: '14px', color: '#4A5E78', flexShrink: 0, marginTop: '2px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </a>
@@ -428,46 +450,44 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div id="history" className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-50">
-              <h2 className="text-sm font-bold text-gray-800">Recent Generations</h2>
-              <span className="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-full">{generations.length} entries</span>
+          {/* Generation history */}
+          <div id="history" style={{ ...S.card, padding: 0, overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', borderBottom: '1px solid rgba(196,163,92,0.10)' }}>
+              <h2 style={{ fontSize: '13px', fontWeight: 700, color: '#A8B8C8', margin: 0 }}>Recent Generations</h2>
+              <span style={{ fontSize: '11px', color: '#4A5E78', background: 'rgba(255,255,255,0.04)', padding: '3px 10px', borderRadius: '100px' }}>{generations.length} entries</span>
             </div>
             {loading ? (
-              <div className="p-5 space-y-3">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="animate-pulse h-14 bg-gray-50 rounded-xl"></div>
-                ))}
+              <div style={{ padding: '16px' }}>
+                {[1,2,3].map(i => <div key={i} style={{ height: '48px', background: 'rgba(255,255,255,0.03)', borderRadius: '10px', marginBottom: '8px', animation: 'pulse 1.5s ease infinite' }} />)}
               </div>
             ) : generations.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-16 text-center px-6">
-                <span className="text-5xl mb-3">✨</span>
-                <p className="text-gray-600 font-semibold mb-1">No generations yet</p>
-                <p className="text-gray-400 text-sm mb-4">Use any AI tool above to create your first content</p>
-                <a href="/generate" className="text-sm text-blue-600 font-semibold hover:underline">Start generating</a>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 1.5rem', textAlign: 'center' }}>
+                <span style={{ fontSize: '2.5rem', marginBottom: '12px' }}>✨</span>
+                <p style={{ fontSize: '14px', fontWeight: 600, color: '#A8B8C8', marginBottom: '4px' }}>No generations yet</p>
+                <p style={{ fontSize: '13px', color: '#4A5E78', marginBottom: '16px' }}>Use any AI tool above to create your first content</p>
+                <a href="/generate" style={{ fontSize: '13px', color: '#C4A35C', fontWeight: 700, textDecoration: 'none' }}>Start generating →</a>
               </div>
             ) : (
-              <div className="divide-y divide-gray-50">
+              <div>
                 {generations.map(gen => (
-                  <div
-                    key={gen.id}
-                    onClick={() => setSelectedGeneration(gen)}
-                    className="flex items-center justify-between px-5 py-3.5 hover:bg-slate-50 transition cursor-pointer group"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className="text-lg flex-shrink-0">
-                        {TOOLS.find(t => t.key === gen.type)?.icon || '📝'}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-gray-800 truncate">{getTitle(gen.type, gen.input)}</p>
-                        <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full mt-0.5 ${TYPE_COLORS[gen.type] || 'bg-gray-100 text-gray-600'}`}>
-                          {TYPE_LABELS[gen.type] || gen.type}
-                        </span>
+                  <div key={gen.id} className="dash-history-row" onClick={() => setSelectedGeneration(gen)}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+                      <span style={{ fontSize: '18px', flexShrink: 0 }}>{TOOLS.find(t => t.key === gen.type)?.icon || '📝'}</span>
+                      <div style={{ minWidth: 0 }}>
+                        <p style={{ fontSize: '13px', fontWeight: 600, color: '#E8DFC8', margin: '0 0 3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {getTitle(gen.type, gen.input)}
+                        </p>
+                        <span style={{
+                          display: 'inline-block', fontSize: '11px', fontWeight: 700,
+                          padding: '2px 9px', borderRadius: '100px',
+                          background: TYPE_COLORS[gen.type] || 'rgba(255,255,255,0.06)',
+                          color: TYPE_TEXT_COLORS[gen.type] || '#7A90A8',
+                        }}>{TYPE_LABELS[gen.type] || gen.type}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 ml-4 flex-shrink-0">
-                      <span className="text-xs text-gray-400 hidden sm:block">{formatDate(gen.created_at)}</span>
-                      <svg className="w-4 h-4 text-gray-300 group-hover:text-blue-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '12px', flexShrink: 0 }}>
+                      <span style={{ fontSize: '11px', color: '#4A5E78' }}>{formatDate(gen.created_at)}</span>
+                      <svg style={{ width: '14px', height: '14px', color: '#4A5E78' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
@@ -477,21 +497,15 @@ export default function Dashboard() {
             )}
           </div>
 
+          {/* Billing actions */}
           {!loading && plan !== 'free' && (
-            <div className="mt-4 text-center flex items-center justify-center gap-4">
+            <div style={{ marginTop: '16px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
               {polarCustomerId && (
-                <button
-                  onClick={handleManageBilling}
-                  disabled={portalLoading}
-                  className="text-xs text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-60"
-                >
+                <button onClick={handleManageBilling} disabled={portalLoading} style={{ background: 'none', border: 'none', fontSize: '12px', color: '#4A5E78', cursor: 'pointer', fontFamily: 'inherit' }}>
                   {portalLoading ? 'Opening...' : 'Manage billing'}
                 </button>
               )}
-              <button
-                onClick={() => setShowCancelModal(true)}
-                className="text-xs text-gray-400 hover:text-red-500 transition-colors"
-              >
+              <button onClick={() => setShowCancelModal(true)} style={{ background: 'none', border: 'none', fontSize: '12px', color: '#4A5E78', cursor: 'pointer', fontFamily: 'inherit' }}>
                 Cancel subscription
               </button>
             </div>
@@ -500,63 +514,45 @@ export default function Dashboard() {
         </div>
       </main>
 
+      {/* Cancel modal */}
       {showCancelModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+          <div style={{ background: '#0D1D35', border: '1px solid rgba(196,163,92,0.20)', borderRadius: '20px', width: '100%', maxWidth: '420px', padding: '2rem' }}>
             {cancelSuccess ? (
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(196,163,92,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '28px' }}>✓</div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#F5EDD8', marginBottom: '8px' }}>
                   {cancelAlreadyCancelled ? 'Already Set to Cancel' : 'Subscription Cancelled'}
                 </h3>
-                <p className="text-gray-500 text-sm">
-                  {cancelAlreadyCancelled
-                    ? 'Your subscription is already scheduled to end at your current billing period — no further action needed.'
-                    : 'You will keep access until the end of your billing period.'}
+                <p style={{ fontSize: '13px', color: '#7A90A8', lineHeight: 1.6 }}>
+                  {cancelAlreadyCancelled ? 'Your subscription is already scheduled to end at your current billing period.' : 'You will keep access until the end of your billing period.'}
                 </p>
               </div>
             ) : (
               <>
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 text-center mb-2">Cancel Subscription?</h3>
-                <p className="text-gray-500 text-sm text-center mb-6">
-                  You will keep your <span className="font-semibold text-gray-700">{planLabel}</span> plan access until the end of your billing period. After that, you will be downgraded to Free (5 generations/month).
+                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '28px' }}>⚠️</div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#F5EDD8', textAlign: 'center', marginBottom: '8px' }}>Cancel Subscription?</h3>
+                <p style={{ fontSize: '13px', color: '#7A90A8', textAlign: 'center', lineHeight: 1.6, marginBottom: '20px' }}>
+                  You will keep your <strong style={{ color: '#E8DFC8' }}>{planLabel}</strong> plan access until the end of your billing period. After that, you will be downgraded to Free (5 generations/month).
                 </p>
                 {cancelError && (
-                  <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-600">
+                  <div style={{ marginBottom: '16px', padding: '10px 14px', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '10px', fontSize: '13px', color: '#FCA5A5' }}>
                     {cancelError}
                   </div>
                 )}
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => { setShowCancelModal(false); setCancelError('') }}
-                    disabled={cancelling}
-                    className="flex-1 py-2.5 px-4 border border-gray-200 text-gray-600 text-sm font-semibold rounded-xl hover:bg-gray-50 transition-colors"
-                  >
-                    Keep My Plan
-                  </button>
-                  <button
-                    onClick={handleCancelSubscription}
-                    disabled={cancelling}
-                    className="flex-1 py-2.5 px-4 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-xl transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-                  >
-                    {cancelling ? (
-                      <>
-                        <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                        </svg>
-                        Cancelling...
-                      </>
-                    ) : 'Yes, Cancel'}
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button onClick={() => { setShowCancelModal(false); setCancelError('') }} disabled={cancelling} style={{
+                    flex: 1, padding: '11px', fontSize: '13px', fontWeight: 700,
+                    border: '1px solid rgba(196,163,92,0.25)', borderRadius: '50px',
+                    color: '#A8B8C8', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit',
+                  }}>Keep My Plan</button>
+                  <button onClick={handleCancelSubscription} disabled={cancelling} style={{
+                    flex: 1, padding: '11px', fontSize: '13px', fontWeight: 700,
+                    background: '#ef4444', color: '#fff', border: 'none',
+                    borderRadius: '50px', cursor: 'pointer', fontFamily: 'inherit',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                  }}>
+                    {cancelling ? 'Cancelling...' : 'Yes, Cancel'}
                   </button>
                 </div>
               </>
@@ -565,10 +561,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <GenerationDetailPanel
-        generation={selectedGeneration}
-        onClose={() => setSelectedGeneration(null)}
-      />
+      <GenerationDetailPanel generation={selectedGeneration} onClose={() => setSelectedGeneration(null)} />
     </div>
   )
 }
