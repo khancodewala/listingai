@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import LogoMark from "@/components/LogoMark";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -70,15 +71,9 @@ export default function Navbar() {
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
           {/* Logo */}
-          <Link href="/" style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontWeight: 700, fontSize: "20px",
-            color: "#C4A35C", textDecoration: "none",
-            display: "flex", alignItems: "center", gap: "8px",
-          }}>
-            🏠 ListingAI
+          <Link href="/" style={{ textDecoration: "none" }}>
+            <LogoMark size="md" theme="dark" />
           </Link>
-
           {/* Desktop Nav */}
           <div className="nav-desktop">
             <Link href="/generate" className="nav-link">AI Generator</Link>

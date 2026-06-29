@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import LogoMark from "@/components/LogoMark";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,12 +13,7 @@ export default function Login() {
   const handleLogin = async () => {
     setLoading(true);
     setError("");
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setError(error.message);
       setLoading(false);
@@ -27,44 +23,89 @@ export default function Login() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-sm p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <a href="/" className="text-2xl font-bold text-blue-600">ListingAI</a>
-          <h1 className="text-2xl font-bold text-gray-800 mt-4">Welcome Back</h1>
-          <p className="text-gray-500 mt-1">Login to your account</p>
+    <main style={{
+      minHeight: "100vh",
+      background: "#080F1E",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "24px",
+      fontFamily: "'DM Sans', sans-serif",
+    }}>
+      <div style={{
+        background: "#0f1c3f",
+        border: "1px solid rgba(196,163,92,0.2)",
+        borderRadius: "16px",
+        padding: "40px",
+        width: "100%",
+        maxWidth: "420px",
+      }}>
+        {/* Logo */}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}>
+          <a href="/" style={{ textDecoration: "none" }}>
+            <LogoMark size="lg" theme="dark" />
+          </a>
         </div>
 
+        <h1 style={{ color: "#ffffff", fontSize: "22px", fontWeight: 700, textAlign: "center", margin: "0 0 6px" }}>
+          Welcome Back
+        </h1>
+        <p style={{ color: "#A8B8C8", fontSize: "14px", textAlign: "center", margin: "0 0 28px" }}>
+          Login to your account
+        </p>
+
         {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+          <div style={{
+            background: "rgba(239,68,68,0.1)",
+            border: "1px solid rgba(239,68,68,0.3)",
+            color: "#fca5a5",
+            fontSize: "13px",
+            borderRadius: "8px",
+            padding: "12px 16px",
+            marginBottom: "20px",
+          }}>
             ⚠️ {error}
           </div>
         )}
 
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">Email</label>
+        <div style={{ marginBottom: "16px" }}>
+          <label style={{ display: "block", color: "#D8E4F0", fontSize: "13px", fontWeight: 500, marginBottom: "8px" }}>
+            Email
+          </label>
           <input
             type="email"
             placeholder="you@example.com"
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            style={{
+              width: "100%", boxSizing: "border-box",
+              background: "#0a1628", border: "1px solid rgba(196,163,92,0.2)",
+              borderRadius: "8px", padding: "12px 16px",
+              color: "#ffffff", fontSize: "14px", outline: "none",
+            }}
           />
         </div>
 
-        <div className="mb-2">
-          <label className="block text-gray-700 font-medium mb-2">Password</label>
+        <div style={{ marginBottom: "8px" }}>
+          <label style={{ display: "block", color: "#D8E4F0", fontSize: "13px", fontWeight: 500, marginBottom: "8px" }}>
+            Password
+          </label>
           <input
             type="password"
             placeholder="Enter your password"
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={{
+              width: "100%", boxSizing: "border-box",
+              background: "#0a1628", border: "1px solid rgba(196,163,92,0.2)",
+              borderRadius: "8px", padding: "12px 16px",
+              color: "#ffffff", fontSize: "14px", outline: "none",
+            }}
           />
         </div>
 
-        <div className="text-right mb-6">
-          <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+        <div style={{ textAlign: "right", marginBottom: "24px" }}>
+          <a href="/forgot-password" style={{ color: "#C4A35C", fontSize: "13px", textDecoration: "none" }}>
             Forgot password?
           </a>
         </div>
@@ -72,14 +113,19 @@ export default function Login() {
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="block w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 text-center disabled:bg-blue-400"
+          style={{
+            width: "100%", padding: "13px",
+            background: loading ? "#8a6d3b" : "#C4A35C",
+            color: "#0B1628", fontWeight: 700, fontSize: "15px",
+            border: "none", borderRadius: "50px", cursor: loading ? "not-allowed" : "pointer",
+          }}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <p className="text-center text-gray-500 mt-6">
-          Do not have an account?{" "}
-          <a href="/signup" className="text-blue-600 font-medium hover:underline">Sign Up</a>
+        <p style={{ color: "#A8B8C8", fontSize: "14px", textAlign: "center", marginTop: "24px" }}>
+          Don't have an account?{" "}
+          <a href="/signup" style={{ color: "#C4A35C", fontWeight: 600, textDecoration: "none" }}>Sign Up</a>
         </p>
       </div>
     </main>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import LogoMark from "@/components/LogoMark";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -13,7 +14,6 @@ export default function ResetPassword() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Supabase automatically exchanges the token from the URL hash into a session
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY") {
         setValidSession(true);
@@ -24,98 +24,149 @@ export default function ResetPassword() {
 
   const handleUpdate = async () => {
     setError("");
-
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       return;
     }
-
     if (password !== confirm) {
       setError("Passwords do not match.");
       return;
     }
-
     setLoading(true);
-
     const { error } = await supabase.auth.updateUser({ password });
-
     if (error) {
       setError(error.message);
       setLoading(false);
     } else {
       setSuccess(true);
       setLoading(false);
-      // Redirect to login after 3 seconds
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 3000);
+      setTimeout(() => { window.location.href = "/login"; }, 3000);
     }
   };
 
+  const inputStyle = {
+    width: "100%", boxSizing: "border-box",
+    background: "#0a1628", border: "1px solid rgba(196,163,92,0.2)",
+    borderRadius: "8px", padding: "12px 16px",
+    color: "#ffffff", fontSize: "14px", outline: "none",
+  };
+
+  const labelStyle = {
+    display: "block", color: "#D8E4F0",
+    fontSize: "13px", fontWeight: 500, marginBottom: "8px",
+  };
+
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-sm p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <a href="/" className="text-2xl font-bold text-blue-600">ListingAI</a>
-          <h1 className="text-2xl font-bold text-gray-800 mt-4">Set New Password</h1>
-          <p className="text-gray-500 mt-1">Choose a strong password for your account</p>
+    <main style={{
+      minHeight: "calc(100vh - 60px)",
+      background: "#080F1E",
+      display: "flex",
+      alignItems: "flex-start",
+      justifyContent: "center",
+      paddingTop: "60px",
+      paddingLeft: "24px",
+      paddingRight: "24px",
+      paddingBottom: "40px",
+      fontFamily: "'DM Sans', sans-serif",
+    }}>
+      <div style={{
+        background: "#0f1c3f",
+        border: "1px solid rgba(196,163,92,0.2)",
+        borderRadius: "16px",
+        padding: "36px",
+        width: "100%",
+        maxWidth: "400px",
+      }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+          <a href="/" style={{ textDecoration: "none" }}>
+            <LogoMark size="md" theme="dark" />
+          </a>
         </div>
 
+        <h1 style={{ color: "#ffffff", fontSize: "20px", fontWeight: 700, textAlign: "center", margin: "0 0 6px" }}>
+          Set New Password
+        </h1>
+        <p style={{ color: "#A8B8C8", fontSize: "13px", textAlign: "center", margin: "0 0 24px" }}>
+          Choose a strong password for your account
+        </p>
+
         {checking ? (
-          <p className="text-center text-gray-500">Verifying your reset link...</p>
+          <p style={{ color: "#A8B8C8", fontSize: "14px", textAlign: "center" }}>
+            Verifying your reset link...
+          </p>
         ) : !validSession ? (
-          <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-4 text-center">
+          <div style={{
+            background: "rgba(239,68,68,0.1)",
+            border: "1px solid rgba(239,68,68,0.3)",
+            color: "#fca5a5", fontSize: "13px",
+            borderRadius: "8px", padding: "16px", textAlign: "center",
+          }}>
             ⚠️ This reset link is invalid or has expired.{" "}
-            <a href="/forgot-password" className="underline font-medium">
+            <a href="/forgot-password" style={{ color: "#C4A35C", textDecoration: "underline" }}>
               Request a new one
             </a>
           </div>
         ) : success ? (
-          <div className="bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg px-4 py-4 text-center">
+          <div style={{
+            background: "rgba(34,197,94,0.1)",
+            border: "1px solid rgba(34,197,94,0.3)",
+            color: "#86efac", fontSize: "13px",
+            borderRadius: "8px", padding: "16px", textAlign: "center",
+          }}>
             ✅ Password updated! Redirecting you to login...
           </div>
         ) : (
           <>
             {error && (
-              <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+              <div style={{
+                background: "rgba(239,68,68,0.1)",
+                border: "1px solid rgba(239,68,68,0.3)",
+                color: "#fca5a5", fontSize: "13px",
+                borderRadius: "8px", padding: "12px 16px", marginBottom: "16px",
+              }}>
                 ⚠️ {error}
               </div>
             )}
 
-            <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-2">New Password</label>
+            <div style={{ marginBottom: "16px" }}>
+              <label style={labelStyle}>New Password</label>
               <input
                 type="password"
                 placeholder="Enter new password"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                style={inputStyle}
               />
             </div>
 
-            <div className="mb-6">
-              <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
+            <div style={{ marginBottom: "24px" }}>
+              <label style={labelStyle}>Confirm Password</label>
               <input
                 type="password"
                 placeholder="Confirm new password"
-                className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
+                style={inputStyle}
               />
             </div>
 
             <button
               onClick={handleUpdate}
               disabled={loading}
-              className="block w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 text-center disabled:bg-blue-400"
+              style={{
+                width: "100%", padding: "12px",
+                background: loading ? "#8a6d3b" : "#C4A35C",
+                color: "#0B1628", fontWeight: 700, fontSize: "15px",
+                border: "none", borderRadius: "50px", cursor: loading ? "not-allowed" : "pointer",
+              }}
             >
               {loading ? "Updating..." : "Update Password"}
             </button>
           </>
         )}
 
-        <p className="text-center text-gray-500 mt-6">
-          <a href="/login" className="text-blue-600 font-medium hover:underline">
+        <p style={{ color: "#A8B8C8", fontSize: "13px", textAlign: "center", marginTop: "20px" }}>
+          <a href="/login" style={{ color: "#C4A35C", fontWeight: 600, textDecoration: "none" }}>
             Back to Login
           </a>
         </p>

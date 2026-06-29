@@ -1,13 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.desktop-nav { display: flex; }
-.mobile-menu-btn { display: none; }
-.mobile-nav { display: none; }
-
-@media (max-width: 768px) {
-  .desktop-nav { display: none !important; }
-  .mobile-menu-btn { display: block !important; }
-  .mobile-nav { display: flex !important; }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #0a1628 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
 }
