@@ -1,24 +1,32 @@
-export default function sitemap() {
-  const baseUrl = "https://listingai-rose.vercel.app";
+// app/sitemap.js
+//
+// lastModified values come from lib/sitemap-dates.json, which is generated
+// at build time by scripts/generate-sitemap-dates.js from real git commit
+// history. Do NOT hardcode dates here and do NOT use `new Date()` — both
+// were tried previously and either go stale or falsely signal "changed
+// today" on every crawl, which trains Google to distrust the lastmod field.
+//
+// Only home, pricing, and signup are indexable — login, forgot-password,
+// reset-password, dashboard, and generate are all noindexed via robots.txt
+// and page-level metadata, so they're intentionally excluded here.
 
+import sitemapDates from '@/lib/sitemap-dates.json';
+
+const BASE_URL = 'https://listingai-rose.vercel.app';
+
+export default function sitemap() {
   return [
     {
-      url: baseUrl,
-      lastModified: new Date("2026-06-15"),
-      changeFrequency: "weekly",
-      priority: 1.0,
+      url: BASE_URL,
+      lastModified: sitemapDates['/'],
     },
     {
-      url: `${baseUrl}/pricing`,
-      lastModified: new Date("2026-06-15"),
-      changeFrequency: "monthly",
-      priority: 0.8,
+      url: `${BASE_URL}/pricing`,
+      lastModified: sitemapDates['/pricing'],
     },
     {
-      url: `${baseUrl}/signup`,
-      lastModified: new Date("2026-07-04"),
-      changeFrequency: "monthly",
-      priority: 0.6,
+      url: `${BASE_URL}/signup`,
+      lastModified: sitemapDates['/signup'],
     },
   ];
 }
