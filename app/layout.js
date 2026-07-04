@@ -58,7 +58,6 @@ export const metadata = {
     description:
       "Generate professional real estate listings in seconds with AI. Free to start.",
     images: ["/og-image.png"],
-    creator: "@listingai",
   },
   alternates: {
     canonical: siteUrl,
