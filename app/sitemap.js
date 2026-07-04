@@ -1,31 +1,24 @@
- export default function sitemap() {
+export default function sitemap() {
   const baseUrl = "https://listingai-rose.vercel.app";
-  const lastModified = new Date();
 
   return [
     {
       url: baseUrl,
-      lastModified,
+      lastModified: new Date("2026-06-15"),
       changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${baseUrl}/pricing`,
-      lastModified,
+      lastModified: new Date("2026-06-15"),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/signup`,
-      lastModified,
-      changeFrequency: "yearly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/login`,
-      lastModified,
-      changeFrequency: "yearly",
-      priority: 0.3,
+      lastModified: new Date("2026-07-04"),
+      changeFrequency: "monthly",
+      priority: 0.6,
     },
   ];
 }

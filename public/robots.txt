@@ -3,5 +3,8 @@ Allow: /
 Disallow: /dashboard
 Disallow: /generate
 Disallow: /api/
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
 
 Sitemap: https://listingai-rose.vercel.app/sitemap.xml
