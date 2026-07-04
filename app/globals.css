@@ -5,3 +5,11 @@ input:-webkit-autofill:focus {
   -webkit-text-fill-color: #ffffff !important;
   caret-color: #ffffff;
 }
+
+.theme-light-auth input:-webkit-autofill,
+.theme-light-auth input:-webkit-autofill:hover,
+.theme-light-auth input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #f7f6f3 inset !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  caret-color: #1a1a1a;
+}

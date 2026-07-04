@@ -10,6 +10,7 @@ export default function LogoMark({ size = 'md', theme = 'dark' }) {
   const navy = theme === 'dark' ? '#0a1628' : '#ffffff';
   const shape = theme === 'dark' ? '#ffffff' : '#0f1c3f';
   const gold = '#C9952A';
+  const subtitleColor = theme === 'dark' ? '#A8B8C8' : '#8a8a85';
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -46,7 +47,7 @@ export default function LogoMark({ size = 'md', theme = 'dark' }) {
             fontFamily: 'Arial, sans-serif',
             fontSize: '8.5px',
             letterSpacing: '2px',
-            color: '#A8B8C8',
+            color: subtitleColor,
             marginTop: '3px',
           }}>
             REAL ESTATE CONTENT
