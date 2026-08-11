@@ -9,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -22,54 +23,123 @@ export default function Login() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+    setError("");
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=/generate`,
+      },
+    });
+    if (error) {
+      setError(error.message);
+      setGoogleLoading(false);
+    }
+  };
+
   return (
-    <main style={{
-      minHeight: "100vh",
-      background: "#080F1E",
+    <main className="theme-light-auth" style={{
+      minHeight: "calc(100vh - 60px)",
+      background: "#FAF8F2",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      padding: "24px",
+      padding: "16px",
+      paddingTop: "12px",
+      paddingBottom: "12px",
       fontFamily: "'DM Sans', sans-serif",
     }}>
       <div style={{
-        background: "#0f1c3f",
-        border: "1px solid rgba(196,163,92,0.2)",
+        background: "#ffffff",
+        border: "1px solid #ece6d8",
         borderRadius: "16px",
-        padding: "40px",
+        padding: "26px 36px",
         width: "100%",
         maxWidth: "420px",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+        position: "relative",
+        overflow: "hidden",
       }}>
+        {/* Decorative corner accent */}
+        <div style={{
+          position: "absolute",
+          top: "-40px",
+          right: "-40px",
+          width: "140px",
+          height: "140px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(94,155,124,0.10) 0%, rgba(24,95,133,0.06) 55%, rgba(24,95,133,0) 80%)",
+        }} />
+
         {/* Logo */}
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px", position: "relative" }}>
           <a href="/" style={{ textDecoration: "none" }}>
-            <LogoMark size="lg" theme="dark" />
+            <LogoMark size="md" theme="light" />
           </a>
         </div>
 
-        <h1 style={{ color: "#ffffff", fontSize: "22px", fontWeight: 700, textAlign: "center", margin: "0 0 6px" }}>
-          Welcome Back
+        <h1 style={{ color: "#1a1a1a", fontSize: "20px", fontWeight: 500, textAlign: "center", margin: "0 0 4px", fontFamily: "Georgia, serif" }}>
+          Welcome back
         </h1>
-        <p style={{ color: "#A8B8C8", fontSize: "14px", textAlign: "center", margin: "0 0 28px" }}>
+        <p style={{ color: "#8a8a85", fontSize: "13px", textAlign: "center", margin: "0 0 20px" }}>
           Login to your account
         </p>
 
         {error && (
           <div style={{
-            background: "rgba(239,68,68,0.1)",
-            border: "1px solid rgba(239,68,68,0.3)",
-            color: "#fca5a5",
+            background: "#fdf0ee",
+            border: "1px solid #f3c9c2",
+            color: "#a3372a",
             fontSize: "13px",
             borderRadius: "8px",
-            padding: "12px 16px",
-            marginBottom: "20px",
+            padding: "10px 14px",
+            marginBottom: "16px",
           }}>
-            ⚠️ {error}
+            {error}
           </div>
         )}
 
-        <div style={{ marginBottom: "16px" }}>
-          <label style={{ display: "block", color: "#D8E4F0", fontSize: "13px", fontWeight: 500, marginBottom: "8px" }}>
+        {/* Google Login Button */}
+        <button
+          onClick={handleGoogleLogin}
+          disabled={googleLoading || loading}
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+            padding: "11px",
+            background: "#ffffff",
+            border: "1px solid #e2ded4",
+            borderRadius: "8px",
+            color: "#1a1a1a",
+            fontSize: "14px",
+            fontWeight: 500,
+            cursor: googleLoading || loading ? "not-allowed" : "pointer",
+            marginBottom: "18px",
+            opacity: googleLoading ? 0.7 : 1,
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18">
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 01-1.8 2.72v2.26h2.9c1.7-1.57 2.68-3.87 2.68-6.62z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 009 18z"/>
+            <path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 013.68 9c0-.59.1-1.17.27-1.7V4.97H.96A9 9 0 000 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 00.96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/>
+          </svg>
+          {googleLoading ? "Redirecting..." : "Login with Google"}
+        </button>
+
+        {/* Divider */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "18px" }}>
+          <div style={{ flex: 1, height: "1px", background: "#e2ded4" }} />
+          <span style={{ color: "#8a8a85", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.04em" }}>or</span>
+          <div style={{ flex: 1, height: "1px", background: "#e2ded4" }} />
+        </div>
+
+        <div style={{ marginBottom: "12px" }}>
+          <label style={{ display: "block", color: "#8a8a85", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
             Email
           </label>
           <input
@@ -79,15 +149,15 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
             style={{
               width: "100%", boxSizing: "border-box",
-              background: "#0a1628", border: "1px solid rgba(196,163,92,0.2)",
-              borderRadius: "8px", padding: "12px 16px",
-              color: "#ffffff", fontSize: "14px", outline: "none",
+              background: "#f7f6f3", border: "1px solid #e2ded4",
+              borderRadius: "8px", padding: "10px 14px",
+              color: "#1a1a1a", fontSize: "14px", outline: "none",
             }}
           />
         </div>
 
         <div style={{ marginBottom: "8px" }}>
-          <label style={{ display: "block", color: "#D8E4F0", fontSize: "13px", fontWeight: 500, marginBottom: "8px" }}>
+          <label style={{ display: "block", color: "#8a8a85", fontSize: "11px", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
             Password
           </label>
           <input
@@ -97,35 +167,36 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             style={{
               width: "100%", boxSizing: "border-box",
-              background: "#0a1628", border: "1px solid rgba(196,163,92,0.2)",
-              borderRadius: "8px", padding: "12px 16px",
-              color: "#ffffff", fontSize: "14px", outline: "none",
+              background: "#f7f6f3", border: "1px solid #e2ded4",
+              borderRadius: "8px", padding: "10px 14px",
+              color: "#1a1a1a", fontSize: "14px", outline: "none",
             }}
           />
         </div>
 
-        <div style={{ textAlign: "right", marginBottom: "24px" }}>
-          <a href="/forgot-password" style={{ color: "#C4A35C", fontSize: "13px", textDecoration: "none" }}>
+        <div style={{ textAlign: "right", marginBottom: "18px" }}>
+          <a href="/forgot-password" style={{ color: "#185F85", fontSize: "12px", textDecoration: "none" }}>
             Forgot password?
           </a>
         </div>
 
         <button
           onClick={handleLogin}
-          disabled={loading}
+          disabled={loading || googleLoading}
           style={{
-            width: "100%", padding: "13px",
-            background: loading ? "#8a6d3b" : "#C4A35C",
-            color: "#0B1628", fontWeight: 700, fontSize: "15px",
-            border: "none", borderRadius: "50px", cursor: loading ? "not-allowed" : "pointer",
+            width: "100%", padding: "12px",
+            background: loading ? "#5c7d91" : "#185F85",
+            color: "#ffffff", fontWeight: 500, fontSize: "14px",
+            border: "none", borderRadius: "8px", cursor: loading ? "not-allowed" : "pointer",
+            letterSpacing: "0.02em",
           }}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <p style={{ color: "#A8B8C8", fontSize: "14px", textAlign: "center", marginTop: "24px" }}>
+        <p style={{ color: "#8a8a85", fontSize: "13px", textAlign: "center", marginTop: "16px", marginBottom: 0 }}>
           Don't have an account?{" "}
-          <a href="/signup" style={{ color: "#C4A35C", fontWeight: 600, textDecoration: "none" }}>Sign Up</a>
+          <a href="/signup" style={{ color: "#185F85", fontWeight: 500, textDecoration: "none" }}>Sign Up</a>
         </p>
       </div>
     </main>
