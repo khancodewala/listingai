@@ -46,90 +46,132 @@ export default function ResetPassword() {
 
   const inputStyle = {
     width: "100%", boxSizing: "border-box",
-    background: "#0a1628", border: "1px solid rgba(196,163,92,0.2)",
-    borderRadius: "8px", padding: "12px 16px",
-    color: "#ffffff", fontSize: "14px", outline: "none",
+    background: "#f7f6f3", border: "1px solid #e2ded4",
+    borderRadius: "8px", padding: "10px 14px",
+    color: "#1a1a1a", fontSize: "14px", outline: "none",
   };
 
   const labelStyle = {
-    display: "block", color: "#D8E4F0",
-    fontSize: "13px", fontWeight: 500, marginBottom: "8px",
+    display: "block", color: "#8a8a85",
+    fontSize: "11px", fontWeight: 500, textTransform: "uppercase",
+    letterSpacing: "0.04em", marginBottom: "6px",
   };
 
   return (
-    <main style={{
+    <main className="theme-light-auth" style={{
       minHeight: "calc(100vh - 60px)",
-      background: "#080F1E",
+      background: "#FAF8F2",
       display: "flex",
-      alignItems: "flex-start",
+      alignItems: "center",
       justifyContent: "center",
-      paddingTop: "60px",
-      paddingLeft: "24px",
-      paddingRight: "24px",
-      paddingBottom: "40px",
+      padding: "16px",
+      paddingTop: "12px",
+      paddingBottom: "12px",
       fontFamily: "'DM Sans', sans-serif",
     }}>
       <div style={{
-        background: "#0f1c3f",
-        border: "1px solid rgba(196,163,92,0.2)",
+        background: "#ffffff",
+        border: "1px solid #ece6d8",
         borderRadius: "16px",
-        padding: "36px",
+        padding: "40px 36px",
         width: "100%",
-        maxWidth: "400px",
+        maxWidth: "380px",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+        {/* Decorative corner accent */}
+        <div style={{
+          position: "absolute",
+          top: "-40px",
+          right: "-40px",
+          width: "140px",
+          height: "140px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(94,155,124,0.10) 0%, rgba(24,95,133,0.06) 55%, rgba(24,95,133,0) 80%)",
+        }} />
+
+        {/* Logo */}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px", position: "relative" }}>
           <a href="/" style={{ textDecoration: "none" }}>
-            <LogoMark size="md" theme="dark" />
+            <LogoMark size="md" theme="light" />
           </a>
         </div>
 
-        <h1 style={{ color: "#ffffff", fontSize: "20px", fontWeight: 700, textAlign: "center", margin: "0 0 6px" }}>
-          Set New Password
+        {/* Icon badge */}
+        <div style={{
+          width: "48px",
+          height: "48px",
+          borderRadius: "50%",
+          background: "#eaf1f5",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "0 auto 16px",
+          position: "relative",
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect x="5" y="11" width="14" height="9" rx="2" stroke="#185F85" strokeWidth="1.6"/>
+            <path d="M8 11V7a4 4 0 018 0v4" stroke="#185F85" strokeWidth="1.6" strokeLinecap="round"/>
+          </svg>
+        </div>
+
+        <h1 style={{ color: "#1a1a1a", fontSize: "20px", fontWeight: 500, textAlign: "center", margin: "0 0 4px", fontFamily: "Georgia, serif" }}>
+          Set new password
         </h1>
-        <p style={{ color: "#A8B8C8", fontSize: "13px", textAlign: "center", margin: "0 0 24px" }}>
+        <p style={{ color: "#8a8a85", fontSize: "13px", textAlign: "center", margin: "0 0 28px", lineHeight: 1.5 }}>
           Choose a strong password for your account
         </p>
 
         {checking ? (
-          <p style={{ color: "#A8B8C8", fontSize: "14px", textAlign: "center" }}>
+          <p style={{ color: "#8a8a85", fontSize: "14px", textAlign: "center" }}>
             Verifying your reset link...
           </p>
         ) : !validSession ? (
           <div style={{
-            background: "rgba(239,68,68,0.1)",
-            border: "1px solid rgba(239,68,68,0.3)",
-            color: "#fca5a5", fontSize: "13px",
-            borderRadius: "8px", padding: "16px", textAlign: "center",
+            background: "#fdf0ee",
+            border: "1px solid #f3c9c2",
+            color: "#a3372a",
+            fontSize: "13px",
+            borderRadius: "8px",
+            padding: "14px",
+            textAlign: "center",
           }}>
-            ⚠️ This reset link is invalid or has expired.{" "}
-            <a href="/forgot-password" style={{ color: "#C4A35C", textDecoration: "underline" }}>
+            This reset link is invalid or has expired.{" "}
+            <a href="/forgot-password" style={{ color: "#185F85", textDecoration: "underline" }}>
               Request a new one
             </a>
           </div>
         ) : success ? (
           <div style={{
-            background: "rgba(34,197,94,0.1)",
-            border: "1px solid rgba(34,197,94,0.3)",
-            color: "#86efac", fontSize: "13px",
-            borderRadius: "8px", padding: "16px", textAlign: "center",
+            background: "#eef6f0",
+            border: "1px solid #c7e3cd",
+            color: "#2f6b3f",
+            fontSize: "13px",
+            borderRadius: "8px",
+            padding: "14px",
+            textAlign: "center",
           }}>
-            ✅ Password updated! Redirecting you to login...
+            Password updated! Redirecting you to login...
           </div>
         ) : (
           <>
             {error && (
               <div style={{
-                background: "rgba(239,68,68,0.1)",
-                border: "1px solid rgba(239,68,68,0.3)",
-                color: "#fca5a5", fontSize: "13px",
-                borderRadius: "8px", padding: "12px 16px", marginBottom: "16px",
+                background: "#fdf0ee",
+                border: "1px solid #f3c9c2",
+                color: "#a3372a",
+                fontSize: "13px",
+                borderRadius: "8px",
+                padding: "10px 14px",
+                marginBottom: "16px",
               }}>
-                ⚠️ {error}
+                {error}
               </div>
             )}
 
-            <div style={{ marginBottom: "16px" }}>
-              <label style={labelStyle}>New Password</label>
+            <div style={{ marginBottom: "14px" }}>
+              <label style={labelStyle}>New password</label>
               <input
                 type="password"
                 placeholder="Enter new password"
@@ -139,8 +181,8 @@ export default function ResetPassword() {
               />
             </div>
 
-            <div style={{ marginBottom: "24px" }}>
-              <label style={labelStyle}>Confirm Password</label>
+            <div style={{ marginBottom: "18px" }}>
+              <label style={labelStyle}>Confirm password</label>
               <input
                 type="password"
                 placeholder="Confirm new password"
@@ -155,19 +197,20 @@ export default function ResetPassword() {
               disabled={loading}
               style={{
                 width: "100%", padding: "12px",
-                background: loading ? "#8a6d3b" : "#C4A35C",
-                color: "#0B1628", fontWeight: 700, fontSize: "15px",
-                border: "none", borderRadius: "50px", cursor: loading ? "not-allowed" : "pointer",
+                background: loading ? "#5c7d91" : "#185F85",
+                color: "#ffffff", fontWeight: 500, fontSize: "14px",
+                border: "none", borderRadius: "8px", cursor: loading ? "not-allowed" : "pointer",
+                letterSpacing: "0.02em",
               }}
             >
-              {loading ? "Updating..." : "Update Password"}
+              {loading ? "Updating..." : "Update password"}
             </button>
           </>
         )}
 
-        <p style={{ color: "#A8B8C8", fontSize: "13px", textAlign: "center", marginTop: "20px" }}>
-          <a href="/login" style={{ color: "#C4A35C", fontWeight: 600, textDecoration: "none" }}>
-            Back to Login
+        <p style={{ color: "#8a8a85", fontSize: "13px", textAlign: "center", marginTop: "22px", marginBottom: 0 }}>
+          <a href="/login" style={{ color: "#185F85", fontWeight: 500, textDecoration: "none" }}>
+            Back to login
           </a>
         </p>
       </div>
