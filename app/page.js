@@ -12,7 +12,7 @@ export default function HomePage() {
   const CTA_IMG     = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80&fit=crop";
 
   return (
-    <main style={{ fontFamily: "'DM Sans', sans-serif", background: "#0B1628", color: "#E8DFC8", overflowX: "hidden", maxWidth: "100vw" }}>
+    <main style={{ fontFamily: "'DM Sans', sans-serif", background: "#FAF8F2", color: "#3A4048", overflowX: "hidden", maxWidth: "100vw" }}>
 
       {/* ── Responsive grid styles ── */}
       <style>{`
@@ -55,8 +55,8 @@ export default function HomePage() {
           margin-bottom: 1.75rem;
         }
         .lai-hero-btn-primary {
-          background: #C4A35C;
-          color: #0B1628;
+          background: #185F85;
+          color: #FFFFFF;
           font-size: 15px;
           font-weight: 700;
           padding: 14px 30px;
@@ -65,16 +65,16 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          box-shadow: 0 4px 24px rgba(196,163,92,0.35);
+          box-shadow: 0 4px 24px rgba(24,95,133,0.35);
           white-space: nowrap;
         }
         .lai-hero-btn-secondary {
-          background: rgba(255,255,255,0.10);
+          background: rgba(255,255,255,0.14);
           color: #FFFFFF;
           font-size: 15px;
           font-weight: 500;
           padding: 14px 28px;
-          border: 1px solid rgba(255,255,255,0.30);
+          border: 1px solid rgba(255,255,255,0.45);
           border-radius: 50px;
           text-decoration: none;
           backdrop-filter: blur(8px);
@@ -101,23 +101,23 @@ export default function HomePage() {
           overflow: hidden;
         }
         .lai-cta-btn {
-          background: #C4A35C;
-          color: #0B1628;
+          background: #185F85;
+          color: #FFFFFF;
           font-size: 16px;
           font-weight: 700;
           padding: 16px 42px;
           border-radius: 50px;
           text-decoration: none;
           display: inline-block;
-          box-shadow: 0 4px 30px rgba(196,163,92,0.40);
+          box-shadow: 0 4px 30px rgba(24,95,133,0.40);
         }
         .lai-pricing-badge {
           position: absolute;
           top: -13px;
           left: 50%;
           transform: translateX(-50%);
-          background: #C4A35C;
-          color: #0B1628;
+          background: #5E9B7C;
+          color: #FFFFFF;
           font-size: 10px;
           font-weight: 700;
           text-transform: uppercase;
@@ -129,16 +129,17 @@ export default function HomePage() {
         .lai-feature-card {
           display: block;
           text-decoration: none;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(196,163,92,0.15);
+          background: #FFFFFF;
+          border: 1px solid rgba(94,155,124,0.18);
           border-radius: 14px;
           padding: 1.75rem;
-          transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
           cursor: pointer;
+          box-shadow: 0 1px 3px rgba(58,64,72,0.04);
         }
         .lai-feature-card:hover {
-          border-color: rgba(196,163,92,0.50);
-          background: rgba(196,163,92,0.06);
+          border-color: rgba(24,95,133,0.45);
+          box-shadow: 0 8px 24px rgba(58,64,72,0.08);
           transform: translateY(-2px);
         }
 
@@ -217,7 +218,7 @@ export default function HomePage() {
         }
       `}</style>
 
-      {/* ── HERO with full-bleed property photo ── */}
+      {/* ── HERO with full-bleed property photo (dark overlay kept for legibility) ── */}
       <section className="lai-hero-section">
         <div style={{
           position: "absolute", inset: 0,
@@ -228,19 +229,19 @@ export default function HomePage() {
         }} />
         <div style={{
           position: "absolute", inset: 0,
-          background: "linear-gradient(105deg, rgba(7,14,28,0.93) 0%, rgba(7,14,28,0.78) 45%, rgba(7,14,28,0.30) 100%)",
+          background: "linear-gradient(105deg, rgba(18,34,48,0.88) 0%, rgba(18,34,48,0.70) 45%, rgba(18,34,48,0.25) 100%)",
         }} />
         <div style={{
           position: "absolute", inset: 0,
-          background: "radial-gradient(ellipse 50% 60% at 15% 80%, rgba(196,163,92,0.08) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse 50% 60% at 15% 80%, rgba(94,155,124,0.12) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
 
         <div style={{ position: "relative", maxWidth: "960px", margin: "0 auto", width: "100%" }}>
           <span style={{
             display: "inline-flex", alignItems: "center", gap: "7px",
-            background: "rgba(196,163,92,0.15)", border: "1px solid rgba(196,163,92,0.40)",
-            color: "#C4A35C", fontSize: "11px", fontWeight: 700,
+            background: "rgba(94,155,124,0.20)", border: "1px solid rgba(94,155,124,0.55)",
+            color: "#8FC7A8", fontSize: "11px", fontWeight: 700,
             letterSpacing: "0.09em", textTransform: "uppercase",
             padding: "6px 16px", borderRadius: "100px", marginBottom: "1.5rem",
           }}>
@@ -254,16 +255,16 @@ export default function HomePage() {
             color: "#FFFFFF",
             maxWidth: "680px",
             marginBottom: "1.5rem",
-            textShadow: "0 2px 20px rgba(0,0,0,0.5)",
+            textShadow: "0 2px 20px rgba(0,0,0,0.35)",
           }}>
             Write Perfect Listings<br />
-            in <em style={{ fontStyle: "italic", color: "#C4A35C" }}>Seconds</em>, Not Hours.
+            in <em style={{ fontStyle: "italic", color: "#8FC7A8" }}>Seconds</em>, Not Hours.
           </h1>
 
           <p style={{
-            fontSize: "1.05rem", color: "rgba(255,255,255,0.72)",
+            fontSize: "1.05rem", color: "rgba(255,255,255,0.82)",
             maxWidth: "520px", marginBottom: "2.25rem", lineHeight: 1.8,
-            textShadow: "0 1px 8px rgba(0,0,0,0.6)",
+            textShadow: "0 1px 8px rgba(0,0,0,0.45)",
           }}>
             ListingAI generates professional MLS descriptions, social media captions,
             buyer emails, and contract summaries — instantly. Works for any property, worldwide.
@@ -278,7 +279,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.40)", letterSpacing: "0.03em" }}>
+          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", letterSpacing: "0.03em" }}>
             No credit card required &nbsp;·&nbsp; Works for any country &nbsp;·&nbsp; Cancel anytime
           </p>
         </div>
@@ -286,9 +287,9 @@ export default function HomePage() {
 
       {/* ── STATS BAR — capability facts only ── */}
       <div style={{
-        background: "rgba(196,163,92,0.08)",
-        borderTop: "1px solid rgba(196,163,92,0.20)",
-        borderBottom: "1px solid rgba(196,163,92,0.20)",
+        background: "#FFFFFF",
+        borderTop: "1px solid rgba(94,155,124,0.20)",
+        borderBottom: "1px solid rgba(94,155,124,0.20)",
         padding: "2rem 1.25rem",
       }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
@@ -302,9 +303,9 @@ export default function HomePage() {
               <div key={s.label}>
                 <span style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: "1.9rem", fontWeight: 700, color: "#C4A35C", display: "block",
+                  fontSize: "1.9rem", fontWeight: 700, color: "#185F85", display: "block",
                 }}>{s.num}</span>
-                <span style={{ fontSize: "11px", color: "#5A6E85", marginTop: "3px", textTransform: "uppercase", letterSpacing: "0.07em", display: "block" }}>{s.label}</span>
+                <span style={{ fontSize: "11px", color: "#7A8790", marginTop: "3px", textTransform: "uppercase", letterSpacing: "0.07em", display: "block" }}>{s.label}</span>
               </div>
             ))}
           </div>
@@ -312,19 +313,19 @@ export default function HomePage() {
       </div>
 
       {/* ── FEATURES ── */}
-      <section className="lai-section-lg" style={{ position: "relative", overflow: "hidden" }}>
+      <section className="lai-section-lg" style={{ position: "relative", overflow: "hidden", background: "#FAF8F2" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `url('${SECTION_IMG}')`,
           backgroundSize: "cover", backgroundPosition: "center",
-          opacity: 0.07,
+          opacity: 0.04,
         }} />
-        <div style={{ position: "absolute", inset: 0, background: "#0B1628", opacity: 0.80 }} />
+        <div style={{ position: "absolute", inset: 0, background: "#FAF8F2", opacity: 0.85 }} />
 
         <div style={{ position: "relative", maxWidth: "960px", margin: "0 auto" }}>
-          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Core Features</div>
-          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.75rem" }}>Everything a Realtor Needs</h2>
-          <p style={{ fontSize: "15px", color: "#7A90A8", maxWidth: "500px", marginBottom: "2.75rem", lineHeight: 1.75 }}>
+          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Core Features</div>
+          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#242B32", marginBottom: "0.75rem" }}>Everything a Realtor Needs</h2>
+          <p style={{ fontSize: "15px", color: "#6B7680", maxWidth: "500px", marginBottom: "2.75rem", lineHeight: 1.75 }}>
             Ten AI tools built for real estate professionals — saving hours every single week.
           </p>
 
@@ -344,13 +345,13 @@ export default function HomePage() {
               <Link key={f.title} href="/generate" className="lai-feature-card">
                 <div style={{
                   width: "44px", height: "44px",
-                  background: "rgba(196,163,92,0.12)", borderRadius: "10px",
+                  background: "rgba(24,95,133,0.08)", borderRadius: "10px",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "22px", marginBottom: "1rem",
                 }}>{f.icon}</div>
-                <h3 style={{ fontSize: "15px", fontWeight: 600, color: "#E8DFC8", marginBottom: "0.5rem" }}>{f.title}</h3>
-                <p style={{ fontSize: "13px", color: "#6B80A0", lineHeight: 1.7 }}>{f.desc}</p>
-                <span style={{ display: "inline-block", marginTop: "0.75rem", fontSize: "12px", color: "#C4A35C", fontWeight: 500 }}>→ {f.tag}</span>
+                <h3 style={{ fontSize: "15px", fontWeight: 600, color: "#242B32", marginBottom: "0.5rem" }}>{f.title}</h3>
+                <p style={{ fontSize: "13px", color: "#6B7680", lineHeight: 1.7 }}>{f.desc}</p>
+                <span style={{ display: "inline-block", marginTop: "0.75rem", fontSize: "12px", color: "#185F85", fontWeight: 500 }}>→ {f.tag}</span>
               </Link>
             ))}
           </div>
@@ -358,11 +359,11 @@ export default function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <div style={{ background: "#0D1D35" }} className="lai-section-md">
+      <div style={{ background: "#FFFFFF" }} className="lai-section-md">
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ How It Works</div>
-          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.5rem" }}>Three Steps to Perfect Copy</h2>
-          <p style={{ fontSize: "15px", color: "#7A90A8" }}>No prompting expertise needed. Fill in the details, let AI do the writing.</p>
+          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", fontWeight: 700, marginBottom: "0.75rem" }}>✦ How It Works</div>
+          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#242B32", marginBottom: "0.5rem" }}>Three Steps to Perfect Copy</h2>
+          <p style={{ fontSize: "15px", color: "#6B7680" }}>No prompting expertise needed. Fill in the details, let AI do the writing.</p>
 
           <div className="lai-steps-grid">
             {[
@@ -373,14 +374,14 @@ export default function HomePage() {
               <div key={s.n} style={{ textAlign: "center", padding: "1.5rem 1rem" }}>
                 <div style={{
                   width: "52px", height: "52px", borderRadius: "50%",
-                  border: "1.5px solid rgba(196,163,92,0.45)",
+                  border: "1.5px solid rgba(24,95,133,0.35)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   margin: "0 auto 1.25rem",
                   fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: "1.3rem", color: "#C4A35C",
+                  fontSize: "1.3rem", color: "#185F85",
                 }}>{s.n}</div>
-                <h3 style={{ fontSize: "15px", fontWeight: 600, color: "#E8DFC8", marginBottom: "0.5rem" }}>{s.title}</h3>
-                <p style={{ fontSize: "13px", color: "#5A6E85", lineHeight: 1.7 }}>{s.desc}</p>
+                <h3 style={{ fontSize: "15px", fontWeight: 600, color: "#242B32", marginBottom: "0.5rem" }}>{s.title}</h3>
+                <p style={{ fontSize: "13px", color: "#7A8790", lineHeight: 1.7 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -388,38 +389,39 @@ export default function HomePage() {
       </div>
 
       {/* ── SOCIAL PROOF — 3 conversion cards ── */}
-      <section className="lai-section-md" style={{ background: "#0B1628" }}>
+      <section className="lai-section-md" style={{ background: "#FAF8F2" }}>
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Why Agents Choose ListingAI</div>
-          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "2.5rem" }}>Built for Real Estate. Trusted from Day One.</h2>
+          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Why Agents Choose ListingAI</div>
+          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#242B32", marginBottom: "2.5rem" }}>Built for Real Estate. Trusted from Day One.</h2>
 
           <div className="lai-social-proof-grid">
 
             {/* Card 1 — Founder's Note */}
             <div style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(196,163,92,0.20)",
+              background: "#FFFFFF",
+              border: "1px solid rgba(94,155,124,0.20)",
               borderRadius: "14px", padding: "1.75rem",
               display: "flex", flexDirection: "column", justifyContent: "space-between",
+              boxShadow: "0 1px 3px rgba(58,64,72,0.04)",
             }}>
               <div>
                 <div style={{ fontSize: "22px", marginBottom: "1rem" }}>✍️</div>
-                <p style={{ fontSize: "13px", color: "#8A9BB5", lineHeight: 1.85, fontStyle: "italic", marginBottom: "1.25rem" }}>
+                <p style={{ fontSize: "13px", color: "#5C6672", lineHeight: 1.85, fontStyle: "italic", marginBottom: "1.25rem" }}>
                   "I built ListingAI because writing listing descriptions, social captions, buyer emails,
                   and contract summaries was taking agents hours every week. With ListingAI, the same
                   work takes under 2 minutes. I built it, I use it, and I stand behind every tool in it."
                 </p>
               </div>
               <div>
-                <div style={{ fontSize: "13px", color: "#E8DFC8", fontWeight: 600 }}>Tauqeer Ahmed</div>
-                <div style={{ fontSize: "11px", color: "#4A5E78", marginTop: "3px" }}>Founder, ListingAI</div>
+                <div style={{ fontSize: "13px", color: "#242B32", fontWeight: 600 }}>Tauqeer Ahmed</div>
+                <div style={{ fontSize: "11px", color: "#8A9199", marginTop: "3px" }}>Founder, ListingAI</div>
               </div>
             </div>
 
             {/* Card 2 — Founding Member Offer */}
             <div style={{
-              background: "rgba(196,163,92,0.06)",
-              border: "1.5px solid rgba(196,163,92,0.40)",
+              background: "rgba(94,155,124,0.06)",
+              border: "1.5px solid rgba(94,155,124,0.45)",
               borderRadius: "14px", padding: "1.75rem",
               display: "flex", flexDirection: "column", justifyContent: "space-between",
             }}>
@@ -428,12 +430,12 @@ export default function HomePage() {
                 <div style={{
                   display: "inline-block", fontSize: "10px", fontWeight: 700,
                   textTransform: "uppercase", letterSpacing: "0.08em",
-                  color: "#0B1628", background: "#C4A35C",
+                  color: "#FFFFFF", background: "#5E9B7C",
                   padding: "3px 12px", borderRadius: "100px", marginBottom: "0.85rem",
                 }}>Founding Member Offer</div>
-                <p style={{ fontSize: "13px", color: "#8A9BB5", lineHeight: 1.85, marginBottom: "1.25rem" }}>
-                  We're onboarding our <strong style={{ color: "#C4A35C" }}>first 50 agents</strong> at a special rate.
-                  Sign up now and lock in Pro at <strong style={{ color: "#C4A35C" }}>$29/month for 12 months</strong> —
+                <p style={{ fontSize: "13px", color: "#5C6672", lineHeight: 1.85, marginBottom: "1.25rem" }}>
+                  We're onboarding our <strong style={{ color: "#185F85" }}>first 50 agents</strong> at a special rate.
+                  Sign up now and lock in Pro at <strong style={{ color: "#185F85" }}>$29/month for 12 months</strong> —
                   guaranteed, even if pricing increases.
                 </p>
               </div>
@@ -441,7 +443,7 @@ export default function HomePage() {
                 display: "block", textAlign: "center",
                 padding: "11px", borderRadius: "50px",
                 fontSize: "13px", fontWeight: 700, textDecoration: "none",
-                background: "#C4A35C", color: "#0B1628",
+                background: "#185F85", color: "#FFFFFF",
               }}>
                 Claim Your Spot →
               </Link>
@@ -449,21 +451,22 @@ export default function HomePage() {
 
             {/* Card 3 — Zero Risk */}
             <div style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(196,163,92,0.20)",
+              background: "#FFFFFF",
+              border: "1px solid rgba(94,155,124,0.20)",
               borderRadius: "14px", padding: "1.75rem",
               display: "flex", flexDirection: "column", justifyContent: "space-between",
+              boxShadow: "0 1px 3px rgba(58,64,72,0.04)",
             }}>
               <div>
                 <div style={{ fontSize: "22px", marginBottom: "1rem" }}>✦</div>
                 <div style={{
                   display: "inline-block", fontSize: "10px", fontWeight: 700,
                   textTransform: "uppercase", letterSpacing: "0.08em",
-                  color: "#C4A35C", border: "1px solid rgba(196,163,92,0.40)",
+                  color: "#185F85", border: "1px solid rgba(24,95,133,0.35)",
                   padding: "3px 12px", borderRadius: "100px", marginBottom: "0.85rem",
                 }}>Zero Risk Guarantee</div>
-                <p style={{ fontSize: "13px", color: "#8A9BB5", lineHeight: 1.85, marginBottom: "1.25rem" }}>
-                  Start with <strong style={{ color: "#E8DFC8" }}>5 free generations</strong> — no credit card,
+                <p style={{ fontSize: "13px", color: "#5C6672", lineHeight: 1.85, marginBottom: "1.25rem" }}>
+                  Start with <strong style={{ color: "#242B32" }}>5 free generations</strong> — no credit card,
                   no commitment. Try all 10 AI tools and see the quality yourself
                   before spending a single dollar.
                 </p>
@@ -472,8 +475,8 @@ export default function HomePage() {
                 display: "block", textAlign: "center",
                 padding: "11px", borderRadius: "50px",
                 fontSize: "13px", fontWeight: 700, textDecoration: "none",
-                border: "1px solid rgba(196,163,92,0.40)",
-                color: "#C4A35C", background: "transparent",
+                border: "1px solid rgba(24,95,133,0.35)",
+                color: "#185F85", background: "transparent",
               }}>
                 Try Free Now →
               </Link>
@@ -484,11 +487,11 @@ export default function HomePage() {
       </section>
 
       {/* ── PRICING ── */}
-      <div id="pricing" style={{ background: "#0D1D35" }} className="lai-section-md">
+      <div id="pricing" style={{ background: "#FFFFFF" }} className="lai-section-md">
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Pricing</div>
-          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#F5EDD8", marginBottom: "0.5rem" }}>Simple, Transparent Pricing</h2>
-          <p style={{ fontSize: "15px", color: "#7A90A8", marginBottom: "0" }}>Start free. Upgrade when you're ready.</p>
+          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Pricing</div>
+          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#242B32", marginBottom: "0.5rem" }}>Simple, Transparent Pricing</h2>
+          <p style={{ fontSize: "15px", color: "#6B7680", marginBottom: "0" }}>Start free. Upgrade when you're ready.</p>
 
           <div className="lai-pricing-grid">
             {[
@@ -497,32 +500,33 @@ export default function HomePage() {
               { name: "Agency", price: "79", period: "per month",      featured: false, features: ["Unlimited generations", "Everything in Pro", "Team access", "Dedicated support"],             cta: "Start Agency Plan", href: "/pricing" },
             ].map(p => (
               <div key={p.name} style={{
-                border: p.featured ? "1.5px solid rgba(196,163,92,0.60)" : "1px solid rgba(196,163,92,0.15)",
+                border: p.featured ? "1.5px solid rgba(94,155,124,0.55)" : "1px solid rgba(94,155,124,0.20)",
                 borderRadius: "16px", padding: "1.75rem 1.5rem",
-                background: p.featured ? "rgba(196,163,92,0.07)" : "rgba(255,255,255,0.02)",
+                background: p.featured ? "rgba(94,155,124,0.06)" : "#FAF8F2",
                 position: "relative",
+                boxShadow: p.featured ? "none" : "0 1px 3px rgba(58,64,72,0.04)",
               }}>
                 {p.featured && (
                   <div className="lai-pricing-badge">Most Popular</div>
                 )}
-                <div style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#5A6E85", marginBottom: "0.75rem" }}>{p.name}</div>
-                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", color: "#F5EDD8", fontWeight: 700, lineHeight: 1, display: "flex", alignItems: "flex-start", gap: "2px" }}>
+                <div style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#7A8790", marginBottom: "0.75rem" }}>{p.name}</div>
+                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", color: "#242B32", fontWeight: 700, lineHeight: 1, display: "flex", alignItems: "flex-start", gap: "2px" }}>
                   <sup style={{ fontSize: "1rem", lineHeight: 1, marginTop: "6px" }}>$</sup>{p.price}
                 </div>
-                <div style={{ fontSize: "12px", color: "#4A5E78", marginBottom: "1.25rem", marginTop: "4px" }}>{p.period}</div>
-                <hr style={{ border: "none", borderTop: "1px solid rgba(196,163,92,0.10)", margin: "1.25rem 0" }} />
+                <div style={{ fontSize: "12px", color: "#8A9199", marginBottom: "1.25rem", marginTop: "4px" }}>{p.period}</div>
+                <hr style={{ border: "none", borderTop: "1px solid rgba(94,155,124,0.15)", margin: "1.25rem 0" }} />
                 {p.features.map(f => (
-                  <div key={f} style={{ fontSize: "13px", color: "#7A90A8", padding: "5px 0", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ color: "#C4A35C", fontWeight: 700 }}>✓</span>{f}
+                  <div key={f} style={{ fontSize: "13px", color: "#5C6672", padding: "5px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ color: "#5E9B7C", fontWeight: 700 }}>✓</span>{f}
                   </div>
                 ))}
                 <Link href={p.href} style={{
                   display: "block", textAlign: "center", marginTop: "1.5rem",
                   padding: "12px", borderRadius: "50px",
                   fontSize: "13px", fontWeight: 700, textDecoration: "none",
-                  border: p.featured ? "none" : "1px solid rgba(196,163,92,0.40)",
-                  background: p.featured ? "#C4A35C" : "transparent",
-                  color: p.featured ? "#0B1628" : "#C4A35C",
+                  border: p.featured ? "none" : "1px solid rgba(24,95,133,0.35)",
+                  background: p.featured ? "#185F85" : "transparent",
+                  color: p.featured ? "#FFFFFF" : "#185F85",
                 }}>
                   {p.cta}
                 </Link>
@@ -541,21 +545,21 @@ export default function HomePage() {
         }} />
         <div style={{
           position: "absolute", inset: 0,
-          background: "linear-gradient(180deg, rgba(7,14,28,0.88) 0%, rgba(7,14,28,0.80) 100%)",
+          background: "linear-gradient(180deg, rgba(18,34,48,0.82) 0%, rgba(18,34,48,0.72) 100%)",
         }} />
 
         <div style={{ position: "relative", maxWidth: "640px", margin: "0 auto" }}>
-          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Get Started Today</div>
+          <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#8FC7A8", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Get Started Today</div>
           <h2 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
             fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
             color: "#FFFFFF", marginBottom: "1rem", lineHeight: 1.25,
-            textShadow: "0 2px 20px rgba(0,0,0,0.5)",
+            textShadow: "0 2px 20px rgba(0,0,0,0.35)",
           }}>
             Your Next Listing is{" "}
-            <em style={{ fontStyle: "italic", color: "#C4A35C" }}>One Click Away</em>
+            <em style={{ fontStyle: "italic", color: "#8FC7A8" }}>One Click Away</em>
           </h2>
-          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.55)", marginBottom: "2.25rem", lineHeight: 1.75 }}>
+          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.70)", marginBottom: "2.25rem", lineHeight: 1.75 }}>
             Join the first agents using ListingAI to save hours every week.
             Start with 5 free generations — no card required.
           </p>
