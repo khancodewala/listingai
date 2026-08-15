@@ -31,16 +31,16 @@ function getPricePlaceholder(language) {
   return "e.g. $250,000 or PKR 2.5 Crore or AED 900,000";
 }
 
-// ── Dark-themed field component ──
+// ── Light-themed field component ──
 function Field({ label, value, onChange, placeholder, textarea }) {
   const inputStyle = {
     width: "100%",
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(196,163,92,0.20)",
+    background: "#F7F6F3",
+    border: "1px solid rgba(24,95,133,0.15)",
     borderRadius: "10px",
     padding: "10px 14px",
     fontSize: "13px",
-    color: "#E8DFC8",
+    color: "#1C232B",
     outline: "none",
     fontFamily: "inherit",
     resize: textarea ? "vertical" : undefined,
@@ -49,17 +49,17 @@ function Field({ label, value, onChange, placeholder, textarea }) {
   };
   return (
     <div style={{ gridColumn: "span 1" }}>
-      <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#7A90A8", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+      <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#5C6672", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
         {label}
       </label>
       {textarea
         ? <textarea style={inputStyle} value={value} onChange={onChange} placeholder={placeholder}
-            onFocus={e => e.target.style.borderColor = "rgba(196,163,92,0.60)"}
-            onBlur={e => e.target.style.borderColor = "rgba(196,163,92,0.20)"}
+            onFocus={e => e.target.style.borderColor = "rgba(24,95,133,0.55)"}
+            onBlur={e => e.target.style.borderColor = "rgba(24,95,133,0.15)"}
           />
         : <input style={inputStyle} value={value} onChange={onChange} placeholder={placeholder}
-            onFocus={e => e.target.style.borderColor = "rgba(196,163,92,0.60)"}
-            onBlur={e => e.target.style.borderColor = "rgba(196,163,92,0.20)"}
+            onFocus={e => e.target.style.borderColor = "rgba(24,95,133,0.55)"}
+            onBlur={e => e.target.style.borderColor = "rgba(24,95,133,0.15)"}
           />}
     </div>
   );
@@ -68,23 +68,23 @@ function Field({ label, value, onChange, placeholder, textarea }) {
 function LanguageSelector({ language, setLanguage }) {
   return (
     <div style={{ marginBottom: "1.25rem" }}>
-      <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#7A90A8", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+      <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#5C6672", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
         Output Language
       </label>
       <select
         style={{
           width: "100%", maxWidth: "260px",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(196,163,92,0.20)",
+          background: "#F7F6F3",
+          border: "1px solid rgba(24,95,133,0.15)",
           borderRadius: "10px", padding: "10px 14px",
-          fontSize: "13px", color: "#E8DFC8",
+          fontSize: "13px", color: "#1C232B",
           outline: "none", fontFamily: "inherit",
         }}
         value={language}
         onChange={(e) => setLanguage(e.target.value)}
       >
         {LANGUAGES.map((l) => (
-          <option key={l.code} value={l.code} style={{ background: "#0D1D35" }}>{l.label}</option>
+          <option key={l.code} value={l.code}>{l.label}</option>
         ))}
       </select>
     </div>
@@ -98,8 +98,8 @@ function GenerateBtn({ onClick, loading }) {
       disabled={loading}
       style={{
         width: "100%",
-        background: loading ? "rgba(196,163,92,0.45)" : "#C4A35C",
-        color: "#0B1628",
+        background: loading ? "rgba(24,95,133,0.45)" : "#185F85",
+        color: "#FFFFFF",
         fontWeight: 700, fontSize: "15px",
         padding: "13px 24px",
         borderRadius: "50px",
@@ -107,6 +107,7 @@ function GenerateBtn({ onClick, loading }) {
         display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
         transition: "opacity 0.2s ease",
         fontFamily: "inherit",
+        boxShadow: "0 4px 20px rgba(24,95,133,0.25)",
       }}
     >
       {loading ? (
@@ -304,7 +305,7 @@ function LeadMagnetForm({ onGenerate, loading, language }) {
   return (
     <div style={spaceY}>
       <div>
-        <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#7A90A8", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#5C6672", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
           Content Type
         </label>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
@@ -318,12 +319,12 @@ function LeadMagnetForm({ onGenerate, loading, language }) {
                 fontSize: "12px", fontWeight: 600,
                 textAlign: "left", cursor: "pointer",
                 border: form.contentType === ct.value
-                  ? "1.5px solid rgba(196,163,92,0.70)"
-                  : "1px solid rgba(196,163,92,0.15)",
+                  ? "1.5px solid rgba(24,95,133,0.60)"
+                  : "1px solid rgba(24,95,133,0.15)",
                 background: form.contentType === ct.value
-                  ? "rgba(196,163,92,0.15)"
-                  : "rgba(255,255,255,0.03)",
-                color: form.contentType === ct.value ? "#C4A35C" : "#7A90A8",
+                  ? "rgba(24,95,133,0.10)"
+                  : "#F7F6F3",
+                color: form.contentType === ct.value ? "#185F85" : "#5C6672",
                 transition: "all 0.15s ease",
                 fontFamily: "inherit",
               }}
@@ -344,12 +345,12 @@ function LeadMagnetForm({ onGenerate, loading, language }) {
       <Field label="Key Points to Cover (optional)" value={form.keyPoints} onChange={set("keyPoints")} placeholder="e.g. Down payment tips, mortgage pre-approval, hidden costs, negotiation tactics" textarea />
       <div style={{
         display: "flex", gap: "10px", alignItems: "flex-start",
-        background: "rgba(196,163,92,0.06)", border: "1px solid rgba(196,163,92,0.20)",
+        background: "rgba(94,155,124,0.08)", border: "1px solid rgba(94,155,124,0.25)",
         borderRadius: "10px", padding: "12px 14px",
       }}>
         <span style={{ fontSize: "16px" }}>🧲</span>
-        <p style={{ fontSize: "12px", color: "#7A90A8", lineHeight: 1.6, margin: 0 }}>
-          <strong style={{ color: "#C4A35C" }}>Lead Magnet tip:</strong> Share the generated content as a free download, blog post, or email newsletter to attract and convert potential buyers and sellers into clients.
+        <p style={{ fontSize: "12px", color: "#4E5964", lineHeight: 1.6, margin: 0 }}>
+          <strong style={{ color: "#3D7A5C" }}>Lead Magnet tip:</strong> Share the generated content as a free download, blog post, or email newsletter to attract and convert potential buyers and sellers into clients.
         </p>
       </div>
       <GenerateBtn onClick={() => onGenerate({ feature: "leadmagnet", language, ...form })} loading={loading} />
@@ -386,14 +387,14 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
 
   return (
     <>
-      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 150 }} />
+      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(28,35,43,0.45)", zIndex: 150 }} />
       <div style={{
         position: "fixed", top: 0, right: 0,
         height: "100vh", width: "100%", maxWidth: "540px",
-        background: "#0D1D35",
-        border: "1px solid rgba(196,163,92,0.20)",
+        background: "#FFFFFF",
+        borderLeft: "1px solid rgba(24,95,133,0.15)",
         zIndex: 200,
-        boxShadow: "-4px 0 32px rgba(0,0,0,0.40)",
+        boxShadow: "-4px 0 32px rgba(28,35,43,0.15)",
         display: "flex", flexDirection: "column",
         overflow: "hidden",
         animation: "slideIn 0.25s ease-out",
@@ -403,32 +404,32 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
           @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
           ::-webkit-scrollbar { width: 6px; }
           ::-webkit-scrollbar-track { background: transparent; }
-          ::-webkit-scrollbar-thumb { background: rgba(196,163,92,0.25); border-radius: 3px; }
-          input::placeholder, textarea::placeholder, select { color: #4A5E78 !important; }
+          ::-webkit-scrollbar-thumb { background: rgba(24,95,133,0.20); border-radius: 3px; }
+          input::placeholder, textarea::placeholder { color: #A6ADB4 !important; }
         `}</style>
 
         {/* Panel header */}
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
           padding: "16px 20px",
-          borderBottom: "1px solid rgba(196,163,92,0.15)",
+          borderBottom: "1px solid rgba(24,95,133,0.12)",
           flexShrink: 0,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{
-              background: "rgba(196,163,92,0.15)", color: "#C4A35C",
+              background: "rgba(24,95,133,0.10)", color: "#185F85",
               fontSize: "12px", fontWeight: 700,
               padding: "3px 12px", borderRadius: "20px",
-              border: "1px solid rgba(196,163,92,0.30)",
+              border: "1px solid rgba(24,95,133,0.25)",
             }}>
               {TAB_LABELS[feature] || feature}
             </span>
             {lang && lang !== "en" && (
               <span style={{
-                background: "rgba(196,163,92,0.08)", color: "#A8B8C8",
+                background: "rgba(94,155,124,0.10)", color: "#3D7A5C",
                 fontSize: "12px", fontWeight: 600,
                 padding: "3px 10px", borderRadius: "20px",
-                border: "1px solid rgba(196,163,92,0.15)",
+                border: "1px solid rgba(94,155,124,0.25)",
               }}>
                 {LANGUAGES.find((l) => l.code === lang)?.label || lang}
               </span>
@@ -437,9 +438,9 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
             <button onClick={onCopy} style={{
               fontSize: "13px", fontWeight: 600, cursor: "pointer",
-              background: copied ? "rgba(196,163,92,0.15)" : "rgba(255,255,255,0.05)",
-              border: `1px solid ${copied ? "rgba(196,163,92,0.50)" : "rgba(196,163,92,0.20)"}`,
-              color: copied ? "#C4A35C" : "#A8B8C8",
+              background: copied ? "rgba(94,155,124,0.12)" : "#F7F6F3",
+              border: `1px solid ${copied ? "rgba(94,155,124,0.45)" : "rgba(24,95,133,0.15)"}`,
+              color: copied ? "#3D7A5C" : "#5C6672",
               padding: "6px 14px", borderRadius: "8px",
               fontFamily: "inherit",
             }}>
@@ -447,7 +448,7 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
             </button>
             <button onClick={onClose} style={{
               fontSize: "20px", background: "none", border: "none",
-              cursor: "pointer", color: "#5A6E85", lineHeight: 1,
+              cursor: "pointer", color: "#8A9199", lineHeight: 1,
               padding: "4px 8px", borderRadius: "6px",
             }}>✕</button>
           </div>
@@ -457,26 +458,26 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
         <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
           {inputEntries.length > 0 && (
             <div style={{ marginBottom: "20px" }}>
-              <p style={{ fontSize: "11px", fontWeight: 700, color: "#4A5E78", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: "12px" }}>
+              <p style={{ fontSize: "11px", fontWeight: 700, color: "#8A9199", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: "12px" }}>
                 Input Details
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                 {inputEntries.map(([key, value]) => (
                   <div key={key}>
-                    <p style={{ fontSize: "11px", color: "#4A5E78", margin: "0 0 2px" }}>{FIELD_LABELS[key] || key}</p>
-                    <p style={{ fontSize: "13px", fontWeight: 500, color: "#A8B8C8", margin: 0 }}>{value}</p>
+                    <p style={{ fontSize: "11px", color: "#8A9199", margin: "0 0 2px" }}>{FIELD_LABELS[key] || key}</p>
+                    <p style={{ fontSize: "13px", fontWeight: 500, color: "#3A424A", margin: 0 }}>{value}</p>
                   </div>
                 ))}
               </div>
-              <div style={{ borderTop: "1px solid rgba(196,163,92,0.10)", marginTop: "20px", marginBottom: "20px" }} />
+              <div style={{ borderTop: "1px solid rgba(24,95,133,0.10)", marginTop: "20px", marginBottom: "20px" }} />
             </div>
           )}
 
-          <p style={{ fontSize: "11px", fontWeight: 700, color: "#4A5E78", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: "12px" }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, color: "#8A9199", letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: "12px" }}>
             AI Output
           </p>
           <pre style={{
-            whiteSpace: "pre-wrap", fontSize: "14px", color: "#E8DFC8",
+            whiteSpace: "pre-wrap", fontSize: "14px", color: "#1C232B",
             fontFamily: "inherit", lineHeight: 1.75, margin: 0,
             direction: lang === "ar" ? "rtl" : "ltr",
             textAlign: lang === "ar" ? "right" : "left",
@@ -487,12 +488,12 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
           {feature === "listing" && (
             <div style={{
               marginTop: "20px", padding: "12px 14px",
-              background: "rgba(196,163,92,0.06)", border: "1px solid rgba(196,163,92,0.18)",
+              background: "rgba(184,131,74,0.08)", border: "1px solid rgba(184,131,74,0.25)",
               borderRadius: "10px", display: "flex", gap: "10px", alignItems: "flex-start",
             }}>
               <span style={{ fontSize: "16px" }}>⚖️</span>
-              <p style={{ fontSize: "12px", color: "#7A90A8", lineHeight: 1.6, margin: 0 }}>
-                <strong style={{ color: "#A8B8C8" }}>Fair Housing Notice:</strong> This AI-generated description is a drafting aid. Review before publishing to ensure compliance with the Fair Housing Act.
+              <p style={{ fontSize: "12px", color: "#5C6672", lineHeight: 1.6, margin: 0 }}>
+                <strong style={{ color: "#8A5F2B" }}>Fair Housing Notice:</strong> This AI-generated description is a drafting aid. Review before publishing to ensure compliance with the Fair Housing Act.
               </p>
             </div>
           )}
@@ -500,12 +501,12 @@ function ResultPanel({ result, inputData, onCopy, copied, onClose, language }) {
           {feature === "leadmagnet" && (
             <div style={{
               marginTop: "20px", padding: "12px 14px",
-              background: "rgba(196,163,92,0.06)", border: "1px solid rgba(196,163,92,0.18)",
+              background: "rgba(94,155,124,0.08)", border: "1px solid rgba(94,155,124,0.25)",
               borderRadius: "10px", display: "flex", gap: "10px", alignItems: "flex-start",
             }}>
               <span style={{ fontSize: "16px" }}>🧲</span>
-              <p style={{ fontSize: "12px", color: "#7A90A8", lineHeight: 1.6, margin: 0 }}>
-                <strong style={{ color: "#C4A35C" }}>How to use this:</strong> Post it on your website or blog, share it as a free PDF download to collect email leads, or send it as a newsletter to your contact list.
+              <p style={{ fontSize: "12px", color: "#5C6672", lineHeight: 1.6, margin: 0 }}>
+                <strong style={{ color: "#3D7A5C" }}>How to use this:</strong> Post it on your website or blog, share it as a free PDF download to collect email leads, or send it as a newsletter to your contact list.
               </p>
             </div>
           )}
@@ -585,13 +586,13 @@ export default function GeneratePage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0B1628", fontFamily: "'DM Sans', sans-serif", padding: "2.5rem 1.25rem 4rem" }}>
+    <div style={{ minHeight: "100vh", background: "#FAF8F2", fontFamily: "'DM Sans', sans-serif", padding: "2.5rem 1.25rem 4rem" }}>
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .gen-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
-        .gen-tab { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid rgba(196,163,92,0.20); background: rgba(255,255,255,0.03); color: #7A90A8; transition: all 0.15s ease; font-family: inherit; }
-        .gen-tab:hover { color: #C4A35C; border-color: rgba(196,163,92,0.40); }
-        .gen-tab.active { background: rgba(196,163,92,0.15); border-color: rgba(196,163,92,0.60); color: #C4A35C; }
+        .gen-tab { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid rgba(24,95,133,0.15); background: #FFFFFF; color: #5C6672; transition: all 0.15s ease; font-family: inherit; }
+        .gen-tab:hover { color: #185F85; border-color: rgba(24,95,133,0.35); }
+        .gen-tab.active { background: rgba(24,95,133,0.10); border-color: rgba(24,95,133,0.55); color: #185F85; }
         .form-grid-mobile { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         @media (max-width: 480px) { .form-grid-mobile { grid-template-columns: 1fr; } }
       `}</style>
@@ -600,28 +601,29 @@ export default function GeneratePage() {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-          <div style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "#C4A35C", marginBottom: "0.5rem" }}>✦ AI Generator</div>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 700, color: "#F5EDD8", marginBottom: "0.5rem" }}>
+          <div style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", marginBottom: "0.5rem" }}>✦ AI Generator</div>
+          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 700, color: "#1C232B", marginBottom: "0.5rem" }}>
             Write Better Listings, Faster
           </h1>
-          <p style={{ fontSize: "14px", color: "#5A6E85" }}>Powered by Claude · Works for any country worldwide 🌍</p>
+          <p style={{ fontSize: "14px", color: "#7A8790" }}>Powered by Claude · Works for any country worldwide 🌍</p>
         </div>
 
         {/* Usage bar */}
         {session && usage && (
           <div style={{
             marginBottom: "1.25rem",
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(196,163,92,0.15)",
+            background: "#FFFFFF",
+            border: "1px solid rgba(24,95,133,0.15)",
             borderRadius: "12px", padding: "12px 16px",
             display: "flex", alignItems: "center", justifyContent: "space-between",
             fontSize: "13px",
+            boxShadow: "0 1px 3px rgba(58,64,72,0.04)",
           }}>
-            <span style={{ color: "#7A90A8" }}>
-              Generations used: <strong style={{ color: "#E8DFC8" }}>{usage.used} / {usage.limit ?? "∞"}</strong>
+            <span style={{ color: "#5C6672" }}>
+              Generations used: <strong style={{ color: "#1C232B" }}>{usage.used} / {usage.limit ?? "∞"}</strong>
             </span>
             {usage.limit && usage.used >= usage.limit && (
-              <Link href="/pricing" style={{ color: "#C4A35C", fontWeight: 700, textDecoration: "none", fontSize: "13px" }}>
+              <Link href="/pricing" style={{ color: "#185F85", fontWeight: 700, textDecoration: "none", fontSize: "13px" }}>
                 Upgrade Plan →
               </Link>
             )}
@@ -632,12 +634,12 @@ export default function GeneratePage() {
         {!session && (
           <div style={{
             marginBottom: "1.25rem",
-            background: "rgba(196,163,92,0.06)",
-            border: "1px solid rgba(196,163,92,0.25)",
+            background: "rgba(184,131,74,0.08)",
+            border: "1px solid rgba(184,131,74,0.30)",
             borderRadius: "12px", padding: "12px 16px",
-            fontSize: "13px", color: "#A8B8C8",
+            fontSize: "13px", color: "#5C6672",
           }}>
-            ⚠️ Please <Link href="/login" style={{ color: "#C4A35C", fontWeight: 700, textDecoration: "underline" }}>log in</Link> to use the AI generator.
+            ⚠️ Please <Link href="/login" style={{ color: "#185F85", fontWeight: 700, textDecoration: "underline" }}>log in</Link> to use the AI generator.
           </div>
         )}
 
@@ -656,9 +658,10 @@ export default function GeneratePage() {
 
         {/* Form card */}
         <div style={{
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(196,163,92,0.15)",
+          background: "#FFFFFF",
+          border: "1px solid rgba(24,95,133,0.12)",
           borderRadius: "20px", padding: "1.75rem",
+          boxShadow: "0 1px 3px rgba(58,64,72,0.04)",
         }}>
           <LanguageSelector language={language} setLanguage={setLanguage} />
           {forms[activeTab]}
@@ -666,10 +669,10 @@ export default function GeneratePage() {
           {error && (
             <div style={{
               marginTop: "1rem",
-              background: "rgba(239,68,68,0.08)",
-              border: "1px solid rgba(239,68,68,0.25)",
+              background: "rgba(220,38,38,0.06)",
+              border: "1px solid rgba(220,38,38,0.25)",
               borderRadius: "10px", padding: "12px 16px",
-              fontSize: "13px", color: "#FCA5A5",
+              fontSize: "13px", color: "#B91C1C",
             }}>
               {error}
             </div>
