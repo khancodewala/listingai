@@ -605,7 +605,7 @@ export default function GeneratePage() {
           <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 700, color: "#1C232B", marginBottom: "0.5rem" }}>
             Write Better Listings, Faster
           </h1>
-          <p style={{ fontSize: "14px", color: "#7A8790" }}>Powered by Claude · Works for any country worldwide 🌍</p>
+          <p style={{ fontSize: "14.5px", color: "#4E5964", fontWeight: 500 }}>Powerful AI, Professional Copy — Generate Real Estate Content in Seconds, for Any Market Worldwide.</p>
         </div>
 
         {/* Usage bar */}
