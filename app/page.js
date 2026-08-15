@@ -130,17 +130,16 @@ export default function HomePage() {
           display: block;
           text-decoration: none;
           background: #FFFFFF;
-          border: 1px solid rgba(94,155,124,0.18);
+          border: 1px solid rgba(58,64,72,0.10);
           border-radius: 14px;
           padding: 1.75rem;
-          transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+          transition: box-shadow 0.2s ease, transform 0.2s ease;
           cursor: pointer;
-          box-shadow: 0 1px 3px rgba(58,64,72,0.04);
+          box-shadow: 0 1px 3px rgba(58,64,72,0.05);
         }
         .lai-feature-card:hover {
-          border-color: rgba(24,95,133,0.45);
-          box-shadow: 0 8px 24px rgba(58,64,72,0.08);
-          transform: translateY(-2px);
+          box-shadow: 0 10px 28px rgba(58,64,72,0.12);
+          transform: translateY(-3px);
         }
 
         @media (max-width: 640px) {
@@ -325,7 +324,7 @@ export default function HomePage() {
         <div style={{ position: "relative", maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Core Features</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#242B32", marginBottom: "0.75rem" }}>Everything a Realtor Needs</h2>
-          <p style={{ fontSize: "15px", color: "#6B7680", maxWidth: "500px", marginBottom: "2.75rem", lineHeight: 1.75 }}>
+          <p style={{ fontSize: "15px", color: "#525C66", maxWidth: "500px", marginBottom: "2.75rem", lineHeight: 1.75 }}>
             Ten AI tools built for real estate professionals — saving hours every single week.
           </p>
 
@@ -341,19 +340,23 @@ export default function HomePage() {
               { icon: "🎥", title: "Property Video Script",      desc: "Get a polished walkthrough script for Reels, YouTube, or TikTok — hook, room-by-room narration, and CTA included.",                               tag: "Go viral on social"       },
               { icon: "👤", title: "Realtor Bio Generator",      desc: "Create a polished, professional bio for your website, business card, or social profiles — tailored to your experience and tone.",                  tag: "Stand out instantly"      },
               { icon: "🧲", title: "Lead Magnet / Blog Writer",  desc: "Generate blog posts, buyer's guides, checklists, and FAQ articles that attract leads and position you as the local market expert.",               tag: "Turn readers into clients" },
-            ].map(f => (
-              <Link key={f.title} href="/generate" className="lai-feature-card">
-                <div style={{
-                  width: "44px", height: "44px",
-                  background: "rgba(24,95,133,0.08)", borderRadius: "10px",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "22px", marginBottom: "1rem",
-                }}>{f.icon}</div>
-                <h3 style={{ fontSize: "15px", fontWeight: 600, color: "#242B32", marginBottom: "0.5rem" }}>{f.title}</h3>
-                <p style={{ fontSize: "13px", color: "#6B7680", lineHeight: 1.7 }}>{f.desc}</p>
-                <span style={{ display: "inline-block", marginTop: "0.75rem", fontSize: "12px", color: "#185F85", fontWeight: 500 }}>→ {f.tag}</span>
-              </Link>
-            ))}
+            ].map((f, i) => {
+              const palette = ["#185F85", "#5E9B7C", "#B8834A", "#7A5FA0"];
+              const accent = palette[i % palette.length];
+              return (
+                <Link key={f.title} href="/generate" className="lai-feature-card" style={{ borderTop: `3px solid ${accent}` }}>
+                  <div style={{
+                    width: "44px", height: "44px",
+                    background: `${accent}1F`, borderRadius: "10px",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "22px", marginBottom: "1rem",
+                  }}>{f.icon}</div>
+                  <h3 style={{ fontSize: "15px", fontWeight: 700, color: "#1C232B", marginBottom: "0.5rem" }}>{f.title}</h3>
+                  <p style={{ fontSize: "13px", color: "#4E5964", lineHeight: 1.7 }}>{f.desc}</p>
+                  <span style={{ display: "inline-block", marginTop: "0.75rem", fontSize: "12px", color: accent, fontWeight: 700 }}>→ {f.tag}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -363,25 +366,26 @@ export default function HomePage() {
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", fontWeight: 700, marginBottom: "0.75rem" }}>✦ How It Works</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#242B32", marginBottom: "0.5rem" }}>Three Steps to Perfect Copy</h2>
-          <p style={{ fontSize: "15px", color: "#6B7680" }}>No prompting expertise needed. Fill in the details, let AI do the writing.</p>
+          <p style={{ fontSize: "15px", color: "#525C66" }}>No prompting expertise needed. Fill in the details, let AI do the writing.</p>
 
           <div className="lai-steps-grid">
             {[
-              { n: "1", title: "Enter Property Details", desc: "Fill in bedrooms, features, location, and any special notes about the property." },
-              { n: "2", title: "Choose Your Tool",        desc: "Select from listing writer, social captions, buyer email, contract summarizer, and 6 more." },
-              { n: "3", title: "Copy & Publish",          desc: "Copy your AI-generated content with one click — ready for MLS, email, or Instagram." },
+              { n: "1", title: "Enter Property Details", desc: "Fill in bedrooms, features, location, and any special notes about the property.", accent: "#185F85" },
+              { n: "2", title: "Choose Your Tool",        desc: "Select from listing writer, social captions, buyer email, contract summarizer, and 6 more.", accent: "#5E9B7C" },
+              { n: "3", title: "Copy & Publish",          desc: "Copy your AI-generated content with one click — ready for MLS, email, or Instagram.", accent: "#B8834A" },
             ].map(s => (
               <div key={s.n} style={{ textAlign: "center", padding: "1.5rem 1rem" }}>
                 <div style={{
-                  width: "52px", height: "52px", borderRadius: "50%",
-                  border: "1.5px solid rgba(24,95,133,0.35)",
+                  width: "56px", height: "56px", borderRadius: "50%",
+                  border: `1.5px solid ${s.accent}`,
+                  background: `${s.accent}14`,
                   display: "flex", alignItems: "center", justifyContent: "center",
                   margin: "0 auto 1.25rem",
                   fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: "1.3rem", color: "#185F85",
+                  fontSize: "1.3rem", fontWeight: 700, color: s.accent,
                 }}>{s.n}</div>
-                <h3 style={{ fontSize: "15px", fontWeight: 600, color: "#242B32", marginBottom: "0.5rem" }}>{s.title}</h3>
-                <p style={{ fontSize: "13px", color: "#7A8790", lineHeight: 1.7 }}>{s.desc}</p>
+                <h3 style={{ fontSize: "15px", fontWeight: 700, color: "#1C232B", marginBottom: "0.5rem" }}>{s.title}</h3>
+                <p style={{ fontSize: "13px", color: "#525C66", lineHeight: 1.7 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -491,42 +495,42 @@ export default function HomePage() {
         <div style={{ maxWidth: "960px", margin: "0 auto" }}>
           <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", fontWeight: 700, marginBottom: "0.75rem" }}>✦ Pricing</div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.1rem", color: "#242B32", marginBottom: "0.5rem" }}>Simple, Transparent Pricing</h2>
-          <p style={{ fontSize: "15px", color: "#6B7680", marginBottom: "0" }}>Start free. Upgrade when you're ready.</p>
+          <p style={{ fontSize: "15px", color: "#525C66", marginBottom: "0" }}>Start free. Upgrade when you're ready.</p>
 
           <div className="lai-pricing-grid">
             {[
-              { name: "Free",   price: "0",  period: "Forever free",  featured: false, features: ["5 generations / month", "All 10 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
-              { name: "Pro",    price: "29", period: "per month",      featured: true,  features: ["100 generations / month", "Everything in Free", "Priority support", "Works for any country"], cta: "Start Pro Plan",    href: "/pricing" },
-              { name: "Agency", price: "79", period: "per month",      featured: false, features: ["Unlimited generations", "Everything in Pro", "Team access", "Dedicated support"],             cta: "Start Agency Plan", href: "/pricing" },
+              { name: "Free",   price: "0",  period: "Forever free",  featured: false, accent: "#7A8790", features: ["5 generations / month", "All 10 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
+              { name: "Pro",    price: "29", period: "per month",      featured: true,  accent: "#185F85", features: ["100 generations / month", "Everything in Free", "Priority support", "Works for any country"], cta: "Start Pro Plan",    href: "/pricing" },
+              { name: "Agency", price: "79", period: "per month",      featured: false, accent: "#5E9B7C", features: ["Unlimited generations", "Everything in Pro", "Team access", "Dedicated support"],             cta: "Start Agency Plan", href: "/pricing" },
             ].map(p => (
               <div key={p.name} style={{
-                border: p.featured ? "1.5px solid rgba(94,155,124,0.55)" : "1px solid rgba(94,155,124,0.20)",
+                border: p.featured ? `2px solid ${p.accent}` : `1.5px solid ${p.accent}45`,
                 borderRadius: "16px", padding: "1.75rem 1.5rem",
-                background: p.featured ? "rgba(94,155,124,0.06)" : "#FAF8F2",
+                background: p.name === "Free" ? "#FFFFFF" : `${p.accent}0D`,
                 position: "relative",
-                boxShadow: p.featured ? "none" : "0 1px 3px rgba(58,64,72,0.04)",
+                boxShadow: p.featured ? "0 10px 30px rgba(24,95,133,0.15)" : "0 1px 3px rgba(58,64,72,0.05)",
               }}>
                 {p.featured && (
                   <div className="lai-pricing-badge">Most Popular</div>
                 )}
-                <div style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#7A8790", marginBottom: "0.75rem" }}>{p.name}</div>
-                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", color: "#242B32", fontWeight: 700, lineHeight: 1, display: "flex", alignItems: "flex-start", gap: "2px" }}>
+                <div style={{ fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: p.accent, marginBottom: "0.75rem" }}>{p.name}</div>
+                <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", color: "#1C232B", fontWeight: 700, lineHeight: 1, display: "flex", alignItems: "flex-start", gap: "2px" }}>
                   <sup style={{ fontSize: "1rem", lineHeight: 1, marginTop: "6px" }}>$</sup>{p.price}
                 </div>
                 <div style={{ fontSize: "12px", color: "#8A9199", marginBottom: "1.25rem", marginTop: "4px" }}>{p.period}</div>
-                <hr style={{ border: "none", borderTop: "1px solid rgba(94,155,124,0.15)", margin: "1.25rem 0" }} />
+                <hr style={{ border: "none", borderTop: `1px solid ${p.accent}30`, margin: "1.25rem 0" }} />
                 {p.features.map(f => (
-                  <div key={f} style={{ fontSize: "13px", color: "#5C6672", padding: "5px 0", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ color: "#5E9B7C", fontWeight: 700 }}>✓</span>{f}
+                  <div key={f} style={{ fontSize: "13px", color: "#3F4952", padding: "5px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ color: p.accent, fontWeight: 700 }}>✓</span>{f}
                   </div>
                 ))}
                 <Link href={p.href} style={{
                   display: "block", textAlign: "center", marginTop: "1.5rem",
                   padding: "12px", borderRadius: "50px",
                   fontSize: "13px", fontWeight: 700, textDecoration: "none",
-                  border: p.featured ? "none" : "1px solid rgba(24,95,133,0.35)",
-                  background: p.featured ? "#185F85" : "transparent",
-                  color: p.featured ? "#FFFFFF" : "#185F85",
+                  border: p.featured ? "none" : `1.5px solid ${p.accent}`,
+                  background: p.featured ? p.accent : "transparent",
+                  color: p.featured ? "#FFFFFF" : p.accent,
                 }}>
                   {p.cta}
                 </Link>
