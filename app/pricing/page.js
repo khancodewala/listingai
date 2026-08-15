@@ -116,14 +116,14 @@ export default function PricingPage() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 1.5rem;
-          margin-top: 3rem;
+          margin-top: 1.5rem;
           align-items: stretch;
         }
         .pricing-card {
           background: #FFFFFF;
           border: 1.5px solid rgba(58,64,72,0.10);
           border-radius: 20px;
-          padding: 2rem 1.75rem;
+          padding: 1.75rem 1.5rem;
           position: relative;
           display: flex;
           flex-direction: column;
@@ -195,7 +195,7 @@ export default function PricingPage() {
       {/* ── HEADER ── */}
       <div style={{
         borderBottom: "1px solid rgba(24,95,133,0.12)",
-        padding: "2rem 1.5rem",
+        padding: "1.25rem 1.5rem",
         maxWidth: "960px",
         margin: "0 auto",
         display: "flex",
@@ -222,21 +222,21 @@ export default function PricingPage() {
       </div>
 
       {/* ── HERO ── */}
-      <div style={{ textAlign: "center", padding: "4rem 1.5rem 1rem", maxWidth: "680px", margin: "0 auto" }}>
+      <div style={{ textAlign: "center", padding: "2.25rem 1.5rem 0.5rem", maxWidth: "680px", margin: "0 auto" }}>
         <div style={{
           display: "inline-block", fontSize: "11px", fontWeight: 700,
           textTransform: "uppercase", letterSpacing: "0.12em",
-          color: "#185F85", marginBottom: "1rem",
+          color: "#185F85", marginBottom: "0.75rem",
         }}>✦ Pricing</div>
         <h1 style={{
           fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: "clamp(2rem, 5vw, 3rem)",
+          fontSize: "clamp(1.9rem, 4.5vw, 2.6rem)",
           fontWeight: 700, color: "#1C232B",
-          marginBottom: "1rem", lineHeight: 1.2,
+          marginBottom: "0.75rem", lineHeight: 1.2,
         }}>
           Simple, Transparent Pricing
         </h1>
-        <p style={{ fontSize: "16px", color: "#525C66", lineHeight: 1.75 }}>
+        <p style={{ fontSize: "15px", color: "#525C66", lineHeight: 1.7 }}>
           Start free with 5 generations. Upgrade when you're ready.
           Cancel anytime — no questions asked.
         </p>
