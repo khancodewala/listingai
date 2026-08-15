@@ -48,6 +48,7 @@ export default function PricingPage() {
       price: "0",
       period: "Forever free",
       description: "Perfect for trying out ListingAI",
+      accent: "#7A8790",
       features: [
         "5 AI generations per month",
         "All 10 AI writing tools",
@@ -65,6 +66,7 @@ export default function PricingPage() {
       price: "29",
       period: "per month",
       description: "For active real estate agents",
+      accent: "#185F85",
       features: [
         "100 AI generations per month",
         "All 10 AI writing tools",
@@ -83,6 +85,7 @@ export default function PricingPage() {
       price: "79",
       period: "per month",
       description: "For real estate teams and agencies",
+      accent: "#5E9B7C",
       features: [
         "Unlimited AI generations",
         "All 10 AI writing tools",
@@ -103,8 +106,8 @@ export default function PricingPage() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#0B1628",
-      color: "#E8DFC8",
+      background: "#FAF8F2",
+      color: "#3A4048",
       fontFamily: "'DM Sans', sans-serif",
     }}>
 
@@ -114,27 +117,29 @@ export default function PricingPage() {
           grid-template-columns: repeat(3, 1fr);
           gap: 1.5rem;
           margin-top: 3rem;
+          align-items: stretch;
         }
         .pricing-card {
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(196,163,92,0.15);
+          background: #FFFFFF;
+          border: 1.5px solid rgba(58,64,72,0.10);
           border-radius: 20px;
           padding: 2rem 1.75rem;
           position: relative;
           display: flex;
           flex-direction: column;
+          box-shadow: 0 1px 3px rgba(58,64,72,0.05);
         }
         .pricing-card.highlighted {
-          background: rgba(196,163,92,0.06);
-          border: 1.5px solid rgba(196,163,92,0.55);
+          border: 2px solid #185F85;
+          box-shadow: 0 10px 30px rgba(24,95,133,0.15);
         }
         .pricing-badge {
           position: absolute;
           top: -14px;
           left: 50%;
           transform: translateX(-50%);
-          background: #C4A35C;
-          color: #0B1628;
+          background: #5E9B7C;
+          color: #FFFFFF;
           font-size: 10px;
           font-weight: 700;
           text-transform: uppercase;
@@ -147,8 +152,8 @@ export default function PricingPage() {
           display: block;
           width: 100%;
           text-align: center;
-          background: #C4A35C;
-          color: #0B1628;
+          background: #185F85;
+          color: #FFFFFF;
           font-size: 14px;
           font-weight: 700;
           padding: 13px;
@@ -166,42 +171,30 @@ export default function PricingPage() {
           width: 100%;
           text-align: center;
           background: transparent;
-          color: #C4A35C;
           font-size: 14px;
           font-weight: 700;
           padding: 13px;
           border-radius: 50px;
-          border: 1px solid rgba(196,163,92,0.45);
           cursor: pointer;
           text-decoration: none;
           margin-bottom: 1.75rem;
           transition: background 0.2s ease;
         }
-        .pricing-btn-secondary:hover { background: rgba(196,163,92,0.08); }
         .pricing-btn-secondary:disabled { opacity: 0.55; cursor: not-allowed; }
-        @media (max-width: 768px) {
-          .pricing-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-          }
-          .pricing-card {
-            padding: 1.75rem 1.5rem;
-          }
-        }
-        @media (min-width: 769px) and (max-width: 1024px) {
+        @media (max-width: 640px) {
           .pricing-grid {
             grid-template-columns: 1fr;
             gap: 1.5rem;
-            max-width: 480px;
-            margin-left: auto;
-            margin-right: auto;
+          }
+          .pricing-card {
+            padding: 1.75rem 1.5rem;
           }
         }
       `}</style>
 
       {/* ── HEADER ── */}
       <div style={{
-        borderBottom: "1px solid rgba(196,163,92,0.12)",
+        borderBottom: "1px solid rgba(24,95,133,0.12)",
         padding: "2rem 1.5rem",
         maxWidth: "960px",
         margin: "0 auto",
@@ -214,12 +207,12 @@ export default function PricingPage() {
         <Link href="/" style={{
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: "1.25rem", fontWeight: 700,
-          color: "#C4A35C", textDecoration: "none",
+          color: "#185F85", textDecoration: "none",
         }}>
           ← Back to Home
         </Link>
         <Link href="/generate" style={{
-          background: "#C4A35C", color: "#0B1628",
+          background: "#185F85", color: "#FFFFFF",
           fontSize: "13px", fontWeight: 700,
           padding: "9px 22px", borderRadius: "50px",
           textDecoration: "none",
@@ -233,17 +226,17 @@ export default function PricingPage() {
         <div style={{
           display: "inline-block", fontSize: "11px", fontWeight: 700,
           textTransform: "uppercase", letterSpacing: "0.12em",
-          color: "#C4A35C", marginBottom: "1rem",
+          color: "#185F85", marginBottom: "1rem",
         }}>✦ Pricing</div>
         <h1 style={{
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: "clamp(2rem, 5vw, 3rem)",
-          fontWeight: 700, color: "#F5EDD8",
+          fontWeight: 700, color: "#1C232B",
           marginBottom: "1rem", lineHeight: 1.2,
         }}>
           Simple, Transparent Pricing
         </h1>
-        <p style={{ fontSize: "16px", color: "#7A90A8", lineHeight: 1.75 }}>
+        <p style={{ fontSize: "16px", color: "#525C66", lineHeight: 1.75 }}>
           Start free with 5 generations. Upgrade when you're ready.
           Cancel anytime — no questions asked.
         </p>
@@ -262,9 +255,9 @@ export default function PricingPage() {
               {/* Plan name + description */}
               <div style={{
                 fontSize: "11px", fontWeight: 700, textTransform: "uppercase",
-                letterSpacing: "0.09em", color: "#5A6E85", marginBottom: "0.4rem",
+                letterSpacing: "0.09em", color: plan.accent, marginBottom: "0.4rem",
               }}>{plan.name}</div>
-              <div style={{ fontSize: "13px", color: "#6B80A0", marginBottom: "1.25rem" }}>
+              <div style={{ fontSize: "13px", color: "#5C6672", marginBottom: "1.25rem" }}>
                 {plan.description}
               </div>
 
@@ -275,24 +268,24 @@ export default function PricingPage() {
               }}>
                 <span style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: "1rem", color: "#C4A35C",
+                  fontSize: "1rem", color: plan.accent,
                   marginTop: "8px", lineHeight: 1,
                 }}>$</span>
                 <span style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
                   fontSize: "3rem", fontWeight: 700,
-                  color: "#F5EDD8", lineHeight: 1,
+                  color: "#1C232B", lineHeight: 1,
                 }}>{plan.price}</span>
               </div>
-              <div style={{ fontSize: "12px", color: "#4A5E78", marginBottom: "1.5rem" }}>
+              <div style={{ fontSize: "12px", color: "#8A9199", marginBottom: "1.5rem" }}>
                 {plan.period}
               </div>
 
-              <hr style={{ border: "none", borderTop: "1px solid rgba(196,163,92,0.10)", marginBottom: "1.5rem" }} />
+              <hr style={{ border: "none", borderTop: `1px solid ${plan.accent}30`, marginBottom: "1.5rem" }} />
 
               {/* CTA Button */}
               {plan.planKey === "free" ? (
-                <Link href="/signup" className="pricing-btn-secondary">
+                <Link href="/signup" className="pricing-btn-secondary" style={{ border: `1.5px solid ${plan.accent}`, color: plan.accent }}>
                   {plan.buttonText}
                 </Link>
               ) : (
@@ -300,6 +293,7 @@ export default function PricingPage() {
                   onClick={() => handleUpgrade(plan.planKey)}
                   disabled={loading === plan.planKey}
                   className={plan.highlighted ? "pricing-btn-primary" : "pricing-btn-secondary"}
+                  style={plan.highlighted ? {} : { border: `1.5px solid ${plan.accent}`, color: plan.accent }}
                 >
                   {loading === plan.planKey ? "Redirecting..." : plan.buttonText}
                 </button>
@@ -312,8 +306,8 @@ export default function PricingPage() {
                     display: "flex", alignItems: "center",
                     gap: "10px", marginBottom: "0.65rem",
                   }}>
-                    <span style={{ color: "#C4A35C", fontWeight: 700, fontSize: "14px", flexShrink: 0 }}>✓</span>
-                    <span style={{ fontSize: "13px", color: "#7A90A8" }}>{feature}</span>
+                    <span style={{ color: plan.accent, fontWeight: 700, fontSize: "14px", flexShrink: 0 }}>✓</span>
+                    <span style={{ fontSize: "13px", color: "#3F4952" }}>{feature}</span>
                   </div>
                 ))}
                 {plan.notIncluded.map((feature) => (
@@ -321,8 +315,8 @@ export default function PricingPage() {
                     display: "flex", alignItems: "center",
                     gap: "10px", marginBottom: "0.65rem",
                   }}>
-                    <span style={{ color: "#2A3A50", fontWeight: 700, fontSize: "14px", flexShrink: 0 }}>✕</span>
-                    <span style={{ fontSize: "13px", color: "#3A4E65" }}>{feature}</span>
+                    <span style={{ color: "#C7CCD1", fontWeight: 700, fontSize: "14px", flexShrink: 0 }}>✕</span>
+                    <span style={{ fontSize: "13px", color: "#A6ADB4" }}>{feature}</span>
                   </div>
                 ))}
               </div>
@@ -334,27 +328,27 @@ export default function PricingPage() {
         {/* ── FOUNDING MEMBER NOTICE ── */}
         <div style={{
           marginTop: "2.5rem",
-          background: "rgba(196,163,92,0.06)",
-          border: "1px solid rgba(196,163,92,0.25)",
+          background: "rgba(94,155,124,0.07)",
+          border: "1px solid rgba(94,155,124,0.30)",
           borderRadius: "14px",
           padding: "1.5rem 2rem",
           textAlign: "center",
         }}>
-          <div style={{ fontSize: "13px", color: "#C4A35C", fontWeight: 700, marginBottom: "0.4rem" }}>
+          <div style={{ fontSize: "13px", color: "#3D7A5C", fontWeight: 700, marginBottom: "0.4rem" }}>
             🔒 Founding Member Offer
           </div>
-          <div style={{ fontSize: "13px", color: "#7A90A8", lineHeight: 1.75 }}>
+          <div style={{ fontSize: "13px", color: "#525C66", lineHeight: 1.75 }}>
             {"First 50 agents who sign up for Pro get the rate locked at "}
-            <strong style={{ color: "#E8DFC8" }}>$29/month for 12 months</strong>
+            <strong style={{ color: "#1C232B" }}>$29/month for 12 months</strong>
             {" — guaranteed, even if pricing increases. "}
-            <Link href="/signup" style={{ color: "#C4A35C", textDecoration: "underline" }}>Claim your spot →</Link>
+            <Link href="/signup" style={{ color: "#185F85", textDecoration: "underline" }}>Claim your spot →</Link>
           </div>
         </div>
 
         {/* ── FOOTER NOTE ── */}
         <p style={{
           textAlign: "center", fontSize: "13px",
-          color: "rgba(196,163,92,0.70)", marginTop: "2rem",
+          color: "#8A9199", marginTop: "2rem",
           letterSpacing: "0.03em",
         }}>
           Works for real estate agents worldwide · Payments in USD · Cancel anytime
