@@ -217,7 +217,7 @@ export default function Dashboard() {
     sidebar: { display: 'flex', flexDirection: 'column', height: '100%', background: '#071020', borderRight: '1px solid rgba(196,163,92,0.12)' },
     sidebarLogo: { padding: '20px', borderBottom: '1px solid rgba(196,163,92,0.12)' },
     sidebarLogoLink: { display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' },
-    sidebarLogoText: { fontSize: '18px', fontWeight: 700, color: '#C4A35C', fontFamily: "'Playfair Display', Georgia, serif" },
+    sidebarLogoText: { fontSize: '18px', fontWeight: 700, color: '#C4A35C', fontFamily: "var(--font-playfair)" },
     sidebarNav: { flex: 1, padding: '12px' },
     sidebarFooter: { padding: '12px', borderTop: '1px solid rgba(196,163,92,0.12)' },
     card: { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(196,163,92,0.12)', borderRadius: '16px', padding: '16px' },
@@ -281,7 +281,7 @@ export default function Dashboard() {
   )
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: '#0B1628', overflow: 'hidden', fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ display: 'flex', height: '100vh', background: '#0B1628', overflow: 'hidden', fontFamily: "var(--font-dm-sans)" }}>
       <style>{`
         .dash-tool-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(196,163,92,0.18); border-radius: 16px; padding: 18px; display: flex; align-items: flex-start; gap: 14px; text-decoration: none; transition: all 0.2s ease; }
         .dash-tool-card:hover { background: rgba(196,163,92,0.08); border-color: rgba(196,163,92,0.40); transform: translateY(-1px); }
@@ -321,7 +321,7 @@ export default function Dashboard() {
         }} className="mobile-topbar">
           <style>{`@media (min-width: 768px) { .mobile-topbar { display: none !important; } }`}</style>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C4A35C', fontSize: '20px' }}>☰</button>
-          <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, color: '#C4A35C', fontSize: '16px' }}>🏠 ListingAI</span>
+          <span style={{ fontFamily: "var(--font-playfair)", fontWeight: 700, color: '#C4A35C', fontSize: '16px' }}>🏠 ListingAI</span>
           <div style={{
             width: '32px', height: '32px', borderRadius: '50%',
             background: 'rgba(196,163,92,0.20)', border: '1px solid rgba(196,163,92,0.40)',
@@ -334,7 +334,7 @@ export default function Dashboard() {
 
           {/* Greeting */}
           <div style={{ marginBottom: '1.5rem' }}>
-            <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, color: '#F5EDD8', marginBottom: '4px' }}>
+            <h1 style={{ fontFamily: "var(--font-playfair)", fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, color: '#F5EDD8', marginBottom: '4px' }}>
               {getGreeting()}, {firstName.charAt(0).toUpperCase() + firstName.slice(1)} 👋
             </h1>
             <p style={{ fontSize: '13px', color: '#4A5E78' }}>Here is what is happening with your ListingAI account today.</p>

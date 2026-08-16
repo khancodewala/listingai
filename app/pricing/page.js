@@ -108,7 +108,7 @@ export default function PricingPage() {
       minHeight: "100vh",
       background: "#FAF8F2",
       color: "#3A4048",
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "var(--font-dm-sans)",
     }}>
 
       <style>{`
@@ -205,7 +205,7 @@ export default function PricingPage() {
         gap: "1rem",
       }}>
         <Link href="/" style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
+          fontFamily: "var(--font-playfair)",
           fontSize: "1.25rem", fontWeight: 700,
           color: "#185F85", textDecoration: "none",
         }}>
@@ -229,7 +229,7 @@ export default function PricingPage() {
           color: "#185F85", marginBottom: "0.75rem",
         }}>✦ Pricing</div>
         <h1 style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
+          fontFamily: "var(--font-playfair)",
           fontSize: "clamp(1.9rem, 4.5vw, 2.6rem)",
           fontWeight: 700, color: "#1C232B",
           marginBottom: "0.75rem", lineHeight: 1.2,
@@ -267,12 +267,12 @@ export default function PricingPage() {
                 marginBottom: "0.35rem",
               }}>
                 <span style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: "var(--font-playfair)",
                   fontSize: "1rem", color: plan.accent,
                   marginTop: "8px", lineHeight: 1,
                 }}>$</span>
                 <span style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: "var(--font-playfair)",
                   fontSize: "3rem", fontWeight: 700,
                   color: "#1C232B", lineHeight: 1,
                 }}>{plan.price}</span>

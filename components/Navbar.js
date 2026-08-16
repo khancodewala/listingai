@@ -66,7 +66,7 @@ export default function Navbar() {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "var(--font-dm-sans)",
       }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 

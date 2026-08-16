@@ -35,7 +35,7 @@ export default function ForgotPassword() {
       padding: "16px",
       paddingTop: "12px",
       paddingBottom: "12px",
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "var(--font-dm-sans)",
     }}>
       <div style={{
         background: "#ffffff",

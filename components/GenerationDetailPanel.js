@@ -99,7 +99,7 @@ export default function GenerationDetailPanel({ generation, onClose }) {
         transform: generation ? 'translateX(0)' : 'translateX(100%)',
         transition: 'transform 0.3s ease',
         animation: generation ? 'slideIn 0.25s ease-out' : 'none',
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "var(--font-dm-sans)",
       }}>
 
         {/* Header */}

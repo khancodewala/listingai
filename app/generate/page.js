@@ -586,7 +586,7 @@ export default function GeneratePage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#FAF8F2", fontFamily: "'DM Sans', sans-serif", padding: "2.5rem 1.25rem 4rem" }}>
+    <div style={{ minHeight: "100vh", background: "#FAF8F2", fontFamily: "var(--font-dm-sans)", padding: "2.5rem 1.25rem 4rem" }}>
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .gen-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
@@ -602,7 +602,7 @@ export default function GeneratePage() {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <div style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "#185F85", marginBottom: "0.5rem" }}>✦ AI Generator</div>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 700, color: "#1C232B", marginBottom: "0.5rem" }}>
+          <h1 style={{ fontFamily: "var(--font-playfair)", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 700, color: "#1C232B", marginBottom: "0.5rem" }}>
             Write Better Listings, Faster
           </h1>
           <p style={{ fontSize: "14.5px", color: "#4E5964", fontWeight: 500 }}>Powerful AI, Professional Copy — Generate Real Estate Content in Seconds, for Any Market Worldwide.</p>
