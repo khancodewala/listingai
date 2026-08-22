@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import GenerationDetailPanel from '@/components/GenerationDetailPanel'
+import LogoMark from '@/components/LogoMark'
 
 const PLAN_LIMITS = { free: 5, pro: 100, agency: Infinity }
 
@@ -96,7 +97,7 @@ function MiniBarChart({ data }) {
             height: `${Math.max(4, (d.count / max) * 52)}px`,
             transition: 'height 0.4s ease',
           }} />
-          <span style={{ fontSize: '10px', color: '#8A97A6' }}>{d.day}</span>
+          <span style={{ fontSize: '10px', fontWeight: 600, color: '#5B6B7C' }}>{d.day}</span>
         </div>
       ))}
     </div>
@@ -234,8 +235,7 @@ export default function Dashboard() {
     <aside style={S.sidebar}>
       <div style={S.sidebarLogo}>
         <a href="/" style={S.sidebarLogoLink}>
-          <span style={{ fontSize: '22px' }}>🏠</span>
-          <span style={S.sidebarLogoText}>ListingAI</span>
+          <LogoMark size="sm" theme="light" />
         </a>
       </div>
       <nav style={S.sidebarNav}>
@@ -316,7 +316,7 @@ export default function Dashboard() {
       )}
 
       {/* Main content */}
-      <main style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+      <main style={{ flex: 1, minWidth: 0, overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
 
         {/* Mobile top bar */}
         <div style={{
@@ -328,7 +328,7 @@ export default function Dashboard() {
         }} className="mobile-topbar">
           <style>{`@media (min-width: 768px) { .mobile-topbar { display: none !important; } }`}</style>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#185F85', fontSize: '20px' }}>☰</button>
-          <span style={{ fontFamily: "var(--font-playfair)", fontWeight: 700, color: '#185F85', fontSize: '16px' }}>🏠 ListingAI</span>
+          <LogoMark size="sm" theme="light" />
           <div style={{
             width: '32px', height: '32px', borderRadius: '50%',
             background: 'rgba(24,95,133,0.12)', border: '1px solid rgba(24,95,133,0.30)',
@@ -337,7 +337,7 @@ export default function Dashboard() {
           }}>{avatarInitials}</div>
         </div>
 
-        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '2rem 1.25rem 4rem', width: '100%' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '2rem 1.25rem 4rem', width: '100%', boxSizing: 'border-box' }}>
 
           {/* Greeting */}
           <div style={{ marginBottom: '1.5rem' }}>
@@ -386,7 +386,7 @@ export default function Dashboard() {
           )}
 
           {/* Stat cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '1.25rem' }}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '12px', marginBottom: '1.25rem' }}
             className="stat-grid">
             <style>{`@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr) !important; } }`}</style>
             {loading ? [1,2,3,4].map(i => (
@@ -426,7 +426,7 @@ export default function Dashboard() {
           <div style={{ ...S.card, marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
               <h2 style={{ fontSize: '13px', fontWeight: 700, color: '#374151', margin: 0 }}>Activity — Last 7 Days</h2>
-              <span style={{ fontSize: '11px', color: '#8A97A6', background: 'rgba(24,95,133,0.06)', padding: '3px 10px', borderRadius: '100px' }}>Generations per day</span>
+              <span style={{ fontSize: '11px', fontWeight: 600, color: '#185F85', background: 'rgba(24,95,133,0.08)', padding: '3px 10px', borderRadius: '100px' }}>Generations per day</span>
             </div>
             {loading ? <div style={{ height: '64px', background: 'rgba(24,95,133,0.06)', borderRadius: '8px', animation: 'pulse 1.5s ease infinite' }} />
               : <MiniBarChart data={chartData} />}
@@ -438,7 +438,7 @@ export default function Dashboard() {
               <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#374151', margin: 0 }}>AI Tools</h2>
               <span style={{ fontSize: '11px', color: '#8A97A6' }}>Click any tool to start</span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }} className="tools-grid">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '10px' }} className="tools-grid">
               <style>{`@media (max-width: 480px) { .tools-grid { grid-template-columns: 1fr !important; } }`}</style>
               {TOOLS.map((tool, i) => {
                 const accent = ACCENT_CYCLE[i % ACCENT_CYCLE.length]
