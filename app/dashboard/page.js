@@ -302,7 +302,7 @@ export default function Dashboard() {
       `}</style>
 
       {/* Desktop sidebar */}
-      <div style={{ display: 'none', width: '220px', flexShrink: 0 }} className="md-sidebar">
+      <div style={{ display: 'none', width: '248px', flexShrink: 0 }} className="md-sidebar">
         <Sidebar />
       </div>
       <style>{`@media (min-width: 768px) { .md-sidebar { display: flex !important; flex-direction: column; } }`}</style>
@@ -310,7 +310,7 @@ export default function Dashboard() {
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex' }}>
-          <div style={{ width: '220px', flexShrink: 0 }}><Sidebar /></div>
+          <div style={{ width: '248px', flexShrink: 0 }}><Sidebar /></div>
           <div style={{ flex: 1, background: 'rgba(20,30,40,0.45)' }} onClick={() => setSidebarOpen(false)} />
         </div>
       )}
