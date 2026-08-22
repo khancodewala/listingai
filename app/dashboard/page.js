@@ -223,7 +223,7 @@ export default function Dashboard() {
 
   const S = {
     sidebar: { display: 'flex', flexDirection: 'column', height: '100%', background: '#ffffff', borderRight: '1px solid rgba(24,95,133,0.12)' },
-    sidebarLogo: { padding: '20px', borderBottom: '1px solid rgba(24,95,133,0.12)' },
+    sidebarLogo: { padding: '18px 16px', borderBottom: '1px solid rgba(24,95,133,0.12)' },
     sidebarLogoLink: { display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' },
     sidebarLogoText: { fontSize: '18px', fontWeight: 700, color: '#185F85', fontFamily: "var(--font-playfair)" },
     sidebarNav: { flex: 1, padding: '12px' },
@@ -235,7 +235,7 @@ export default function Dashboard() {
     <aside style={S.sidebar}>
       <div style={S.sidebarLogo}>
         <a href="/" style={S.sidebarLogoLink}>
-          <LogoMark size="sm" theme="light" />
+          <LogoMark size="md" theme="light" />
         </a>
       </div>
       <nav style={S.sidebarNav}>
@@ -328,7 +328,7 @@ export default function Dashboard() {
         }} className="mobile-topbar">
           <style>{`@media (min-width: 768px) { .mobile-topbar { display: none !important; } }`}</style>
           <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#185F85', fontSize: '20px' }}>☰</button>
-          <LogoMark size="sm" theme="light" />
+          <LogoMark size="md" theme="light" />
           <div style={{
             width: '32px', height: '32px', borderRadius: '50%',
             background: 'rgba(24,95,133,0.12)', border: '1px solid rgba(24,95,133,0.30)',
