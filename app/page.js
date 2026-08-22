@@ -133,7 +133,7 @@ export default function HomePage() {
           top: -13px;
           left: 50%;
           transform: translateX(-50%);
-          background: #5E9B7C;
+          background: #3F7A5C;
           color: #FFFFFF;
           font-size: 10px;
           font-weight: 700;
@@ -372,7 +372,7 @@ export default function HomePage() {
               { icon: "👤", title: "Realtor Bio Generator",      desc: "Create a polished, professional bio for your website, business card, or social profiles — tailored to your experience and tone.",                  tag: "Stand out instantly"      },
               { icon: "🧲", title: "Lead Magnet / Blog Writer",  desc: "Generate blog posts, buyer's guides, checklists, and FAQ articles that attract leads and position you as the local market expert.",               tag: "Turn readers into clients" },
             ].map((f, i) => {
-              const palette = ["#185F85", "#5E9B7C", "#B8834A", "#7A5FA0"];
+              const palette = ["#185F85", "#3F7A5C", "#B8834A", "#7A5FA0"];
               const accent = palette[i % palette.length];
               return (
                 <Link key={f.title} href="/generate" className="lai-feature-card" style={{ borderTop: `3px solid ${accent}` }}>
@@ -465,7 +465,7 @@ export default function HomePage() {
                 <div style={{
                   display: "inline-block", fontSize: "10px", fontWeight: 700,
                   textTransform: "uppercase", letterSpacing: "0.08em",
-                  color: "#FFFFFF", background: "#5E9B7C",
+                  color: "#FFFFFF", background: "#3F7A5C",
                   padding: "3px 12px", borderRadius: "100px", marginBottom: "0.85rem",
                 }}>Founding Member Offer</div>
                 <p style={{ fontSize: "13px", color: "#5C6672", lineHeight: 1.85, marginBottom: "1.25rem" }}>
@@ -532,7 +532,7 @@ export default function HomePage() {
             {[
               { name: "Free",   price: "0",  period: "Forever free",  featured: false, accent: "#55606A", features: ["5 generations / month", "All 10 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
               { name: "Pro",    price: "29", period: "per month",      featured: true,  accent: "#185F85", features: ["100 generations / month", "Everything in Free", "Priority support", "Works for any country"], cta: "Start Pro Plan",    href: "/pricing" },
-              { name: "Agency", price: "79", period: "per month",      featured: false, accent: "#5E9B7C", features: ["Unlimited generations", "Everything in Pro", "Team access", "Dedicated support"],             cta: "Start Agency Plan", href: "/pricing" },
+              { name: "Agency", price: "79", period: "per month",      featured: false, accent: "#3F7A5C", features: ["Unlimited generations", "Everything in Pro", "Team access", "Dedicated support"],             cta: "Start Agency Plan", href: "/pricing" },
             ].map(p => (
               <div key={p.name} style={{
                 border: p.featured ? `2px solid ${p.accent}` : `1.5px solid ${p.accent}45`,

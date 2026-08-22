@@ -48,7 +48,7 @@ export default function PricingPage() {
       price: "0",
       period: "Forever free",
       description: "Perfect for trying out ListingAI",
-      accent: "#7A8790",
+      accent: "#55606A",
       features: [
         "5 AI generations per month",
         "All 10 AI writing tools",
@@ -85,7 +85,7 @@ export default function PricingPage() {
       price: "79",
       period: "per month",
       description: "For real estate teams and agencies",
-      accent: "#5E9B7C",
+      accent: "#3F7A5C",
       features: [
         "Unlimited AI generations",
         "All 10 AI writing tools",
@@ -138,7 +138,7 @@ export default function PricingPage() {
           top: -14px;
           left: 50%;
           transform: translateX(-50%);
-          background: #5E9B7C;
+          background: #3F7A5C;
           color: #FFFFFF;
           font-size: 10px;
           font-weight: 700;
@@ -277,7 +277,7 @@ export default function PricingPage() {
                   color: "#1C232B", lineHeight: 1,
                 }}>{plan.price}</span>
               </div>
-              <div style={{ fontSize: "12px", color: "#8A9199", marginBottom: "1.5rem" }}>
+              <div style={{ fontSize: "12px", color: "#55606A", marginBottom: "1.5rem" }}>
                 {plan.period}
               </div>
 
@@ -348,7 +348,7 @@ export default function PricingPage() {
         {/* ── FOOTER NOTE ── */}
         <p style={{
           textAlign: "center", fontSize: "13px",
-          color: "#8A9199", marginTop: "2rem",
+          color: "#55606A", marginTop: "2rem",
           letterSpacing: "0.03em",
         }}>
           Works for real estate agents worldwide · Payments in USD · Cancel anytime
