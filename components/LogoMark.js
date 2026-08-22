@@ -10,7 +10,7 @@ export default function LogoMark({ size = 'md', theme = 'dark' }) {
   const navy = theme === 'dark' ? '#0a1628' : '#ffffff';
   const shape = theme === 'dark' ? '#ffffff' : '#0f1c3f';
   const gold = '#C9952A';
-  const subtitleColor = theme === 'dark' ? '#A8B8C8' : '#8a8a85';
+  const subtitleColor = theme === 'dark' ? '#A8B8C8' : '#5B6B7C';
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
