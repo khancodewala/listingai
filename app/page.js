@@ -32,7 +32,7 @@ export default function HomePage() {
     <main style={{ fontFamily: "var(--font-dm-sans)", background: "#FAF8F2", color: "#3A4048", overflowX: "hidden", maxWidth: "100vw" }}>
 
       {/* ── Responsive grid styles ── */}
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         html, body { overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
         *, *::before, *::after { box-sizing: border-box; }
 
@@ -252,7 +252,7 @@ export default function HomePage() {
             padding: 4rem 1.25rem;
           }
         }
-      `}</style>
+      ` }} />
 
       {/* ── HERO with full-bleed property photo (dark overlay kept for legibility) ── */}
       <section className="lai-hero-section">
