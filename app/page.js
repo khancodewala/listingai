@@ -335,7 +335,7 @@ export default function HomePage() {
                   fontFamily: "var(--font-playfair)",
                   fontSize: "1.9rem", fontWeight: 700, color: "#185F85", display: "block",
                 }}>{s.num}</span>
-                <span style={{ fontSize: "11px", color: "#7A8790", marginTop: "3px", textTransform: "uppercase", letterSpacing: "0.07em", display: "block" }}>{s.label}</span>
+                <span style={{ fontSize: "11px", color: "#55606A", marginTop: "3px", textTransform: "uppercase", letterSpacing: "0.07em", display: "block" }}>{s.label}</span>
               </div>
             ))}
           </div>
@@ -449,7 +449,7 @@ export default function HomePage() {
               </div>
               <div>
                 <div style={{ fontSize: "13px", color: "#242B32", fontWeight: 600 }}>Tauqeer Ahmed</div>
-                <div style={{ fontSize: "11px", color: "#8A9199", marginTop: "3px" }}>Founder, ListingAI</div>
+                <div style={{ fontSize: "11px", color: "#55606A", marginTop: "3px" }}>Founder, ListingAI</div>
               </div>
             </div>
 
@@ -530,7 +530,7 @@ export default function HomePage() {
 
           <div className="lai-pricing-grid">
             {[
-              { name: "Free",   price: "0",  period: "Forever free",  featured: false, accent: "#7A8790", features: ["5 generations / month", "All 10 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
+              { name: "Free",   price: "0",  period: "Forever free",  featured: false, accent: "#55606A", features: ["5 generations / month", "All 10 AI tools", "Works worldwide", "No credit card needed"],        cta: "Get Started Free",  href: "/signup" },
               { name: "Pro",    price: "29", period: "per month",      featured: true,  accent: "#185F85", features: ["100 generations / month", "Everything in Free", "Priority support", "Works for any country"], cta: "Start Pro Plan",    href: "/pricing" },
               { name: "Agency", price: "79", period: "per month",      featured: false, accent: "#5E9B7C", features: ["Unlimited generations", "Everything in Pro", "Team access", "Dedicated support"],             cta: "Start Agency Plan", href: "/pricing" },
             ].map(p => (
@@ -548,7 +548,7 @@ export default function HomePage() {
                 <div style={{ fontFamily: "var(--font-playfair)", fontSize: "2.5rem", color: "#1C232B", fontWeight: 700, lineHeight: 1, display: "flex", alignItems: "flex-start", gap: "2px" }}>
                   <sup style={{ fontSize: "1rem", lineHeight: 1, marginTop: "6px" }}>$</sup>{p.price}
                 </div>
-                <div style={{ fontSize: "12px", color: "#8A9199", marginBottom: "1.25rem", marginTop: "4px" }}>{p.period}</div>
+                <div style={{ fontSize: "12px", color: "#55606A", marginBottom: "1.25rem", marginTop: "4px" }}>{p.period}</div>
                 <hr style={{ border: "none", borderTop: `1px solid ${p.accent}30`, margin: "1.25rem 0" }} />
                 {p.features.map(f => (
                   <div key={f} style={{ fontSize: "13px", color: "#3F4952", padding: "5px 0", display: "flex", alignItems: "center", gap: "8px" }}>
