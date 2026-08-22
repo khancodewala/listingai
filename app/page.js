@@ -7,9 +7,26 @@ import Link from "next/link";
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
-  const HERO_IMG    = "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1600&q=80&fit=crop";
-  const SECTION_IMG = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80&fit=crop";
-  const CTA_IMG     = "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80&fit=crop";
+  // Unsplash's own on-the-fly resizing + format negotiation: auto=format serves
+  // WebP/AVIF automatically based on the browser's Accept header — no next/image
+  // needed for plain CSS backgrounds like these.
+  const unsplash = (id, w, q = 70) =>
+    `https://images.unsplash.com/${id}?w=${w}&q=${q}&auto=format&fit=crop`;
+
+  const HERO_ID    = "photo-1600210492493-0946911123ea";
+  const SECTION_ID = "photo-1600607687939-ce8a6c25118c";
+  const CTA_ID     = "photo-1512917774080-9991f1c4c750";
+
+  // Hero & CTA are full-bleed backgrounds — serve a smaller crop on mobile via
+  // the CSS media query below instead of always loading the 1600px desktop version
+  const HERO_IMG_MOBILE  = unsplash(HERO_ID, 800, 65);
+  const HERO_IMG_DESKTOP = unsplash(HERO_ID, 1600, 75);
+  const CTA_IMG_MOBILE   = unsplash(CTA_ID, 800, 60);
+  const CTA_IMG_DESKTOP  = unsplash(CTA_ID, 1600, 70);
+
+  // This one sits at 4% opacity purely for background texture — a small,
+  // heavily compressed version looks identical but costs a fraction of the size
+  const SECTION_IMG = unsplash(SECTION_ID, 900, 35);
 
   return (
     <main style={{ fontFamily: "var(--font-dm-sans)", background: "#FAF8F2", color: "#3A4048", overflowX: "hidden", maxWidth: "100vw" }}>
@@ -142,6 +159,26 @@ export default function HomePage() {
           transform: translateY(-3px);
         }
 
+        .lai-hero-bg {
+          position: absolute;
+          inset: 0;
+          background-image: url('${HERO_IMG_MOBILE}');
+          background-size: cover;
+          background-position: center 40%;
+          background-repeat: no-repeat;
+        }
+        .lai-cta-bg {
+          position: absolute;
+          inset: 0;
+          background-image: url('${CTA_IMG_MOBILE}');
+          background-size: cover;
+          background-position: center;
+        }
+        @media (min-width: 641px) {
+          .lai-hero-bg { background-image: url('${HERO_IMG_DESKTOP}'); }
+          .lai-cta-bg { background-image: url('${CTA_IMG_DESKTOP}'); }
+        }
+
         @media (max-width: 640px) {
           .lai-stats-grid {
             grid-template-columns: repeat(2, 1fr);
@@ -219,13 +256,7 @@ export default function HomePage() {
 
       {/* ── HERO with full-bleed property photo (dark overlay kept for legibility) ── */}
       <section className="lai-hero-section">
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: `url('${HERO_IMG}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center 40%",
-          backgroundRepeat: "no-repeat",
-        }} />
+        <div className="lai-hero-bg" />
         <div style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(105deg, rgba(18,34,48,0.88) 0%, rgba(18,34,48,0.70) 45%, rgba(18,34,48,0.25) 100%)",
@@ -542,11 +573,7 @@ export default function HomePage() {
 
       {/* ── BOTTOM CTA with property photo background ── */}
       <section className="lai-cta-section" style={{ overflow: "hidden" }}>
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: `url('${CTA_IMG}')`,
-          backgroundSize: "cover", backgroundPosition: "center",
-        }} />
+        <div className="lai-cta-bg" />
         <div style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(180deg, rgba(18,34,48,0.82) 0%, rgba(18,34,48,0.72) 100%)",
