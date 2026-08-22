@@ -19,36 +19,43 @@ const TYPE_LABELS = {
 }
 
 const TYPE_COLORS = {
-  listing:      'rgba(196,163,92,0.15)',
-  social:       'rgba(139,92,246,0.15)',
-  email:        'rgba(16,185,129,0.15)',
-  contract:     'rgba(245,158,11,0.15)',
-  openhouse:    'rgba(239,68,68,0.15)',
-  neighborhood: 'rgba(20,184,166,0.15)',
-  pricedrop:    'rgba(249,115,22,0.15)',
-  videoscript:  'rgba(99,102,241,0.15)',
-  bio:          'rgba(236,72,153,0.15)',
-  leadmagnet:   'rgba(34,197,94,0.15)',
+  listing:      'rgba(24,95,133,0.12)',
+  social:       'rgba(124,92,191,0.12)',
+  email:        'rgba(94,155,124,0.12)',
+  contract:     'rgba(201,154,62,0.14)',
+  openhouse:    'rgba(220,38,38,0.10)',
+  neighborhood: 'rgba(15,122,122,0.12)',
+  pricedrop:    'rgba(234,131,45,0.12)',
+  videoscript:  'rgba(67,56,202,0.12)',
+  bio:          'rgba(190,24,93,0.12)',
+  leadmagnet:   'rgba(22,121,79,0.12)',
 }
 
 const TYPE_TEXT_COLORS = {
-  listing:      '#C4A35C',
-  social:       '#A78BFA',
-  email:        '#34D399',
-  contract:     '#FCD34D',
-  openhouse:    '#F87171',
-  neighborhood: '#2DD4BF',
-  pricedrop:    '#FB923C',
-  videoscript:  '#818CF8',
-  bio:          '#F472B6',
-  leadmagnet:   '#4ADE80',
+  listing:      '#185F85',
+  social:       '#7C5CBF',
+  email:        '#4C8468',
+  contract:     '#A9791F',
+  openhouse:    '#B91C1C',
+  neighborhood: '#0F7A7A',
+  pricedrop:    '#B85A16',
+  videoscript:  '#4338CA',
+  bio:          '#BE185D',
+  leadmagnet:   '#16794F',
 }
 
 const PLAN_CONFIG = {
-  free:   { color: '#7A90A8', bar: '#5A6E85',  badge: 'rgba(90,110,133,0.20)',  badgeText: '#7A90A8'  },
-  pro:    { color: '#C4A35C', bar: '#C4A35C',  badge: 'rgba(196,163,92,0.20)', badgeText: '#C4A35C'  },
-  agency: { color: '#A78BFA', bar: '#A78BFA',  badge: 'rgba(167,139,250,0.20)', badgeText: '#A78BFA' },
+  free:   { color: '#6B7280', bar: '#94A3B8', badge: 'rgba(107,114,128,0.12)', badgeText: '#6B7280' },
+  pro:    { color: '#185F85', bar: '#185F85', badge: 'rgba(24,95,133,0.12)',   badgeText: '#185F85' },
+  agency: { color: '#7C5CBF', bar: '#7C5CBF', badge: 'rgba(124,92,191,0.12)', badgeText: '#7C5CBF' },
 }
+
+const ACCENT_CYCLE = [
+  { bg: 'rgba(24,95,133,0.10)',  border: 'rgba(24,95,133,0.18)',  color: '#185F85' }, // blue
+  { bg: 'rgba(94,155,124,0.10)', border: 'rgba(94,155,124,0.20)', color: '#4C8468' }, // sage
+  { bg: 'rgba(201,154,62,0.12)', border: 'rgba(201,154,62,0.22)', color: '#A9791F' }, // amber
+  { bg: 'rgba(124,92,191,0.10)', border: 'rgba(124,92,191,0.20)', color: '#7C5CBF' }, // purple
+]
 
 const TOOLS = [
   { key: 'listing',      icon: '🏠', label: 'Listing Writer',    desc: 'Generate professional MLS property descriptions in seconds'           },
@@ -85,11 +92,11 @@ function MiniBarChart({ data }) {
         <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', flex: 1 }}>
           <div style={{
             width: '100%', borderRadius: '3px 3px 0 0',
-            background: d.count > 0 ? '#C4A35C' : 'rgba(196,163,92,0.15)',
+            background: d.count > 0 ? '#185F85' : 'rgba(24,95,133,0.14)',
             height: `${Math.max(4, (d.count / max) * 52)}px`,
             transition: 'height 0.4s ease',
           }} />
-          <span style={{ fontSize: '10px', color: '#4A5E78' }}>{d.day}</span>
+          <span style={{ fontSize: '10px', color: '#8A97A6' }}>{d.day}</span>
         </div>
       ))}
     </div>
@@ -214,13 +221,13 @@ export default function Dashboard() {
   const handleLogout = async () => { await supabase.auth.signOut(); window.location.href = '/' }
 
   const S = {
-    sidebar: { display: 'flex', flexDirection: 'column', height: '100%', background: '#071020', borderRight: '1px solid rgba(196,163,92,0.12)' },
-    sidebarLogo: { padding: '20px', borderBottom: '1px solid rgba(196,163,92,0.12)' },
+    sidebar: { display: 'flex', flexDirection: 'column', height: '100%', background: '#ffffff', borderRight: '1px solid rgba(24,95,133,0.12)' },
+    sidebarLogo: { padding: '20px', borderBottom: '1px solid rgba(24,95,133,0.12)' },
     sidebarLogoLink: { display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' },
-    sidebarLogoText: { fontSize: '18px', fontWeight: 700, color: '#C4A35C', fontFamily: "var(--font-playfair)" },
+    sidebarLogoText: { fontSize: '18px', fontWeight: 700, color: '#185F85', fontFamily: "var(--font-playfair)" },
     sidebarNav: { flex: 1, padding: '12px' },
-    sidebarFooter: { padding: '12px', borderTop: '1px solid rgba(196,163,92,0.12)' },
-    card: { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(196,163,92,0.12)', borderRadius: '16px', padding: '16px' },
+    sidebarFooter: { padding: '12px', borderTop: '1px solid rgba(24,95,133,0.12)' },
+    card: { background: '#ffffff', border: '1px solid rgba(24,95,133,0.12)', borderRadius: '16px', padding: '16px' },
   }
 
   const Sidebar = () => (
@@ -238,9 +245,9 @@ export default function Dashboard() {
             padding: '10px 12px', borderRadius: '10px',
             fontSize: '13px', fontWeight: 600, textDecoration: 'none',
             marginBottom: '2px',
-            background: item.active ? 'rgba(196,163,92,0.15)' : 'transparent',
-            color: item.active ? '#C4A35C' : '#5A6E85',
-            border: item.active ? '1px solid rgba(196,163,92,0.30)' : '1px solid transparent',
+            background: item.active ? 'rgba(24,95,133,0.10)' : 'transparent',
+            color: item.active ? '#185F85' : '#6B7280',
+            border: item.active ? '1px solid rgba(24,95,133,0.28)' : '1px solid transparent',
             transition: 'all 0.15s ease',
           }}>
             <span style={{ fontSize: '15px' }}>{item.icon}</span>
@@ -252,7 +259,7 @@ export default function Dashboard() {
         {plan === 'free' && (
           <a href="/pricing" style={{
             display: 'block', width: '100%', textAlign: 'center',
-            background: '#C4A35C', color: '#0B1628',
+            background: '#185F85', color: '#ffffff',
             fontSize: '13px', fontWeight: 700,
             padding: '10px', borderRadius: '50px',
             textDecoration: 'none', marginBottom: '12px',
@@ -261,18 +268,18 @@ export default function Dashboard() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px', borderRadius: '10px' }}>
           <div style={{
             width: '34px', height: '34px', borderRadius: '50%',
-            background: 'rgba(196,163,92,0.20)', border: '1px solid rgba(196,163,92,0.40)',
+            background: 'rgba(24,95,133,0.12)', border: '1px solid rgba(24,95,133,0.30)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#C4A35C', fontSize: '12px', fontWeight: 700, flexShrink: 0,
+            color: '#185F85', fontSize: '12px', fontWeight: 700, flexShrink: 0,
           }}>{avatarInitials}</div>
           <div style={{ minWidth: 0, flex: 1 }}>
-            <p style={{ fontSize: '12px', fontWeight: 600, color: '#A8B8C8', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userEmail}</p>
+            <p style={{ fontSize: '12px', fontWeight: 600, color: '#374151', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userEmail}</p>
             <p style={{ fontSize: '11px', color: pc.color, margin: 0 }}>{planLabel} Plan</p>
           </div>
         </div>
         <button onClick={handleLogout} style={{
           width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px',
-          padding: '8px 12px', fontSize: '12px', color: '#4A5E78',
+          padding: '8px 12px', fontSize: '12px', color: '#8A97A6',
           background: 'none', border: 'none', cursor: 'pointer', borderRadius: '8px',
           marginTop: '4px', fontFamily: 'inherit',
         }}>🚪 Logout</button>
@@ -281,17 +288,17 @@ export default function Dashboard() {
   )
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: '#0B1628', overflow: 'hidden', fontFamily: "var(--font-dm-sans)" }}>
+    <div style={{ display: 'flex', height: '100vh', background: '#FAF8F2', overflow: 'hidden', fontFamily: "var(--font-dm-sans)" }}>
       <style>{`
-        .dash-tool-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(196,163,92,0.18); border-radius: 16px; padding: 18px; display: flex; align-items: flex-start; gap: 14px; text-decoration: none; transition: all 0.2s ease; }
-        .dash-tool-card:hover { background: rgba(196,163,92,0.08); border-color: rgba(196,163,92,0.40); transform: translateY(-1px); }
-        .dash-tool-title { font-size: 13px; font-weight: 700; color: #D8E4F0; margin: 0 0 4px; }
-        .dash-tool-desc { font-size: 12px; color: #7A90A8; margin: 0; line-height: 1.5; }
-        .dash-history-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; cursor: pointer; border-bottom: 1px solid rgba(196,163,92,0.08); transition: background 0.15s ease; }
-        .dash-history-row:hover { background: rgba(196,163,92,0.05); }
+        .dash-tool-card { background: #ffffff; border: 1px solid rgba(24,95,133,0.14); border-radius: 16px; padding: 18px; display: flex; align-items: flex-start; gap: 14px; text-decoration: none; transition: all 0.2s ease; }
+        .dash-tool-card:hover { background: rgba(24,95,133,0.04); border-color: rgba(24,95,133,0.35); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(24,95,133,0.08); }
+        .dash-tool-title { font-size: 13px; font-weight: 700; color: #1F2937; margin: 0 0 4px; }
+        .dash-tool-desc { font-size: 12px; color: #6B7280; margin: 0; line-height: 1.5; }
+        .dash-history-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; cursor: pointer; border-bottom: 1px solid rgba(24,95,133,0.08); transition: background 0.15s ease; }
+        .dash-history-row:hover { background: rgba(24,95,133,0.04); }
         .dash-history-row:last-child { border-bottom: none; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
       `}</style>
 
       {/* Desktop sidebar */}
@@ -304,7 +311,7 @@ export default function Dashboard() {
       {sidebarOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex' }}>
           <div style={{ width: '220px', flexShrink: 0 }}><Sidebar /></div>
-          <div style={{ flex: 1, background: 'rgba(0,0,0,0.60)' }} onClick={() => setSidebarOpen(false)} />
+          <div style={{ flex: 1, background: 'rgba(20,30,40,0.45)' }} onClick={() => setSidebarOpen(false)} />
         </div>
       )}
 
@@ -315,18 +322,18 @@ export default function Dashboard() {
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '12px 16px',
-          background: '#071020',
-          borderBottom: '1px solid rgba(196,163,92,0.12)',
+          background: '#ffffff',
+          borderBottom: '1px solid rgba(24,95,133,0.12)',
           position: 'sticky', top: 0, zIndex: 40,
         }} className="mobile-topbar">
           <style>{`@media (min-width: 768px) { .mobile-topbar { display: none !important; } }`}</style>
-          <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#C4A35C', fontSize: '20px' }}>☰</button>
-          <span style={{ fontFamily: "var(--font-playfair)", fontWeight: 700, color: '#C4A35C', fontSize: '16px' }}>🏠 ListingAI</span>
+          <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#185F85', fontSize: '20px' }}>☰</button>
+          <span style={{ fontFamily: "var(--font-playfair)", fontWeight: 700, color: '#185F85', fontSize: '16px' }}>🏠 ListingAI</span>
           <div style={{
             width: '32px', height: '32px', borderRadius: '50%',
-            background: 'rgba(196,163,92,0.20)', border: '1px solid rgba(196,163,92,0.40)',
+            background: 'rgba(24,95,133,0.12)', border: '1px solid rgba(24,95,133,0.30)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#C4A35C', fontSize: '12px', fontWeight: 700,
+            color: '#185F85', fontSize: '12px', fontWeight: 700,
           }}>{avatarInitials}</div>
         </div>
 
@@ -334,25 +341,25 @@ export default function Dashboard() {
 
           {/* Greeting */}
           <div style={{ marginBottom: '1.5rem' }}>
-            <h1 style={{ fontFamily: "var(--font-playfair)", fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, color: '#F5EDD8', marginBottom: '4px' }}>
+            <h1 style={{ fontFamily: "var(--font-playfair)", fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, color: '#1C2B3A', marginBottom: '4px' }}>
               {getGreeting()}, {firstName.charAt(0).toUpperCase() + firstName.slice(1)} 👋
             </h1>
-            <p style={{ fontSize: '13px', color: '#4A5E78' }}>Here is what is happening with your ListingAI account today.</p>
+            <p style={{ fontSize: '13px', color: '#8A97A6' }}>Here is what is happening with your ListingAI account today.</p>
           </div>
 
           {/* Payment issue banner */}
           {!loading && paymentIssue && plan !== 'free' && (
             <div style={{
               marginBottom: '1.25rem', borderRadius: '14px', padding: '16px 20px',
-              background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.30)',
+              background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap',
             }}>
               <div>
-                <p style={{ fontSize: '13px', fontWeight: 700, color: '#FCA5A5', margin: '0 0 2px' }}>⚠️ Payment issue — your {planLabel} access is at risk</p>
-                <p style={{ fontSize: '12px', color: '#7A90A8', margin: 0 }}>We could not process your last payment. Update your card to avoid being downgraded.</p>
+                <p style={{ fontSize: '13px', fontWeight: 700, color: '#B91C1C', margin: '0 0 2px' }}>⚠️ Payment issue — your {planLabel} access is at risk</p>
+                <p style={{ fontSize: '12px', color: '#6B7280', margin: 0 }}>We could not process your last payment. Update your card to avoid being downgraded.</p>
               </div>
               <button onClick={handleManageBilling} disabled={portalLoading} style={{
-                background: '#ef4444', color: '#fff', border: 'none',
+                background: '#DC2626', color: '#fff', border: 'none',
                 fontSize: '13px', fontWeight: 700, padding: '8px 18px', borderRadius: '50px',
                 cursor: 'pointer', flexShrink: 0, fontFamily: 'inherit',
               }}>{portalLoading ? 'Opening...' : 'Update Payment'}</button>
@@ -363,15 +370,15 @@ export default function Dashboard() {
           {!loading && plan === 'free' && (
             <div style={{
               marginBottom: '1.25rem', borderRadius: '14px', padding: '16px 20px',
-              background: 'rgba(196,163,92,0.08)', border: '1px solid rgba(196,163,92,0.30)',
+              background: 'rgba(201,154,62,0.08)', border: '1px solid rgba(201,154,62,0.28)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap',
             }}>
               <div>
-                <p style={{ fontSize: '13px', fontWeight: 700, color: '#C4A35C', margin: '0 0 2px' }}>You are on the Free plan — {remaining} generations left</p>
-                <p style={{ fontSize: '12px', color: '#7A90A8', margin: 0 }}>Upgrade to Pro for 100 generations/month and unlock full access.</p>
+                <p style={{ fontSize: '13px', fontWeight: 700, color: '#A9791F', margin: '0 0 2px' }}>You are on the Free plan — {remaining} generations left</p>
+                <p style={{ fontSize: '12px', color: '#6B7280', margin: 0 }}>Upgrade to Pro for 100 generations/month and unlock full access.</p>
               </div>
               <a href="/pricing" style={{
-                background: '#C4A35C', color: '#0B1628',
+                background: '#185F85', color: '#ffffff',
                 fontSize: '13px', fontWeight: 700, padding: '8px 18px', borderRadius: '50px',
                 textDecoration: 'none', flexShrink: 0,
               }}>Upgrade Now</a>
@@ -384,33 +391,33 @@ export default function Dashboard() {
             <style>{`@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr) !important; } }`}</style>
             {loading ? [1,2,3,4].map(i => (
               <div key={i} style={{ ...S.card, animation: 'pulse 1.5s ease infinite' }}>
-                <div style={{ height: '10px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', width: '60%', marginBottom: '12px' }} />
-                <div style={{ height: '28px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', width: '40%' }} />
+                <div style={{ height: '10px', background: 'rgba(24,95,133,0.08)', borderRadius: '4px', width: '60%', marginBottom: '12px' }} />
+                <div style={{ height: '28px', background: 'rgba(24,95,133,0.08)', borderRadius: '4px', width: '40%' }} />
               </div>
             )) : (<>
               <div style={S.card}>
-                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Total Used</p>
-                <p style={{ fontSize: '2rem', fontWeight: 700, color: '#F5EDD8', margin: '0 0 2px' }}>{usage}</p>
-                <p style={{ fontSize: '11px', color: '#4A5E78', margin: 0 }}>All time</p>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#8A97A6', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Total Used</p>
+                <p style={{ fontSize: '2rem', fontWeight: 700, color: '#1C2B3A', margin: '0 0 2px' }}>{usage}</p>
+                <p style={{ fontSize: '11px', color: '#8A97A6', margin: 0 }}>All time</p>
               </div>
               <div style={S.card}>
-                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Remaining</p>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#8A97A6', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Remaining</p>
                 <p style={{ fontSize: '2rem', fontWeight: 700, color: pc.color, margin: '0 0 6px' }}>{remaining}</p>
-                <div style={{ width: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: '4px', height: '4px' }}>
+                <div style={{ width: '100%', background: 'rgba(24,95,133,0.10)', borderRadius: '4px', height: '4px' }}>
                   <div style={{ height: '4px', borderRadius: '4px', background: pc.bar, width: `${100 - usagePercent}%`, transition: 'width 0.5s ease' }} />
                 </div>
               </div>
               <div style={S.card}>
-                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Current Plan</p>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#8A97A6', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Current Plan</p>
                 <p style={{ fontSize: '2rem', fontWeight: 700, color: pc.color, margin: '0 0 4px' }}>{planLabel}</p>
                 <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 10px', borderRadius: '100px', background: pc.badge, color: pc.badgeText }}>
                   {limit === Infinity ? 'Unlimited' : `${limit} gen/mo`}
                 </span>
               </div>
               <div style={S.card}>
-                <p style={{ fontSize: '10px', fontWeight: 700, color: '#4A5E78', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>This Week</p>
-                <p style={{ fontSize: '2rem', fontWeight: 700, color: '#F5EDD8', margin: '0 0 2px' }}>{chartData.reduce((s, d) => s + d.count, 0)}</p>
-                <p style={{ fontSize: '11px', color: '#4A5E78', margin: 0 }}>generations</p>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#8A97A6', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>This Week</p>
+                <p style={{ fontSize: '2rem', fontWeight: 700, color: '#1C2B3A', margin: '0 0 2px' }}>{chartData.reduce((s, d) => s + d.count, 0)}</p>
+                <p style={{ fontSize: '11px', color: '#8A97A6', margin: 0 }}>generations</p>
               </div>
             </>)}
           </div>
@@ -418,56 +425,59 @@ export default function Dashboard() {
           {/* Activity chart */}
           <div style={{ ...S.card, marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <h2 style={{ fontSize: '13px', fontWeight: 700, color: '#A8B8C8', margin: 0 }}>Activity — Last 7 Days</h2>
-              <span style={{ fontSize: '11px', color: '#4A5E78', background: 'rgba(255,255,255,0.04)', padding: '3px 10px', borderRadius: '100px' }}>Generations per day</span>
+              <h2 style={{ fontSize: '13px', fontWeight: 700, color: '#374151', margin: 0 }}>Activity — Last 7 Days</h2>
+              <span style={{ fontSize: '11px', color: '#8A97A6', background: 'rgba(24,95,133,0.06)', padding: '3px 10px', borderRadius: '100px' }}>Generations per day</span>
             </div>
-            {loading ? <div style={{ height: '64px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', animation: 'pulse 1.5s ease infinite' }} />
+            {loading ? <div style={{ height: '64px', background: 'rgba(24,95,133,0.06)', borderRadius: '8px', animation: 'pulse 1.5s ease infinite' }} />
               : <MiniBarChart data={chartData} />}
           </div>
 
           {/* AI Tools */}
           <div style={{ marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#A8B8C8', margin: 0 }}>AI Tools</h2>
-              <span style={{ fontSize: '11px', color: '#4A5E78' }}>Click any tool to start</span>
+              <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#374151', margin: 0 }}>AI Tools</h2>
+              <span style={{ fontSize: '11px', color: '#8A97A6' }}>Click any tool to start</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }} className="tools-grid">
               <style>{`@media (max-width: 480px) { .tools-grid { grid-template-columns: 1fr !important; } }`}</style>
-              {TOOLS.map(tool => (
-                <a key={tool.key} href="/generate" className="dash-tool-card">
-                  <div style={{
-                    width: '42px', height: '42px', borderRadius: '10px', flexShrink: 0,
-                    background: 'rgba(196,163,92,0.10)', border: '1px solid rgba(196,163,92,0.15)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
-                  }}>{tool.icon}</div>
-                  <div style={{ minWidth: 0 }}>
-                    <p className="dash-tool-title">{tool.label}</p>
-                    <p className="dash-tool-desc">{tool.desc}</p>
-                  </div>
-                  <svg style={{ width: '14px', height: '14px', color: '#4A5E78', flexShrink: 0, marginTop: '2px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              ))}
+              {TOOLS.map((tool, i) => {
+                const accent = ACCENT_CYCLE[i % ACCENT_CYCLE.length]
+                return (
+                  <a key={tool.key} href="/generate" className="dash-tool-card">
+                    <div style={{
+                      width: '42px', height: '42px', borderRadius: '10px', flexShrink: 0,
+                      background: accent.bg, border: `1px solid ${accent.border}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
+                    }}>{tool.icon}</div>
+                    <div style={{ minWidth: 0 }}>
+                      <p className="dash-tool-title">{tool.label}</p>
+                      <p className="dash-tool-desc">{tool.desc}</p>
+                    </div>
+                    <svg style={{ width: '14px', height: '14px', color: '#9CA6B0', flexShrink: 0, marginTop: '2px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                )
+              })}
             </div>
           </div>
 
           {/* Generation history */}
           <div id="history" style={{ ...S.card, padding: 0, overflow: 'hidden' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', borderBottom: '1px solid rgba(196,163,92,0.10)' }}>
-              <h2 style={{ fontSize: '13px', fontWeight: 700, color: '#A8B8C8', margin: 0 }}>Recent Generations</h2>
-              <span style={{ fontSize: '11px', color: '#4A5E78', background: 'rgba(255,255,255,0.04)', padding: '3px 10px', borderRadius: '100px' }}>{generations.length} entries</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', borderBottom: '1px solid rgba(24,95,133,0.10)' }}>
+              <h2 style={{ fontSize: '13px', fontWeight: 700, color: '#374151', margin: 0 }}>Recent Generations</h2>
+              <span style={{ fontSize: '11px', color: '#8A97A6', background: 'rgba(24,95,133,0.06)', padding: '3px 10px', borderRadius: '100px' }}>{generations.length} entries</span>
             </div>
             {loading ? (
               <div style={{ padding: '16px' }}>
-                {[1,2,3].map(i => <div key={i} style={{ height: '48px', background: 'rgba(255,255,255,0.03)', borderRadius: '10px', marginBottom: '8px', animation: 'pulse 1.5s ease infinite' }} />)}
+                {[1,2,3].map(i => <div key={i} style={{ height: '48px', background: 'rgba(24,95,133,0.05)', borderRadius: '10px', marginBottom: '8px', animation: 'pulse 1.5s ease infinite' }} />)}
               </div>
             ) : generations.length === 0 ? (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 1.5rem', textAlign: 'center' }}>
                 <span style={{ fontSize: '2.5rem', marginBottom: '12px' }}>✨</span>
-                <p style={{ fontSize: '14px', fontWeight: 600, color: '#A8B8C8', marginBottom: '4px' }}>No generations yet</p>
-                <p style={{ fontSize: '13px', color: '#4A5E78', marginBottom: '16px' }}>Use any AI tool above to create your first content</p>
-                <a href="/generate" style={{ fontSize: '13px', color: '#C4A35C', fontWeight: 700, textDecoration: 'none' }}>Start generating →</a>
+                <p style={{ fontSize: '14px', fontWeight: 600, color: '#374151', marginBottom: '4px' }}>No generations yet</p>
+                <p style={{ fontSize: '13px', color: '#8A97A6', marginBottom: '16px' }}>Use any AI tool above to create your first content</p>
+                <a href="/generate" style={{ fontSize: '13px', color: '#185F85', fontWeight: 700, textDecoration: 'none' }}>Start generating →</a>
               </div>
             ) : (
               <div>
@@ -476,20 +486,20 @@ export default function Dashboard() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
                       <span style={{ fontSize: '18px', flexShrink: 0 }}>{TOOLS.find(t => t.key === gen.type)?.icon || '📝'}</span>
                       <div style={{ minWidth: 0 }}>
-                        <p style={{ fontSize: '13px', fontWeight: 600, color: '#D8E4F0', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <p style={{ fontSize: '13px', fontWeight: 600, color: '#1F2937', margin: '0 0 4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {getTitle(gen.type, gen.input)}
                         </p>
                         <span style={{
                           display: 'inline-block', fontSize: '11px', fontWeight: 700,
                           padding: '2px 9px', borderRadius: '100px',
-                          background: TYPE_COLORS[gen.type] || 'rgba(255,255,255,0.06)',
-                          color: TYPE_TEXT_COLORS[gen.type] || '#7A90A8',
+                          background: TYPE_COLORS[gen.type] || 'rgba(24,95,133,0.06)',
+                          color: TYPE_TEXT_COLORS[gen.type] || '#6B7280',
                         }}>{TYPE_LABELS[gen.type] || gen.type}</span>
                       </div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '12px', flexShrink: 0 }}>
-                      <span style={{ fontSize: '11px', color: '#4A5E78' }}>{formatDate(gen.created_at)}</span>
-                      <svg style={{ width: '14px', height: '14px', color: '#4A5E78' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <span style={{ fontSize: '11px', color: '#8A97A6' }}>{formatDate(gen.created_at)}</span>
+                      <svg style={{ width: '14px', height: '14px', color: '#9CA6B0' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
@@ -503,11 +513,11 @@ export default function Dashboard() {
           {!loading && plan !== 'free' && (
             <div style={{ marginTop: '16px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
               {polarCustomerId && (
-                <button onClick={handleManageBilling} disabled={portalLoading} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#A8B8C8', cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' }}>
+                <button onClick={handleManageBilling} disabled={portalLoading} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#374151', cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline' }}>
                   {portalLoading ? 'Opening...' : 'Manage billing'}
                 </button>
               )}
-              <button onClick={() => setShowCancelModal(true)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#F87171', cursor: 'pointer', fontFamily: 'inherit' }}>
+              <button onClick={() => setShowCancelModal(true)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#DC2626', cursor: 'pointer', fontFamily: 'inherit' }}>
                 Cancel subscription
               </button>
             </div>
@@ -518,39 +528,39 @@ export default function Dashboard() {
 
       {/* Cancel modal */}
       {showCancelModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div style={{ background: '#0D1D35', border: '1px solid rgba(196,163,92,0.20)', borderRadius: '20px', width: '100%', maxWidth: '420px', padding: '2rem' }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(20,30,40,0.45)', zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+          <div style={{ background: '#ffffff', border: '1px solid rgba(24,95,133,0.16)', borderRadius: '20px', width: '100%', maxWidth: '420px', padding: '2rem', boxShadow: '0 20px 50px rgba(20,30,40,0.15)' }}>
             {cancelSuccess ? (
               <div style={{ textAlign: 'center' }}>
-                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(196,163,92,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '28px' }}>✓</div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#F5EDD8', marginBottom: '8px' }}>
+                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(24,95,133,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '28px' }}>✓</div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1C2B3A', marginBottom: '8px' }}>
                   {cancelAlreadyCancelled ? 'Already Set to Cancel' : 'Subscription Cancelled'}
                 </h3>
-                <p style={{ fontSize: '13px', color: '#7A90A8', lineHeight: 1.6 }}>
+                <p style={{ fontSize: '13px', color: '#6B7280', lineHeight: 1.6 }}>
                   {cancelAlreadyCancelled ? 'Your subscription is already scheduled to end at your current billing period.' : 'You will keep access until the end of your billing period.'}
                 </p>
               </div>
             ) : (
               <>
-                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '28px' }}>⚠️</div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#F5EDD8', textAlign: 'center', marginBottom: '8px' }}>Cancel Subscription?</h3>
-                <p style={{ fontSize: '13px', color: '#7A90A8', textAlign: 'center', lineHeight: 1.6, marginBottom: '20px' }}>
-                  You will keep your <strong style={{ color: '#E8DFC8' }}>{planLabel}</strong> plan access until the end of your billing period. After that, you will be downgraded to Free (5 generations/month).
+                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(220,38,38,0.08)', border: '1px solid rgba(220,38,38,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '28px' }}>⚠️</div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1C2B3A', textAlign: 'center', marginBottom: '8px' }}>Cancel Subscription?</h3>
+                <p style={{ fontSize: '13px', color: '#6B7280', textAlign: 'center', lineHeight: 1.6, marginBottom: '20px' }}>
+                  You will keep your <strong style={{ color: '#1F2937' }}>{planLabel}</strong> plan access until the end of your billing period. After that, you will be downgraded to Free (5 generations/month).
                 </p>
                 {cancelError && (
-                  <div style={{ marginBottom: '16px', padding: '10px 14px', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '10px', fontSize: '13px', color: '#FCA5A5' }}>
+                  <div style={{ marginBottom: '16px', padding: '10px 14px', background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.22)', borderRadius: '10px', fontSize: '13px', color: '#B91C1C' }}>
                     {cancelError}
                   </div>
                 )}
                 <div style={{ display: 'flex', gap: '10px' }}>
                   <button onClick={() => { setShowCancelModal(false); setCancelError('') }} disabled={cancelling} style={{
                     flex: 1, padding: '11px', fontSize: '13px', fontWeight: 700,
-                    border: '1px solid rgba(196,163,92,0.25)', borderRadius: '50px',
-                    color: '#A8B8C8', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit',
+                    border: '1px solid rgba(24,95,133,0.22)', borderRadius: '50px',
+                    color: '#374151', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit',
                   }}>Keep My Plan</button>
                   <button onClick={handleCancelSubscription} disabled={cancelling} style={{
                     flex: 1, padding: '11px', fontSize: '13px', fontWeight: 700,
-                    background: '#ef4444', color: '#fff', border: 'none',
+                    background: '#DC2626', color: '#fff', border: 'none',
                     borderRadius: '50px', cursor: 'pointer', fontFamily: 'inherit',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
                   }}>
