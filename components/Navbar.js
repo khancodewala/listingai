@@ -32,7 +32,7 @@ export default function Navbar() {
 
   return (
     <>
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .nav-link {
           color: #D8E4F0;
           text-decoration: none;
@@ -57,7 +57,7 @@ export default function Navbar() {
           .nav-desktop { display: none; }
           .nav-hamburger { display: block; }
         }
-      `}</style>
+      ` }} />
 
       <nav style={{
         background: "#0B1628",
