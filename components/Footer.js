@@ -1,23 +1,108 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import LogoMark from "@/components/LogoMark";
+
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === "/dashboard") return null;
+
   return (
-    <footer className="w-full bg-gray-900 text-gray-400 py-12 px-6">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-        <div>
-          <div className="text-2xl font-bold text-white mb-2">ListingAI</div>
-          <p className="text-sm">
-            AI powered tools for real estate agents
-          </p>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .footer-link {
+          color: #A8B8C8;
+          text-decoration: none;
+          font-size: 14px;
+          transition: color 0.2s ease;
+        }
+        .footer-link:hover { color: #C4A35C; }
+        .footer-cols {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 40px;
+          justify-content: space-between;
+        }
+        .footer-col-heading {
+          color: #D8E4F0;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          margin-bottom: 14px;
+        }
+        @media (max-width: 640px) {
+          .footer-cols { flex-direction: column; gap: 28px; }
+        }
+      ` }} />
+
+      <footer style={{
+        background: "#0B1628",
+        borderTop: "1px solid rgba(196,163,92,0.15)",
+        padding: "48px 24px 28px",
+        fontFamily: "var(--font-dm-sans)",
+      }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          <div className="footer-cols" style={{ marginBottom: "36px" }}>
+
+            {/* Brand */}
+            <div style={{ maxWidth: "280px" }}>
+              <LogoMark size="md" theme="dark" />
+              <p style={{ color: "#8A9AAC", fontSize: "13px", lineHeight: 1.6, marginTop: "14px" }}>
+                AI-powered listing descriptions, social captions, and marketing copy for real estate professionals.
+              </p>
+            </div>
+
+            {/* Product */}
+            <div>
+              <div className="footer-col-heading">Product</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <Link href="/generate" className="footer-link">AI Generator</Link>
+                <Link href="/pricing" className="footer-link">Pricing</Link>
+                <Link href="/dashboard" className="footer-link">Dashboard</Link>
+              </div>
+            </div>
+
+            {/* Account */}
+            <div>
+              <div className="footer-col-heading">Account</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <Link href="/login" className="footer-link">Login</Link>
+                <Link href="/signup" className="footer-link">Sign Up</Link>
+              </div>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <div className="footer-col-heading">Legal</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <Link href="/privacy" className="footer-link">Privacy Policy</Link>
+                <Link href="/terms" className="footer-link">Terms of Service</Link>
+                <a href="mailto:ahmedtauqeer761@gmail.com" className="footer-link">Contact</a>
+              </div>
+            </div>
+          </div>
+
+          <div style={{
+            borderTop: "1px solid rgba(196,163,92,0.10)",
+            paddingTop: "20px",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "12px",
+          }}>
+            <div style={{ color: "#6E7C8E", fontSize: "13px" }}>
+              © {new Date().getFullYear()} ListingAI. All rights reserved.
+            </div>
+            <div style={{ color: "#6E7C8E", fontSize: "13px" }}>
+              Operated by Tauqeer Ahmed
+            </div>
+          </div>
         </div>
-        <nav className="flex gap-6 text-sm">
-          <a href="#features" className="hover:text-white">Features</a>
-          <a href="#pricing" className="hover:text-white">Pricing</a>
-          <a href="#" className="hover:text-white">Login</a>
-          <a href="#" className="hover:text-white">Sign Up</a>
-        </nav>
-        <div className="text-sm">
-          © 2026 ListingAI. All rights reserved.
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }
