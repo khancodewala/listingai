@@ -80,7 +80,7 @@ export default function Footer() {
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 <Link href="/privacy" className="footer-link">Privacy Policy</Link>
                 <Link href="/terms" className="footer-link">Terms of Service</Link>
-                <a href="mailto:ahmedtauqeer761@gmail.com" className="footer-link">Contact</a>
+                <Link href="/contact" className="footer-link">Contact</Link>
               </div>
             </div>
           </div>
