@@ -61,12 +61,12 @@ export default function ContactPage() {
         }
       ` }} />
 
-      <main style={{ maxWidth: "680px", margin: "0 auto", padding: "32px 24px 56px" }}>
+    <main style={{ maxWidth: "680px", margin: "0 auto", padding: "24px 24px 40px" }}>
         <div style={{
           background: "#ffffff",
           border: "1px solid #ECE8DD",
           borderRadius: "16px",
-          padding: "48px",
+          padding: "36px",
           boxShadow: "0 4px 24px rgba(16,32,46,0.05)",
         }}>
           <h1 className="contact-title">Contact Us</h1>
