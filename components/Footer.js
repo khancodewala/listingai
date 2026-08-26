@@ -59,6 +59,7 @@ export default function Footer() {
             <div>
               <div className="footer-col-heading">Product</div>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                <Link href="/about" className="footer-link">About</Link>
                 <Link href="/generate" className="footer-link">AI Generator</Link>
                 <Link href="/pricing" className="footer-link">Pricing</Link>
                 <Link href="/dashboard" className="footer-link">Dashboard</Link>
