@@ -61,7 +61,7 @@ export default function ContactPage() {
         }
       ` }} />
 
-      <main style={{ maxWidth: "680px", margin: "0 auto", padding: "56px 24px 80px" }}>
+      <main style={{ maxWidth: "680px", margin: "0 auto", padding: "32px 24px 56px" }}>
         <div style={{
           background: "#ffffff",
           border: "1px solid #ECE8DD",
