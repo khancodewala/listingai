@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata = {
@@ -10,8 +9,6 @@ export const metadata = {
 export default function TermsOfServicePage() {
   return (
     <div style={{ background: "#FAF8F2", minHeight: "100vh" }}>
-      <Navbar />
-
       <style dangerouslySetInnerHTML={{ __html: `
         .legal-content h1.legal-title {
           font-family: var(--font-playfair);
