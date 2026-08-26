@@ -88,17 +88,9 @@ export default function Footer() {
           <div style={{
             borderTop: "1px solid rgba(196,163,92,0.10)",
             paddingTop: "20px",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "12px",
           }}>
             <div style={{ color: "#6E7C8E", fontSize: "13px" }}>
               © {new Date().getFullYear()} ListingAI. All rights reserved.
-            </div>
-            <div style={{ color: "#6E7C8E", fontSize: "13px" }}>
-              Operated by Tauqeer Ahmed
             </div>
           </div>
         </div>
