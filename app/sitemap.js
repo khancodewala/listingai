@@ -6,9 +6,10 @@
 // were tried previously and either go stale or falsely signal "changed
 // today" on every crawl, which trains Google to distrust the lastmod field.
 //
-// Only home, pricing, and signup are indexable — login, forgot-password,
-// reset-password, dashboard, and generate are all noindexed via robots.txt
-// and page-level metadata, so they're intentionally excluded here.
+// Indexable pages: home, pricing, signup, privacy, terms, contact, about.
+// login, forgot-password, reset-password, dashboard, and generate are all
+// noindexed via robots.txt and page-level metadata, so they're intentionally
+// excluded here.
 
 import sitemapDates from '@/lib/sitemap-dates.json';
 

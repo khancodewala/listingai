@@ -4,10 +4,12 @@
 // real last-modified date from git commit history, so app/sitemap.js can
 // report accurate lastmod values instead of hardcoded or request-time dates.
 //
-// Requires VERCEL_DEEP_CLONE=1 to be set in Vercel project env vars,
-// otherwise Vercel's shallow clone (last 10 commits) may not contain the
-// commit that last touched a given file - this script falls back safely
-// to today's date if that happens, so the build never breaks.
+// Vercel's default shallow clone has been tested and confirmed sufficient —
+// it contains enough git history to resolve the last-modified commit for
+// every page below. VERCEL_DEEP_CLONE=1 is NOT required and is not set.
+// If a future page ever falls back to today's date, check the build logs
+// for a "[sitemap-dates] No git history found" warning before assuming
+// this needs to be revisited.
 
 const { execSync } = require('child_process');
 const fs = require('fs');
