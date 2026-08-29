@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export default function PricingPage() {
   const [loading, setLoading] = useState("");
@@ -354,7 +355,10 @@ export default function PricingPage() {
           Works for real estate agents worldwide · Payments in USD · Cancel anytime
         </p>
 
+              </div>
+
+        <Footer />
+
       </div>
-    </div>
-  );
-}
+    );
+  }

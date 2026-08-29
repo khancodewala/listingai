@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 // ─── Unsplash photo IDs (free commercial use, no attribution required) ───────
 // Hero bg:    Roberto Nickson – luxury living room   photo-1600210492493-0946911123ea
@@ -598,7 +599,9 @@ export default function HomePage() {
             Start Writing for Free →
           </Link>
         </div>
-      </section>
+            </section>
+
+      <Footer />
 
     </main>
   );

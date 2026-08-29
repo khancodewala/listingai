@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 const TABS = [
   { id: "listing",      label: "🏠 Listing Writer" },
@@ -681,7 +682,7 @@ export default function GeneratePage() {
 
       </div>
 
-      {result && (
+            {result && (
         <ResultPanel
           result={result}
           inputData={inputData}
@@ -691,6 +692,9 @@ export default function GeneratePage() {
           language={language}
         />
       )}
-    </div>
+
+      <Footer />
+
+      </div>
   );
 }
