@@ -3,8 +3,7 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: "Terms of Service | ListingAI",
   description: "The terms governing your access to and use of ListingAI.",
-  robots: { index: false, follow: true },
-};
+ };
 
 export default function TermsOfServicePage() {
   return (

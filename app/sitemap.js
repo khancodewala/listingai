@@ -28,5 +28,21 @@ export default function sitemap() {
       url: `${BASE_URL}/signup`,
       lastModified: sitemapDates['/signup'],
     },
+    {
+      url: `${BASE_URL}/privacy`,
+      lastModified: sitemapDates['/privacy'],
+    },
+    {
+      url: `${BASE_URL}/terms`,
+      lastModified: sitemapDates['/terms'],
+    },
+    {
+      url: `${BASE_URL}/contact`,
+      lastModified: sitemapDates['/contact'],
+    },
+    {
+      url: `${BASE_URL}/about`,
+      lastModified: sitemapDates['/about'],
+    },
   ];
 }

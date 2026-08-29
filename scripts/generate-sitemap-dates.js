@@ -20,6 +20,10 @@ const pages = [
   { url: '/', file: 'app/page.js' },
   { url: '/pricing', file: 'app/pricing/page.js' },
   { url: '/signup', file: 'app/signup/page.js' },
+  { url: '/privacy', file: 'app/privacy/page.js' },
+  { url: '/terms', file: 'app/terms/page.js' },
+  { url: '/contact', file: 'app/contact/page.js' },
+  { url: '/about', file: 'app/about/page.js' },
 ];
 
 const FALLBACK_DATE = new Date().toISOString().split('T')[0];
