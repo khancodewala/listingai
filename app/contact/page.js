@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: "Contact | ListingAI",
   description: "Get in touch with the ListingAI team for support, billing, or general questions.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
