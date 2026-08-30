@@ -207,7 +207,7 @@ export default function Dashboard() {
     try {
       const { data: { session } } = await supabase.auth.getSession()
       if (!session) throw new Error('Not logged in')
-      const res = await fetch('/api/polar/portal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: session.user.id }) })
+      const res = await fetch('/api/polar/portal', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` } })
       const data = await res.json()
       if (data.redirectToPricing) { window.location.href = '/pricing'; return }
       if (!res.ok) throw new Error(data.error || 'Failed to open billing portal')
