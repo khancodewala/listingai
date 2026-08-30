@@ -21,12 +21,11 @@ export default function PricingPage() {
     try {
       const res = await fetch("/api/polar/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          plan,
-          userId: session.user.id,
-          userEmail: session.user.email,
-        }),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ plan }),
       });
 
       const data = await res.json();
