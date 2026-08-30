@@ -122,7 +122,6 @@ export default function PricingPage() {
         }
         .pricing-card {
           background: #FFFFFF;
-          border: 1.5px solid rgba(58,64,72,0.10);
           border-radius: 20px;
           padding: 1.75rem 1.5rem;
           position: relative;
@@ -149,39 +148,44 @@ export default function PricingPage() {
           border-radius: 100px;
           white-space: nowrap;
         }
-        .pricing-btn-primary {
-          display: block;
+        .pricing-btn-primary,
+        .pricing-btn-secondary {
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: 100%;
           text-align: center;
-          background: #185F85;
-          color: #FFFFFF;
           font-size: 14px;
           font-weight: 700;
-          padding: 13px;
+          line-height: 1.2;
+          padding: 13px 16px;
           border-radius: 50px;
-          border: none;
           cursor: pointer;
           text-decoration: none;
           margin-bottom: 1.75rem;
+          white-space: nowrap;
+        }
+        .pricing-btn-primary {
+          background: #185F85;
+          color: #FFFFFF;
+          border: none;
           transition: opacity 0.2s ease;
         }
         .pricing-btn-primary:hover { opacity: 0.88; }
         .pricing-btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
         .pricing-btn-secondary {
-          display: block;
-          width: 100%;
-          text-align: center;
           background: transparent;
-          font-size: 14px;
-          font-weight: 700;
-          padding: 13px;
-          border-radius: 50px;
-          cursor: pointer;
-          text-decoration: none;
-          margin-bottom: 1.75rem;
           transition: background 0.2s ease;
         }
         .pricing-btn-secondary:disabled { opacity: 0.55; cursor: not-allowed; }
+        @media (max-width: 400px) {
+          .pricing-btn-primary,
+          .pricing-btn-secondary {
+            font-size: 13px;
+            white-space: normal;
+          }
+        }
         @media (max-width: 640px) {
           .pricing-grid {
             grid-template-columns: 1fr;
@@ -247,7 +251,11 @@ export default function PricingPage() {
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "0 1.5rem 5rem" }}>
         <div className="pricing-grid">
           {plans.map((plan) => (
-            <div key={plan.name} className={`pricing-card ${plan.highlighted ? "highlighted" : ""}`}>
+            <div
+              key={plan.name}
+              className={`pricing-card ${plan.highlighted ? "highlighted" : ""}`}
+              style={!plan.highlighted ? { border: `1.5px solid ${plan.accent}55` } : undefined}
+            >
 
               {plan.highlighted && (
                 <div className="pricing-badge">Most Popular</div>
@@ -355,10 +363,9 @@ export default function PricingPage() {
           Works for real estate agents worldwide · Payments in USD · Cancel anytime
         </p>
 
-              </div>
+         </div>
 
         <Footer />
-
       </div>
     );
   }
