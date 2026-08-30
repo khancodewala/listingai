@@ -90,7 +90,7 @@ export default function Footer() {
             borderTop: "1px solid rgba(196,163,92,0.10)",
             paddingTop: "20px",
           }}>
-            <div style={{ color: "#6E7C8E", fontSize: "13px" }}>
+           <div style={{ color: "#8A9AAC", fontSize: "13px" }}>
               © {new Date().getFullYear()} ListingAI. All rights reserved.
             </div>
           </div>
