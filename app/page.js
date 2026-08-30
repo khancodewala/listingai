@@ -268,16 +268,29 @@ export default function HomePage() {
           pointerEvents: "none",
         }} />
 
-        <div style={{ position: "relative", maxWidth: "960px", margin: "0 auto", width: "100%" }}>
-          <span style={{
-            display: "inline-flex", alignItems: "center", gap: "7px",
-            background: "rgba(94,155,124,0.20)", border: "1px solid rgba(94,155,124,0.55)",
-            color: "#8FC7A8", fontSize: "11px", fontWeight: 700,
-            letterSpacing: "0.09em", textTransform: "uppercase",
-            padding: "6px 16px", borderRadius: "100px", marginBottom: "1.5rem",
-          }}>
-            ✦ AI for Real Estate Professionals
-          </span>
+         <div style={{ position: "relative", maxWidth: "960px", margin: "0 auto", width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px" }}>
+            <span style={{
+              display: "inline-flex", alignItems: "center", gap: "7px",
+              background: "rgba(94,155,124,0.20)", border: "1px solid rgba(94,155,124,0.55)",
+              color: "#8FC7A8", fontSize: "11px", fontWeight: 700,
+              letterSpacing: "0.09em", textTransform: "uppercase",
+              padding: "6px 16px", borderRadius: "100px",
+            }}>
+              ✦ AI for Real Estate Professionals
+            </span>
+
+            <span style={{
+              display: "inline-flex", alignItems: "center", gap: "7px",
+              background: "#185F85", border: "1px solid rgba(255,255,255,0.25)",
+              color: "#FFFFFF", fontSize: "12px", fontWeight: 700,
+              letterSpacing: "0.03em",
+              padding: "7px 18px", borderRadius: "100px", marginBottom: "1.5rem",
+              boxShadow: "0 2px 12px rgba(24,95,133,0.35)",
+            }}>
+              🌐 Generate Listings in English, Spanish, French & Arabic
+            </span>
+          </div>
 
           <h1 style={{
             fontFamily: "var(--font-playfair)",

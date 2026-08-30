@@ -80,6 +80,14 @@ export default function AboutPage() {
               bios, and blog content. Everything is generated with a flat, predictable pricing structure and a
               complete history of everything you&apos;ve created.
             </p>
+            <p style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              background: "rgba(184,131,74,0.10)", border: "1px solid rgba(184,131,74,0.40)",
+              color: "#8A5A24", fontWeight: 700, fontSize: "14px",
+              padding: "10px 18px", borderRadius: "10px", marginBottom: "14px",
+            }}>
+              🌐 Generate listings in 4 languages — English, Spanish, French &amp; Arabic.
+            </p>
 
             <h2>Who&apos;s Behind It</h2>
             <p>
