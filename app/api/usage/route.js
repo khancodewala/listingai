@@ -23,18 +23,25 @@ export async function GET(request) {
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
 
-  const { count } = await supabaseAdmin
-    .from("usage")
-    .select("*", { count: "exact", head: true })
-    .eq("user_id", user.id)
-    .gte("created_at", startOfMonth.toISOString());
+  const [{ count: monthCount }, { count: allTimeCount }] = await Promise.all([
+    supabaseAdmin
+      .from("usage")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .gte("created_at", startOfMonth.toISOString()),
+    supabaseAdmin
+      .from("usage")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id),
+  ]);
 
   const limits = { free: 5, pro: 100, agency: null };
   const plan = profile?.plan || "free";
 
   return Response.json({
     plan,
-    used: count || 0,
+    used: monthCount || 0,
+    allTime: allTimeCount || 0,
     limit: limits[plan],
   });
 }

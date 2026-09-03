@@ -107,6 +107,7 @@ function MiniBarChart({ data }) {
 export default function Dashboard() {
   const [plan, setPlan] = useState('free')
   const [usage, setUsage] = useState(0)
+  const [usageAllTime, setUsageAllTime] = useState(0)
   const [generations, setGenerations] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedGeneration, setSelectedGeneration] = useState(null)
@@ -137,6 +138,7 @@ export default function Dashboard() {
         setPolarCustomerId(profile?.polar_customer_id || null)
         setPaymentIssue(profile?.payment_issue || false)
         setUsage(usageData.used || 0)
+        setUsageAllTime(usageData.allTime || 0)
         setGenerations(gens || [])
       } catch (err) {
         console.error('Dashboard fetch error:', err)
@@ -402,9 +404,9 @@ export default function Dashboard() {
               </div>
             )) : (<>
               <div style={S.card}>
-                <p style={{ fontSize: '10px', fontWeight: 700, color: '#8A97A6', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Total Used</p>
+                <p style={{ fontSize: '10px', fontWeight: 700, color: '#8A97A6', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Used This Month</p>
                 <p style={{ fontSize: '2rem', fontWeight: 700, color: '#1C2B3A', margin: '0 0 2px' }}>{usage}</p>
-                <p style={{ fontSize: '11px', color: '#8A97A6', margin: 0 }}>All time</p>
+                <p style={{ fontSize: '11px', color: '#8A97A6', margin: 0 }}>{usageAllTime} all-time</p>
               </div>
               <div style={S.card}>
                 <p style={{ fontSize: '10px', fontWeight: 700, color: '#8A97A6', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>Remaining</p>
