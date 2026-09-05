@@ -303,7 +303,9 @@ export async function POST(request) {
     systemPrompt += INJECTION_GUARDRAIL;
 
     // Lead magnet content can be longer — allow more tokens
-    const maxTokens = feature === "leadmagnet" ? 2048 : 1024;
+    let maxTokens = 1024;
+    if (feature === "leadmagnet") maxTokens = 2048;
+    if (feature === "contract") maxTokens = 4096;
 
     const message = await client.messages.create({
       model: "claude-sonnet-4-5",
