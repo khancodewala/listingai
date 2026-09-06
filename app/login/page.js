@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import LogoMark from "@/components/LogoMark";
+import Turnstile from "@/components/Turnstile";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,14 +11,26 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const turnstileRef = useRef(null);
 
   const handleLogin = async () => {
+    if (!captchaToken) {
+      setError("Please complete the verification check.");
+      return;
+    }
     setLoading(true);
     setError("");
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+      options: { captchaToken },
+    });
     if (error) {
       setError(error.message);
       setLoading(false);
+      setCaptchaToken(null);
+      turnstileRef.current?.reset();
     } else {
       window.location.href = "/generate";
     }
@@ -180,14 +193,16 @@ export default function Login() {
           </a>
         </div>
 
+        <Turnstile ref={turnstileRef} onVerify={setCaptchaToken} onExpire={() => setCaptchaToken(null)} />
+
         <button
           onClick={handleLogin}
-          disabled={loading || googleLoading}
+          disabled={loading || googleLoading || !captchaToken}
           style={{
             width: "100%", padding: "12px",
-            background: loading ? "#5c7d91" : "#185F85",
+            background: loading || !captchaToken ? "#5c7d91" : "#185F85",
             color: "#ffffff", fontWeight: 500, fontSize: "14px",
-            border: "none", borderRadius: "8px", cursor: loading ? "not-allowed" : "pointer",
+            border: "none", borderRadius: "8px", cursor: loading || !captchaToken ? "not-allowed" : "pointer",
             letterSpacing: "0.02em",
           }}
         >

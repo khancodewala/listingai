@@ -1,24 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import LogoMark from "@/components/LogoMark";
+import Turnstile from "@/components/Turnstile";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const turnstileRef = useRef(null);
 
   const handleReset = async () => {
+    if (!captchaToken) {
+      setError("Please complete the verification check.");
+      return;
+    }
     setLoading(true);
     setError("");
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
+      captchaToken,
     });
     if (error) {
       setError(error.message);
       setLoading(false);
+      setCaptchaToken(null);
+      turnstileRef.current?.reset();
     } else {
       setSuccess(true);
       setLoading(false);
@@ -137,14 +147,16 @@ export default function ForgotPassword() {
               />
             </div>
 
+            <Turnstile ref={turnstileRef} onVerify={setCaptchaToken} onExpire={() => setCaptchaToken(null)} />
+
             <button
               onClick={handleReset}
-              disabled={loading}
+              disabled={loading || !captchaToken}
               style={{
                 width: "100%", padding: "12px",
-                background: loading ? "#5c7d91" : "#185F85",
+                background: loading || !captchaToken ? "#5c7d91" : "#185F85",
                 color: "#ffffff", fontWeight: 500, fontSize: "14px",
-                border: "none", borderRadius: "8px", cursor: loading ? "not-allowed" : "pointer",
+                border: "none", borderRadius: "8px", cursor: loading || !captchaToken ? "not-allowed" : "pointer",
                 letterSpacing: "0.02em",
               }}
             >
