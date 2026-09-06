@@ -556,6 +556,10 @@ export default function GeneratePage() {
         setUsage({ used: data.used, limit: data.limit, plan: data.plan });
         return;
       }
+          if (res.status === 429 && data.error === "rate_limited") {
+      setError(`⏱️ ${data.message}`);
+      return;
+    }
       if (!res.ok || !data.success) {
         setError(data.error || "Something went wrong. Please try again.");
       } else {

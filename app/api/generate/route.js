@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { supabaseAdmin } from '@/lib/supabaseAdmin'
 import { checkAndTrackUsage } from "@/lib/checkUsage";
+import { checkGenerateRateLimit } from "@/lib/ratelimit";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -248,6 +249,23 @@ export async function POST(request) {
 
     if (authError || !user) {
       return Response.json({ error: "Session expired. Please log in again." }, { status: 401 });
+    }
+
+    // ---- STEP 1.5: Rate limit (per-user burst protection, additive to monthly usage cap) ----
+    const rateLimitResult = await checkGenerateRateLimit(user.id);
+
+    if (!rateLimitResult.success) {
+      const retryAfterSeconds = Math.max(0, Math.ceil((rateLimitResult.reset - Date.now()) / 1000));
+      return Response.json(
+        {
+          error: "rate_limited",
+          message: "You're generating too quickly. Please wait a moment and try again.",
+        },
+        {
+          status: 429,
+          headers: { "Retry-After": String(retryAfterSeconds) },
+        }
+      );
     }
 
     // ---- STEP 2: Check usage limit ----
