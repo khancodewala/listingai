@@ -9,6 +9,22 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+function redactEvent(event) {
+  const clone = JSON.parse(JSON.stringify(event));
+  const scrub = (obj) => {
+    if (!obj || typeof obj !== 'object') return;
+    for (const key of Object.keys(obj)) {
+      if (/email|name|phone|address/i.test(key)) {
+        obj[key] = '[redacted]';
+      } else if (typeof obj[key] === 'object') {
+        scrub(obj[key]);
+      }
+    }
+  };
+  scrub(clone);
+  return clone;
+}
+
 export async function POST(req) {
   const body = await req.text();
   const headers = {
@@ -27,7 +43,7 @@ export async function POST(req) {
     throw err;
   }
 
-  console.log('POLAR WEBHOOK EVENT:', JSON.stringify(event, null, 2));
+  console.log('POLAR WEBHOOK EVENT:', JSON.stringify(redactEvent(event), null, 2));
 
   const metadata =
     event.data?.metadata ||
