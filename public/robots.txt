@@ -7,4 +7,4 @@ Disallow: /login
 Disallow: /forgot-password
 Disallow: /reset-password
 
-Sitemap: https://listingai-rose.vercel.app/sitemap.xml
+Sitemap: https://www.joinlistingai.com/sitemap.xml

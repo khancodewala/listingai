@@ -13,7 +13,7 @@
 
 import sitemapDates from '@/lib/sitemap-dates.json';
 
-const BASE_URL = 'https://listingai-rose.vercel.app';
+const BASE_URL = 'https://www.joinlistingai.com';
 
 export default function sitemap() {
   return [

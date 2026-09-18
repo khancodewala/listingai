@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const siteUrl = "https://listingai-rose.vercel.app";
+const siteUrl = "https://www.joinlistingai.com";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
