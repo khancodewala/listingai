@@ -46,6 +46,36 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/(.*)',
+        has: [
+          {
+            type: 'host',
+            value: 'listingai-rose.vercel.app',
+          },
+        ],
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'listingai-rose.vercel.app',
+          },
+        ],
+        destination: 'https://www.joinlistingai.com/:path*',
+        permanent: true,
+      },
     ];
   },
 };
