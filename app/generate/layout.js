@@ -4,7 +4,7 @@
     "Use ListingAI's AI generator to write property listings, social media captions, buyer emails, and contract summaries instantly. Powered by Claude AI.",
   robots: { index: false, follow: false },
   alternates: {
-    canonical: "https://listingai-rose.vercel.app/generate",
+    canonical: "/generate",
   },
 };
 

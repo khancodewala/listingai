@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "Privacy Policy | ListingAI",
+  title: "Privacy Policy",
   description: "How ListingAI collects, uses, and protects your information.",
   alternates: { canonical: "/privacy" },
 };

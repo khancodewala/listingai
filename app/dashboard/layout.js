@@ -5,7 +5,7 @@ export const metadata = {
     follow: false,
   },
   alternates: {
-    canonical: "https://listingai-rose.vercel.app/dashboard",
+    canonical: "/dashboard",
   },
 };
 

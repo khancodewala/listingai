@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "Terms of Service | ListingAI",
+  title: "Terms of Service",
   description: "The terms governing your access to and use of ListingAI.",
   alternates: { canonical: "/terms" },
 };

@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "About | ListingAI",
+  title: "About",
   description: "Learn about ListingAI and why we built an AI-powered content generation platform for real estate professionals.",
   alternates: { canonical: "/about" },
 };

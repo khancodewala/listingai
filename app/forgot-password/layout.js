@@ -6,7 +6,7 @@ export const metadata = {
     follow: false,
   },
   alternates: {
-    canonical: "https://listingai-rose.vercel.app/forgot-password",
+    canonical: "/forgot-password",
   },
 };
 
