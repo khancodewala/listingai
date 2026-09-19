@@ -14,12 +14,30 @@ export default function ResetPassword() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    let active = true;
+
+    // The PASSWORD_RECOVERY event can fire before this page has subscribed
+    // (the link exchange can finish before hydration does). So besides
+    // listening for the event, also check for an existing session once the
+    // client has finished processing the reset link.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (!active) return;
       if (event === "PASSWORD_RECOVERY") {
         setValidSession(true);
+        setChecking(false);
       }
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!active) return;
+      if (session) setValidSession(true);
       setChecking(false);
     });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleUpdate = async () => {
