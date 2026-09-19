@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { resend } from '@/lib/resend';
+import { EMAIL_FROM } from '@/lib/emailConfig';
 import { getPreRenewalReminderEmailHtml, getFinalWarningEmailHtml } from '@/lib/emails';
 
 const supabase = createClient(
@@ -51,7 +52,7 @@ export async function GET(request) {
         if (!userData?.user?.email) continue;
 
         await resend.emails.send({
-          from: 'onboarding@resend.dev',
+          from: EMAIL_FROM,
           to: userData.user.email,
           subject: `Your ListingAI ${profile.plan === 'pro' ? 'Pro' : 'Agency'} plan renews soon`,
           html: getPreRenewalReminderEmailHtml({
@@ -100,7 +101,7 @@ export async function GET(request) {
         );
 
         await resend.emails.send({
-          from: 'onboarding@resend.dev',
+          from: EMAIL_FROM,
           to: userData.user.email,
           subject: `Final notice: your ListingAI access ends in ${daysRemaining === 1 ? '1 day' : `${daysRemaining} days`}`,
           html: getFinalWarningEmailHtml({

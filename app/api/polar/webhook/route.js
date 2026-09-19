@@ -2,6 +2,7 @@ import { validateEvent, WebhookVerificationError } from '@polar-sh/sdk/webhooks'
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import { resend } from '@/lib/resend';
+import { EMAIL_FROM } from '@/lib/emailConfig';
 import { getPaymentFailedEmailHtml } from '@/lib/emails';
 
 const supabase = createClient(
@@ -130,7 +131,7 @@ export async function POST(req) {
         const { data: userData } = await supabase.auth.admin.getUserById(userId);
         if (userData?.user?.email) {
           await resend.emails.send({
-            from: 'onboarding@resend.dev',
+            from: EMAIL_FROM,
             to: userData.user.email,
             subject: `Action needed: your ListingAI ${plan === 'pro' ? 'Pro' : 'Agency'} payment failed`,
             html: getPaymentFailedEmailHtml({
