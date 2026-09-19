@@ -210,7 +210,7 @@ export default function PrivacyPolicyPage() {
               Tauqeer Ahmed at:
             </p>
             <p>
-              <strong><a href="mailto:ahmedtauqeer761@gmail.com">ahmedtauqeer761@gmail.com</a></strong>
+              <strong><a href="mailto:support@joinlistingai.com">support@joinlistingai.com</a></strong>
             </p>
           </div>
         </div>

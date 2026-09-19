@@ -78,7 +78,7 @@ export default function ContactPage() {
           <div className="contact-card">
             <div className="contact-card-label">General &amp; Billing Support</div>
             <div className="contact-card-value">
-              <a href="mailto:ahmedtauqeer761@gmail.com">ahmedtauqeer761@gmail.com</a>
+              <a href="mailto:support@joinlistingai.com">support@joinlistingai.com</a>
             </div>
           </div>
 
